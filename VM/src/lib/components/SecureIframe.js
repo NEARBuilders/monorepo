@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import IframeResizer from "iframe-resizer-react";
-import { deepCopy, deepEqual } from "../lib/data/utils";
+import { deepCopy, deepEqual } from "../data/utils";
 
 export default function SecureIframe(allProps) {
   const {

@@ -15,7 +15,7 @@ import {
   isString,
   Loading,
   ReactKey,
-} from "../../data/utils";
+} from "../data/utils";
 import Files from "react-files";
 import { Markdown } from "../components/Markdown";
 import InfiniteScroll from "react-infinite-scroller";

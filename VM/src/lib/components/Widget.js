@@ -3,11 +3,11 @@ import React, {
   useContext,
   useEffect,
   useLayoutEffect,
-  useState
+  useState,
 } from "react";
 import { useNear } from "../data/near";
 import ConfirmTransactions from "./ConfirmTransactions";
-import VM from "../lib/vm/vm";
+import VM from "../vm/vm";
 import {
   deepCopy,
   deepEqual,
@@ -53,9 +53,9 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
   const [prevVmInput, setPrevVmInput] = useState(null);
   const [configs, setConfigs] = useState(null);
   const [srcOrCode, setSrcOrCode] = useState(null);
- 
+
   const ethersProviderContext = useContext(EthersProviderContext);
-  
+
   const networkId =
     configs &&
     configs.findLast((config) => config && config.networkId)?.networkId;
@@ -183,7 +183,7 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     requestCommit,
     confirmTransactions,
     configs,
-    ethersProviderContext
+    ethersProviderContext,
   ]);
 
   useEffect(() => {
@@ -248,46 +248,47 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     forwardedProps,
   ]);
 
-  const widget = element !== null && element !== undefined ? (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={() => {
-        setElement(null);
-      }}
-      resetKeys={[element]}
-    >
-      <>
-        {element}
-        {transactions && (
-          <ConfirmTransactions            
-            transactions={transactions}
-            widgetSrc={src}
-            onHide={(result) => {
-              setTransactions(null);
-              if (result && result.transaction) {
-                cache.invalidateCache(near, result.transaction.receiver_id);        
-              }
-            }}
-            networkId={networkId}
-          />
-        )}
-        {commitRequest && (
-          <CommitModal
-            show={true}
-            widgetSrc={src}
-            data={commitRequest.data}
-            force={commitRequest.force}
-            onHide={() => setCommitRequest(null)}
-            onCommit={commitRequest.onCommit}
-            onCancel={commitRequest.onCancel}
-            networkId={networkId}
-          />
-        )}
-      </>
-    </ErrorBoundary>
-  ) : (
-    loading ?? Loading
-  );
-  
+  const widget =
+    element !== null && element !== undefined ? (
+      <ErrorBoundary
+        FallbackComponent={ErrorFallback}
+        onReset={() => {
+          setElement(null);
+        }}
+        resetKeys={[element]}
+      >
+        <>
+          {element}
+          {transactions && (
+            <ConfirmTransactions
+              transactions={transactions}
+              widgetSrc={src}
+              onHide={(result) => {
+                setTransactions(null);
+                if (result && result.transaction) {
+                  cache.invalidateCache(near, result.transaction.receiver_id);
+                }
+              }}
+              networkId={networkId}
+            />
+          )}
+          {commitRequest && (
+            <CommitModal
+              show={true}
+              widgetSrc={src}
+              data={commitRequest.data}
+              force={commitRequest.force}
+              onHide={() => setCommitRequest(null)}
+              onCommit={commitRequest.onCommit}
+              onCancel={commitRequest.onCancel}
+              networkId={networkId}
+            />
+          )}
+        </>
+      </ErrorBoundary>
+    ) : (
+      loading ?? Loading
+    );
+
   return widget;
 });
