@@ -19,21 +19,7 @@ module.exports = function (env) {
         libraryTarget: "umd",
       },
       externals: [
-        nodeExternals(),
-        {
-          react: {
-            commonjs: "react",
-            commonjs2: "react",
-            amd: "react",
-            root: "React",
-          },
-          "react-dom": {
-            commonjs: "react-dom",
-            commonjs2: "react-dom",
-            amd: "react-dom",
-            root: "ReactDOM",
-          },
-        },
+        nodeExternals()
       ],
       module: {
         rules: [
@@ -63,7 +49,6 @@ module.exports = function (env) {
           stream: require.resolve("stream-browserify"),
           util: require.resolve("util"),
           punycode: require.resolve("punycode"),
-          // events: require.resolve("events")
         },
       },
       target: "node",

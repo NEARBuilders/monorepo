@@ -53,6 +53,7 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
   const [prevVmInput, setPrevVmInput] = useState(null);
   const [configs, setConfigs] = useState(null);
   const [srcOrCode, setSrcOrCode] = useState(null);
+
   const ethersProviderContext = useContext(EthersProviderContext);
 
   const networkId =
@@ -102,7 +103,7 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
       setSrc(src);
     } else if (srcOrCode?.code) {
       setCode(srcOrCode.code);
-      setSrc(null);
+      setSrc(near?.features?.enableWidgetSrcWithCodeOverride ? propsSrc : null);
     }
   }, [near, srcOrCode, nonce]);
 
@@ -221,6 +222,14 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     } catch (e) {
       setElement(
         <div className="alert alert-danger">
+          {src ? (
+            <>
+              Src: {src}
+              <br />
+            </>
+          ) : (
+            ""
+          )}
           Execution error:
           <pre>{e.message}</pre>
           <pre>{e.stack}</pre>
@@ -239,38 +248,47 @@ export const Widget = React.forwardRef((props, forwardedRef) => {
     forwardedProps,
   ]);
 
-  return element !== null && element !== undefined ? (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onReset={() => {
-        setElement(null);
-      }}
-      resetKeys={[element]}
-    >
-      <>
-        {element}
-        {transactions && (
-          <ConfirmTransactions
-            transactions={transactions}
-            onHide={() => setTransactions(null)}
-            networkId={networkId}
-          />
-        )}
-        {commitRequest && (
-          <CommitModal
-            show={true}
-            widgetSrc={src}
-            data={commitRequest.data}
-            force={commitRequest.force}
-            onHide={() => setCommitRequest(null)}
-            onCommit={commitRequest.onCommit}
-            onCancel={commitRequest.onCancel}
-            networkId={networkId}
-          />
-        )}
-      </>
-    </ErrorBoundary>
-  ) : (
-    loading ?? Loading
-  );
+  const widget =
+    element !== null && element !== undefined ? (
+      <ErrorBoundary
+        FallbackComponent={ErrorFallback}
+        onReset={() => {
+          setElement(null);
+        }}
+        resetKeys={[element]}
+      >
+        <>
+          {element}
+          {transactions && (
+            <ConfirmTransactions
+              transactions={transactions}
+              widgetSrc={src}
+              onHide={(result) => {
+                setTransactions(null);
+                if (result && result.transaction) {
+                  cache.invalidateCache(near, result.transaction.receiver_id);
+                }
+              }}
+              networkId={networkId}
+            />
+          )}
+          {commitRequest && (
+            <CommitModal
+              show={true}
+              widgetSrc={src}
+              data={commitRequest.data}
+              force={commitRequest.force}
+              onHide={() => setCommitRequest(null)}
+              onCommit={commitRequest.onCommit}
+              onCancel={commitRequest.onCancel}
+              networkId={networkId}
+            />
+          )}
+        </>
+      </ErrorBoundary>
+    ) : (
+      loading ?? Loading
+    );
+
+  return widget;
 });
