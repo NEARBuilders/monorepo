@@ -1,5 +1,41 @@
 # Changelog
 
+## Pending
+
+- Support multiple Limited Access Keys on BOS gateway to enable "Don't ask me again" when interacting with third-party contracts on BOS. See https://github.com/NearSocial/VM/issues/148
+
+## 2.5.6
+
+- FIX: Restrict native object prototypes from being accessed. To address BN issue, reported by BrunoModificato from OtterSec.
+- FIX: Filter out some ethers.js utils. Reported by BrunoModificato from OtterSec.
+- FIX: Remove potential XSS vulnerability for some SVG tags. Reported by BrunoModificato from OtterSec.
+- Minor: report widget `src` when VM throws an exception during rendering.
+
+## 2.5.5
+
+- FIX: Restrict attributes of `Files` component to a whitelist. Reported by BrunoModificato from OtterSec.
+
+## 2.5.4
+
+- Added optional `commitModalBypass` feature config. When the `<CommitButton />` component is used inside of a widget with a matching `src` prop, the `CommitModal` will be bypassed and `onCommit()` will be called instantly when the button is clicked. If for some reason the requested transaction is invalid, the `CommitModal` will still appear to show an error message to the user. View example below to see configuration options.
+- Added optional `enableWidgetSrcWithCodeOverride` boolean feature flag. This is helpful to enable when developing in a local environment when using a `redirectMap` in combination with the new `commitModalBypass` feature. With this enabled, any widget that is overridden via `redirectMap` can still reference its `src` prop to respect your `commitModalBypass` config.
+
+```js
+initNear({
+  features: {
+    commitModalBypass: {
+      authorIds: ["mob.near", "root.near"], // Bypass for all widgets published by these accounts
+      sources: [
+        "cool.near/widget/CoolComponent",
+        "awesome.near/widget/AwesomeComponent",
+      ], // Bypass for specific components
+    },
+    enableWidgetSrcWithCodeOverride: isLocalEnvironment,
+  },
+});
+```
+- Add string type check to the `href` property on the `a` tag. Reported by BrunoModificato from OtterSec.
+
 ## 2.5.3
 
 - FIX: Remove `cachedPropery` from `elliptic.utils`. Reported by BrunoModificato from OtterSec. 

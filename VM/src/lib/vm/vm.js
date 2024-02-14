@@ -15,7 +15,7 @@ import {
   isString,
   Loading,
   ReactKey,
-} from "../data/utils";
+} from "../../data/utils";
 import Files from "react-files";
 import { Markdown } from "../components/Markdown";
 import InfiniteScroll from "react-infinite-scroller";
@@ -35,7 +35,6 @@ import jsx from "acorn-jsx";
 import { ethers } from "ethers";
 import { Web3ConnectButton } from "../components/ethers";
 import { isValidAttribute } from "dompurify";
-import Urbit from "@urbit/http-api";
 
 // Radix:
 import * as Accordion from "@radix-ui/react-accordion";
@@ -75,6 +74,18 @@ const ExpressionDebug = false;
 const StatementDebug = false;
 
 const MAX_INTERVALS = 16;
+
+const NativePrototypes = [
+  Object.prototype,
+  Function.prototype,
+  Array.prototype,
+  String.prototype,
+  Number.prototype,
+  Boolean.prototype,
+];
+const NativePrototypesSet = new Set(NativePrototypes);
+
+NativePrototypes.forEach(Object.preventExtensions);
 
 const StorageType = {
   Private: "private",
@@ -207,6 +218,20 @@ const Keywords = {
   styled: true,
 };
 
+const filterEthersUtils = (utils) => {
+  [
+    "checkProperties",
+    "deepCopy",
+    "defineReadOnly",
+    "getStatic",
+    "resolveProperties",
+    "shallowCopy",
+  ].forEach((key) => {
+    delete utils[key];
+  });
+  return utils;
+};
+
 const GlobalInjected = deepFreeze(
   cloneDeep({
     // Functions
@@ -232,7 +257,7 @@ const GlobalInjected = deepFreeze(
       verify: nacl.verify,
     },
     ethers: {
-      utils: ethers.utils,
+      utils: filterEthersUtils(deepCopy(ethers.utils)),
       BigNumber: ethers.BigNumber,
       Contract: ethers.Contract,
       providers: ethers.providers,
@@ -300,13 +325,21 @@ const assertNotReservedKey = (key) => {
   }
 };
 
-const assertNotReactObject = (o) => {
+const assertNotNativePrototype = (o) => {
+  if (NativePrototypesSet.has(o)) {
+    throw new Error("Native prototypes shouldn't be used");
+  }
+};
+
+const assertDereferenceableObject = (o) => {
+  assertNotNativePrototype(o);
   if (isReactObject(o)) {
-    throw new Error("React objects shouldn't dereferenced");
+    throw new Error("React objects shouldn't be dereferenced");
   }
 };
 
 const assertValidObject = (o) => {
+  assertDereferenceableObject(o);
   if (o !== null && typeof o === "object") {
     Object.entries(o).forEach(([key, value]) => {
       assertNotReservedKey(key);
@@ -414,6 +447,31 @@ const requirePattern = (id) => {
   }
 };
 
+const FilesComponentWhitelist = [
+  "key",
+  "name",
+  "className",
+  "onChange",
+  "onError",
+  "accepts",
+  "multiple",
+  "clickable",
+  "maxFiles",
+  "maxFileSize",
+  "minFileSize",
+  "dragActiveClassName",
+];
+
+const filterFilesAttributes = (attributes) => {
+  const filteredAttributes = {};
+  FilesComponentWhitelist.forEach((key) => {
+    if (attributes.hasOwnProperty(key)) {
+      filteredAttributes[key] = attributes[key];
+    }
+  });
+  return filteredAttributes;
+};
+
 class Stack {
   constructor(prevStack, state) {
     this.prevStack = prevStack;
@@ -451,6 +509,7 @@ class VmStack {
   executeExpression(code) {
     ExpressionDebug && console.log("Executing code:", code?.type);
     const res = this.executeExpressionInternal(code);
+    assertNotNativePrototype(res);
     ExpressionDebug && console.log(code?.type, res);
     return res;
   }
@@ -609,14 +668,23 @@ class VmStack {
 
     if (basicElement === "img") {
       attributes.alt = attributes.alt ?? "not defined";
-    } else if (basicElement === "a") {
+    } else if (basicElement === "a" || basicElement === "use") {
       Object.entries(attributes).forEach(([name, value]) => {
         if (name.toLowerCase() === "href") {
-          attributes[name] = isValidAttribute("a", "href", value)
-            ? value
-            : "about:blank";
+          attributes[name] =
+            isString(value) && isValidAttribute("a", "href", value)
+              ? value
+              : "about:blank";
         }
       });
+    } else if (basicElement === "set") {
+      if (
+        attributes.attributeName === "href" ||
+        attributes.attributeName === "xlink:href" ||
+        attributes.attributeName === "is"
+      ) {
+        return <></>;
+      }
     } else if (element === "Widget") {
       attributes.depth = this.vm.depth + 1;
       attributes.config = [attributes.config, ...this.vm.widgetConfigs].filter(
@@ -688,7 +756,7 @@ class VmStack {
             accepts={["image/*"]}
             minFileSize={1}
             clickable
-            {...attributes}
+            {...filterFilesAttributes(attributes)}
           >
             {status.img?.uploading ? (
               <>{Loading} Uploading</>
@@ -701,7 +769,7 @@ class VmStack {
         </div>
       );
     } else if (element === "Files") {
-      return <Files {...attributes}>{children}</Files>;
+      return <Files {...filterFilesAttributes(attributes)}>{children}</Files>;
     } else if (element === "iframe") {
       return <SecureIframe {...attributes} />;
     } else if (element === "Web3Connect") {
@@ -754,7 +822,7 @@ class VmStack {
         throw new Error(`The top object should be ${StakeKey}`);
       }
       const obj = this.stack.findObj(key) ?? this.stack.state;
-      assertNotReactObject(obj);
+      assertDereferenceableObject(obj);
       if (obj === this.stack.state) {
         if (Keywords.hasOwnProperty(key)) {
           if (options?.left) {
@@ -794,7 +862,7 @@ class VmStack {
         }
       }
       const obj = this.executeExpression(code.object);
-      assertNotReactObject(obj);
+      assertDereferenceableObject(obj);
       const key = this.resolveKey(code.property, code.computed);
       return { obj, key };
     } else {
@@ -980,7 +1048,7 @@ class VmStack {
           object[key] = this.executeExpression(property.value);
         } else if (property.type === "SpreadElement") {
           const value = this.executeExpression(property.argument);
-          assertNotReactObject(value);
+          assertDereferenceableObject(value);
           Object.assign(object, value);
         } else {
           throw new Error("Unknown property type: " + property.type);
@@ -1162,7 +1230,7 @@ class VmStack {
     if (pattern.type === "Identifier") {
       this.stack.state[pattern.name] = value;
     } else if (pattern.type === "ArrayPattern") {
-      assertNotReactObject(value);
+      assertDereferenceableObject(value);
       pattern.elements.forEach((element, i) => {
         if (element.type === "RestElement") {
           this.stackDeclare(element.argument, value.slice(i));
@@ -1171,7 +1239,7 @@ class VmStack {
         }
       });
     } else if (pattern.type === "ObjectPattern") {
-      assertNotReactObject(value);
+      assertDereferenceableObject(value);
       const seen = new Set();
       pattern.properties.forEach((property) => {
         if (property.type === "RestElement") {
@@ -1256,7 +1324,7 @@ class VmStack {
     } else if (token.type === "ForOfStatement") {
       const stack = this.newStack();
       const right = stack.executeExpression(token.right);
-      assertNotReactObject(right);
+      assertDereferenceableObject(right);
       for (const value of right) {
         if (this.vm.loopLimit-- <= 0) {
           throw new Error("Exceeded loop limit");
@@ -1491,11 +1559,6 @@ export default class VM {
       widgetConfigs.findLast((config) => config && config.networkId)
         ?.networkId || near.config.networkId;
 
-    // TODO: hard-coded authentication for a local fake
-    //       urbit ship for debugging purposes; remove
-    this.UrbitApi = new Urbit('http://localhost:8082', 'dolsyt-lavref-mormyr-rissep', 'near');
-    this.UrbitApi.ship = 'fun';
-
     this.globalFunctions = this.initGlobalFunctions();
   }
 
@@ -1623,7 +1686,7 @@ export default class VM {
         if (args.length < 1) {
           throw new Error("Missing argument 'obj' for JSON.stringify");
         }
-        assertNotReactObject(args[0]);
+        assertDereferenceableObject(args[0]);
         return JSON.stringify(args[0], args[1], args[2]);
       },
       parse: (...args) => {
@@ -1645,25 +1708,25 @@ export default class VM {
         if (args.length < 1) {
           throw new Error("Missing argument 'obj' for Object.keys");
         }
-        assertNotReactObject(args[0]);
+        assertDereferenceableObject(args[0]);
         return Object.keys(args[0]);
       },
       values: (...args) => {
         if (args.length < 1) {
           throw new Error("Missing argument 'obj' for Object.values");
         }
-        assertNotReactObject(args[0]);
+        assertDereferenceableObject(args[0]);
         return Object.values(args[0]);
       },
       entries: (...args) => {
         if (args.length < 1) {
           throw new Error("Missing argument 'obj' for Object.entries");
         }
-        assertNotReactObject(args[0]);
+        assertDereferenceableObject(args[0]);
         return Object.entries(args[0]);
       },
       assign: (...args) => {
-        args.forEach((arg) => assertNotReactObject(arg));
+        args.forEach((arg) => assertDereferenceableObject(arg));
         const obj = Object.assign(...args);
         assertValidObject(obj);
         return obj;
@@ -1835,74 +1898,6 @@ export default class VM {
       return memoized;
     };
 
-    const Urbit = {
-      pokeUrbit: (app, mark, json) => {
-        return new Promise((resolve, reject) => {
-          if (!this.UrbitApi) {
-            reject(new Error("Urbit HTTP API not properly initialized"));
-            return;
-          }
-
-          // this code won't work unless app with vm is globbed onto a ship
-          // if (!window.ship) {
-          //   reject(new Error("No Urbit server connected"));
-          //   return;
-          // }
-
-          // placeholder
-          if (!this.UrbitApi.ship) {
-            reject(new Error("No Urbit server connected"));
-            return;
-          }
-
-          this.UrbitApi.poke({
-            app: app,
-            mark: mark,
-            json: json,
-            onSuccess: (response) => resolve(response),
-            onError: (err) => {
-              reject(new Error("Error in Urbit.pokeUrbit(): " + err));
-            },
-          });
-        });
-      },
-      pokeNearHandler: (json) => {
-        console.log('Attempting pokeNearHandler')
-        // TODO: error
-        // gall: poke-as cast fail :near-handler [a=%json b=%near-handler-action]
-        return Urbit.pokeUrbit("near-handler", "near-handler-action", { 'poke': json });
-      },
-      scryUrbit: (app, path) => {
-        return new Promise((resolve, reject) => {
-          if (!this.UrbitApi) {
-            reject(new Error("Urbit HTTP API not properly initialized"));
-            return;
-          }
-
-          // TODO: check window.ship is not null/undefined
-
-          this.UrbitApi.scry({app: app, path: path})
-            .then(response => {
-              resolve(response);
-            })
-            .catch(err => {
-              reject(new Error("Error in Urbit.scryUrbit(): " + err));
-            });
-        });
-      },
-      scryNearHandler: (path) => {
-        return new Promise((resolve, reject) => {
-          Urbit.scryUrbit('near-handler', path)
-            .then(response => {
-              resolve(response);
-            })
-            .catch(err => {
-              reject(new Error("Error in Urbit.scryNearHandler(): " + err));
-            });
-        });
-      },
-    };
-
     return deepFreeze({
       socialGetr: Social.getr,
       socialGet: Social.get,
@@ -1914,7 +1909,6 @@ export default class VM {
       initState: State.init,
       State,
       Storage,
-      Urbit,
       console: vmConsole,
       clipboard: {
         writeText: (...args) => {

@@ -63,7 +63,6 @@ module.exports = function (env) {
           stream: require.resolve("stream-browserify"),
           util: require.resolve("util"),
           punycode: require.resolve("punycode"),
-          // events: require.resolve("events")
         },
       },
       target: "node",
