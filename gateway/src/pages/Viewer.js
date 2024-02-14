@@ -18,7 +18,7 @@ function Viewer({ code }) {
   }, [location]);
 
   const src = useMemo(() => {
-    const defaultSrc = "urbit.near/widget/app"; // default widget to load
+    const defaultSrc = "apps.near/widget/project"; // default widget to load
     const pathSrc = path || defaultSrc; // if no path, load default widget
     return pathSrc;
   }, [path]);
