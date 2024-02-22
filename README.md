@@ -1,12 +1,40 @@
-# NEAR <> Urbit Playground
+# Monorepo
 
 This repository is set up with a clone of the [NearSocial/VM](https://github.com/NearSocial/VM), a simplified clone of [near-everything/viewer](https://github.com/near-everything/viewer) gateway ([everything.dev](https://everything.dev)), and a [bos-workspace](https://github.com/nearbuilders/bos-workspace).
 
 ### Breakdown
 
-- /VM - exposes a VM element `Urbit` for integrating with the [Urbit Http-API](https://developers.urbit.org/guides/additional/http-api-guide)
+- /VM - What is the VM?
 - /gateway - runs a local React App configured with the VM for displaying widgets served from /apps
 - /apps - widgets to be served by bos-workspace, displayed on the gateway. The root account is "urbit.near" as configured in apps/urbit/bos.config.json. Nested paths in /widget will resolve to dot notation (e.g. urbit.near/widget/page.home). Your gateway will redirect references to prioritize the widgets from local.
+
+### TODO
+
+- [ ] convert gateway -> near-bos-webcomponent (we probably want a next.js gateway too, something connected to Tauri, Proximity bos-template Mike.near)
+- [ ] import apps
+- [ ] simple change in the VM that can signify if using local or not
+
+```
+everything
+    apps
+        every.near - default viewer, thing ability, browser, search
+        devs.near - bos blocks, component library
+        create.near - generic editor/creator/canvas
+        apps.near - app creator and browser
+        sdks.near - sdk creator browser for sdks
+        maps.near - browser for maps
+        embeds.near - feeds
+        video.every.near
+        nearbuilders.near - build dao gateway specific code
+    gateway
+        near-everything/viewer
+        NearSocial/viewer
+        nearbuilders/gateway
+        create-next-app/starter
+        near-bos-webcomponent 
+    VM
+    packages/bos-workspace
+```
 
 ## Getting Started
 
