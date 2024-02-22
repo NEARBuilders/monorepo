@@ -41,3 +41,32 @@ pnpm run build
 ```
 
 If linked successfully, gateway should load changes automatically.
+
+### Using submodules
+
+From the root folder then add the submodule folder.
+
+```cmd
+git submodule add <url>
+```
+
+Now when you clone the project you simply need to init and update the submodule
+
+```cmd
+git submodule init
+git submodule update
+```
+
+Git 1.8.2 features a new option --remote
+
+```cmd
+git submodule update --remote --merge
+```
+
+will fetch the latest changes from upstream in each submodule, merge them in, and check out the latest revision of the submodule. As [the docs][1] put it:
+
+`--remote`
+
+This option is only valid for the update command. Instead of using the superproject’s recorded SHA-1 to update the submodule, use the status of the submodule’s remote-tracking branch.
+
+This is equivalent to running git pull in each submodule.
