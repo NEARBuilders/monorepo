@@ -9,7 +9,7 @@
     "dev": "concurrently \"pnpm run dev:gateway\" \"bos-workspace dev\"",
     "dev:gateway": "npx nx run-many --target=dev --projects=viewer",
     "bw": "bos-workspace",
-    "build": "concurrently \"pnpm run -r build\" \"bos-workspace build\"",
+    "build": "concurrently \"pnpm run -r build\" \"bos-workspace build\""
   },
   "devDependencies": {
     "bos-workspace": "*",
@@ -23,6 +23,7 @@
   "workspaces": [
     "gateway",
     "VM",
-    "packages/*"
+    "packages/*",
+    "node_modules/bos-workspace"
   ]
 }

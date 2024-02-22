@@ -42,6 +42,21 @@ pnpm run build
 
 If linked successfully, gateway should load changes automatically.
 
+### Using bos-workspace
+
+Clone a near account's widgets:
+
+```cmd
+pnpm run bw clone hack.near
+```
+
+If anyone updates widgets in a separate editor like jutsu.ai or near.social/edit, you can sync them locally here:
+
+```cmd
+pnpm run bw pull hack.near
+```
+
+
 ### Using submodules
 
 From the root folder then add the submodule folder.
