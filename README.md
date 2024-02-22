@@ -13,6 +13,8 @@ This repository is set up with a clone of the [NearSocial/VM](https://github.com
 - [ ] convert gateway -> near-bos-webcomponent (we probably want a next.js gateway too, something connected to Tauri, Proximity bos-template Mike.near)
 - [ ] import apps
 - [ ] simple change in the VM that can signify if using local or not
+- [ ] web4 contract
+- [ ] .github/.workflows
 
 ```
 everything
