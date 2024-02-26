@@ -1,3 +1,12 @@
 [submodule "packages/bos-workspace"]
 	path = packages/bos-workspace
 	url = https://github.com/NEARBuilders/bos-workspace
+[submodule "twitter-bot"]
+	path = twitter-bot
+	url = https://github.com/nearbuilders/twitter-bot
+[submodule "packages/twitter-bot"]
+	path = packages/twitter-bot
+	url = https://github.com/nearbuilders/twitter-bot
+[submodule "packages/create-bos-app"]
+	path = packages/create-bos-app
+	url = https://github.com/archetype-org/create-bos-app
