@@ -12,7 +12,7 @@
     "build": "concurrently \"pnpm run -r build\" \"bos-workspace build\""
   },
   "devDependencies": {
-    "bos-workspace": "*",
+    "bos-workspace": "packages/bos-workspace",
     "concurrently": "^8.2.2"
   },
   "dependencies": {
