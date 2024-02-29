@@ -2,11 +2,57 @@
 
 This repository is set up with a clone of the [NearSocial/VM](https://github.com/NearSocial/VM), a simplified clone of [near-everything/viewer](https://github.com/near-everything/viewer) gateway ([everything.dev](https://everything.dev)), and a [bos-workspace](https://github.com/nearbuilders/bos-workspace).
 
+### Prerequisites
+
+These packages utilize `pnpm` for monorepo capabilities.
+
+```
+npm install -g pnpm
+
+pnpm add -g @archetype-org/create-bos-app
+
+create-bos-app 
+--> what to name your app?
+
+cd /app
+npm install bos-workspace (so that we can update it)
+
+npm run dev
+
+npm run bw clone efiz.near
+
+```
+
+### TODO
+-[ ] combine create-bos-app to bos-workspace init
+-[ ] modify init to use zeeshan's template
+-[ ] create-bos-app needs recent version of bos-workspace
+
+### Getting started
+
+- This gateway uses git submodules and there are branches with specifc configurations
+    - dev: has bos-workspace develop branch on it 
+
+```cmd
+git submodule update --init --recursive
+
+pnpm install
+
+pnpm run create-bos-app
+pnpm run bw clone efiz.near
+```
+
+
+pnpm add -g @archetype-org/create-bos-app
+
+
+
 ### Breakdown
 
 - /VM - What is the VM?
 - /gateway - runs a local React App configured with the VM for displaying widgets served from /apps
 - /apps - widgets to be served by bos-workspace, displayed on the gateway. The root account is "urbit.near" as configured in apps/urbit/bos.config.json. Nested paths in /widget will resolve to dot notation (e.g. urbit.near/widget/page.home). Your gateway will redirect references to prioritize the widgets from local.
+/packages - has bos-workspace and create-bos-app
 
 ### TODO
 
