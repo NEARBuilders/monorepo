@@ -34,6 +34,7 @@ npm run bw clone efiz.near
     - dev: has bos-workspace develop branch on it 
 
 ```cmd
+git clone https://github.com/NEARBuilders/monorepo
 git submodule update --init --recursive
 
 pnpm install
