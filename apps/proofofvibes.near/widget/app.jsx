@@ -9,10 +9,13 @@ const { routes } = {
   type: "every.near/widget/app",
   routes: {
     home: {
-      path: "proofofvibes.near/canvas/main",
+      path: "mob.near/widget/Image",
       blockHeight: "final",
       init: {
         name: "Home",
+        image: {
+          ipfs_cid: "bafkreiaqltfma2yudatfg6ha53izmuv4ejffmoewnlhbqma6zvojf7abbi"
+        }
       },
     },
     people: {
