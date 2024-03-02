@@ -1,5 +1,4 @@
-const { Layout } = VM.require("commonterms.near/widget/components") || {
-  // I like this, but it's very generic
+const { Layout } = VM.require("devs.near/widget/Layout") || {
   Layout: () => <></>,
 };
 
@@ -16,21 +15,18 @@ if (!config) {
       param: "page",
       routes: {
         home: {
+          default: true,
           path: "efiz.near/widget/Tree",
           blockHeight: "final",
           init: {
             name: "Home",
           },
-          default: true,
-        },
-        other: {
-          path: "efiz.near/widget/Other",
-          blockHeight: "final",
-          init: {
-            name: "Other",
-          },
         },
       },
+    },
+    blocks: {
+      Header: () => <></>, // customize your header
+      Footer: () => <></>, // customize your footer
     },
   };
 } else {
@@ -89,10 +85,7 @@ const Content = styled.div`
 return (
   <CSS style={config.theme}>
     <Container>
-      <Layout
-        variant="standard"
-        blocks={config.blocks}
-      >
+      <Layout variant="standard" blocks={config.blocks}>
         <Content>
           <Router config={config.router} {...passProps} />
         </Content>
