@@ -5,7 +5,11 @@ const config = {
     background: "var(--main-color)",
     color: "var(--secondary-color)",
   },
-  blocks: {
+  layout: {
+    src: "commonterms.near/widget/components",
+    // variant: "grid",
+  },
+  blocks: { // these get passed to the layout and children
     Header: () => (
       // customize your header
       <Widget

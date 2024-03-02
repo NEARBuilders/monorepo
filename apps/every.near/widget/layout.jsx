@@ -30,6 +30,34 @@ return {
           </div>
         );
       }
+      case "grid": {
+        const { Header, Footer } = blocks;
+        return (
+          <div
+            className="layout"
+            style={{
+              display: "grid",
+              gridTemplateRows: "auto 1fr auto", 
+              height: "100%",
+            }}
+          >
+            <Header />
+            <div
+              className="content"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+                gap: "1rem",
+                padding: "1rem",
+                width: "100%",
+              }}
+            >
+              {children}
+            </div>
+            <Footer />
+          </div>
+        );
+      }
     }
   },
 };

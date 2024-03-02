@@ -1,7 +1,3 @@
-const { Layout } = VM.require("devs.near/widget/Layout") || {
-  Layout: () => <></>,
-};
-
 const { Router } = VM.require("devs.near/widget/Router") || {
   Router: () => <></>,
 };
@@ -45,6 +41,10 @@ if (!config) {
   );
 }
 
+const { Layout } = VM.require(config.layout?.src ?? "devs.near/widget/Layout") || {
+  Layout: () => <></>,
+};
+
 // While something like Theme should be in the parent...
 const CSS = styled.div`
   .container {
@@ -82,10 +82,12 @@ const Content = styled.div`
   height: 100%;
 `;
 
+// const Template = config.Template ?? (({children}) => <>{children}</>);
+
 return (
   <CSS style={config.theme}>
     <Container>
-      <Layout variant="standard" blocks={config.blocks}>
+      <Layout variant={config.layout?.variant ?? "standard"} blocks={config.blocks}>
         <Content>
           <Router config={config.router} {...passProps} />
         </Content>
