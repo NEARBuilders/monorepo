@@ -1,3 +1,5 @@
+const store = Storage.get("events-app-creator");
+
 
 return (
   <div className="m-2">
@@ -9,16 +11,23 @@ return (
         config: {
           type: "every.near/type/app",
           router: {
+            v: "2",
             param: "tab",
-            routes: routesConfigObject,
+            routes: store.router?.routes,
+          },
+          layout: {
+            src: "devs.near/widget/Layout",
+            props: {
+              variant: "standard",
+            },
           },
           blocks: {
             Header: () => (
               <Widget
                 src="${config/account}/widget/components.Navbar"
                 props={{
-                  routes: routesConfigObject,
-                  image: state.image,
+                  routes: store.router?.routes,
+                  image: store.metadata?.image,
                 }}
               />
             ),
@@ -28,9 +37,9 @@ return (
                 props={{
                   creatorId: accountId,
                   appId: projectId,
-                  twitter,
-                  telegram,
-                  github,
+                  twitter: store.metadata?.twitter,
+                  telegram: store.metadata?.telegram,
+                  github: store.metadata?.github,
                 }}
               />
             ),

@@ -34,10 +34,10 @@ const FormGroup = styled.div`
 const store = Storage.get("events-app-creator");
 
 const initState = store.metadata || {
-  image,
+  image, // TODO: background image
   name: "",
   description: "",
-  twitter: "",
+  twitter: "", // TODO: linkTree
   github: "",
   telegram: "",
 };
@@ -106,5 +106,6 @@ return (
         />
       </div>
     </div>
+    {/* TODO: Preview */}
   </Form>
 );

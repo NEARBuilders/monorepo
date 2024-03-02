@@ -1,3 +1,4 @@
+
 const { Router } = VM.require("devs.near/widget/Router") || {
   Router: () => <></>,
 };

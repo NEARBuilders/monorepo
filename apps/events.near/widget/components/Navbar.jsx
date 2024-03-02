@@ -72,7 +72,8 @@ const NavLink = ({ to, children }) => (
     to={href({
       widgetSrc: "${config/account}/widget/app",
       params: {
-        page: to,
+        page: "preview",
+        tab: to,
       },
     })}
   >
@@ -211,7 +212,8 @@ const Navbar = ({ page, routes, ...props }) => (
           to={href({
             widgetSrc: "${config/account}/widget/app",
             params: {
-              page: "home",
+              page: "preview",
+              tab: "home"
             },
           })}
         >

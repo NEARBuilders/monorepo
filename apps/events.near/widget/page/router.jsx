@@ -1,9 +1,5 @@
-const store = VM.require("${config/account}/widget/store") || {
-  set: () => console.log("no set"),
-  get: () => console.log("no get"),
-};
-
-const defaultRoutes = Social.get(`${accountId}/project/${appId}/config`) ?? {
+// Social.get(`${accountId}/project/${appId}/config`) ??
+const defaultRoutes = {
   home: {
     // maybe this can be the canvas
     init: {
@@ -35,35 +31,64 @@ const defaultRoutes = Social.get(`${accountId}/project/${appId}/config`) ?? {
   },
 };
 
+const persistance = Storage.privateGet("newRoute") || {
+  routeKey: "",
+  buttonText: "",
+  routePath: "",
+  initialProps: "",
+  createBlankPage: false,
+};
+
+const store = Storage.get("events-app-creator");
+const storeKey = "router";
+
+const initState = store[storeKey] ?? {
+  routes: props.routes ?? defaultRoutes,
+  param: "page",
+};
+
+State.init({ ...initState, ...persistance });
+
+const set = (k, v) => {
+  State.update({ [k]: v });
+  Storage.set("events-app-creator", { ...store, [storeKey]: state });
+};
+
+const persist = (k, v) => {
+  State.update({ [k]: v });
+  Storage.privateSet("newRoute", { ...state, [k]: v });
+};
+
 const [routeKey, setRouteKey] = useState("");
-const [buttonText, setButtonText] = useState(route);
-const [routePath, setRoutePath] = useState("");
-const [routes, setRoutes] = useState(props.routes ?? defaultRoutes);
+const [buttonText, setButtonText] = useState("");
 const [initialProps, setInitialProps] = useState("");
 const [createBlankPage, setCreateBlankPage] = useState(false);
-const isValid = Social.get(`${routePath}/**`);
+const isValid = Social.get(`${state.routePath}/**`);
 
 const addRoute = (newRouteKey, newRouteData) => {
-  setRoutes((prevRoutes) => ({
-    ...prevRoutes,
-    [newRouteKey]: newRouteData,
-  }));
-  Storage.set("data", "hello");
+  State.update({ routes: { ...state.routes, [newRouteKey]: newRouteData } });
+  set("routes", { ...state.routes, [newRouteKey]: newRouteData });
 };
 
 const removeRoute = (routeKey) => {
-  setRoutes((prevRoutes) => {
-    const updatedRoutes = { ...prevRoutes };
-    delete updatedRoutes[routeKey];
-    return updatedRoutes;
+  const updatedRoutes = { ...state.routes };
+  delete updatedRoutes[routeKey];
+
+  State.update({
+    routes: updatedRoutes,
   });
+  // // setRoutes((prevRoutes) => {
+  // //   const updatedRoutes = { ...prevRoutes };
+  // //   delete updatedRoutes[routeKey];
+  // //   return updatedRoutes;
+  // // });
+  set("routes", { ...state.routes, [routeKey]: undefined });
 };
 
 return (
   <div className="row">
     <div className="col-7">
       <div className="border p-3">
-        <button onClick={() => console.log(Storage.get("data"))}>get</button>
         <h5 className="m-1">Create Route</h5>
         <div className="m-2 d-flex flex-column gap-3">
           <div className="d-flex flex-row gap-3">
@@ -73,8 +98,8 @@ return (
                 id="routeKey"
                 type="text"
                 placeholder="Enter route key"
-                value={routeKey}
-                onChange={(e) => setRouteKey(e.target.value)}
+                value={state.routeKey}
+                onChange={(e) => persist("routeKey", e.target.value)}
               />
             </div>
             <div className="p-1">
@@ -83,20 +108,20 @@ return (
                 id="buttonText"
                 type="text"
                 placeholder="Enter navbar item text"
-                value={buttonText}
-                onChange={(e) => setButtonText(e.target.value)}
+                value={state.buttonText}
+                onChange={(e) => persist("buttonText", e.target.value)}
               />
             </div>
             <div className="p-1">
               <button
                 className="btn btn-dark"
-                disabled={!isValid || routeKey === ""}
+                disabled={!isValid || state.routeKey === ""}
                 onClick={() => {
                   const newRouteData = {
-                    path: routePath,
+                    path: state.routePath,
                     blockHeight: "final",
                     init: {
-                      name: buttonText || routeKey,
+                      name: state.buttonText || state.routeKey,
                     },
                   };
                   addRoute(routeKey, newRouteData);
@@ -112,17 +137,17 @@ return (
               id="routePath"
               type="text"
               placeholder="Enter widget source path"
-              value={routePath}
-              onChange={(e) => setRoutePath(e.target.value)}
-              disabled={createBlankPage}
+              value={state.routePath}
+              onChange={(e) => persist("routePath", e.target.value)}
+              disabled={state.createBlankPage}
             />
             <div className="form-check">
               <input
                 id="createBlankPage"
                 className="form-check-input"
                 type="checkbox"
-                checked={createBlankPage}
-                onChange={(e) => setCreateBlankPage(e.target.checked)}
+                checked={state.createBlankPage}
+                onChange={(e) => persist("createBlankPage", e.target.checked)}
               />
               <label className="form-check-label" htmlFor="createBlankPage">
                 Create Blank Page
@@ -135,12 +160,12 @@ return (
           <textarea
             className="form-control"
             rows="5"
-            value={initialProps}
-            onChange={(e) => setInitialProps(e.target.value)}
+            value={state.initialProps}
+            onChange={(e) => State.update({ initialProps: e.target.value })}
             onBlur={() => {
               try {
-                const parsedProps = JSON.parse(initialProps);
-                setInitialProps(JSON.stringify(parsedProps, null, 2));
+                const parsedProps = JSON.parse(state.initialProps);
+                persist("initialProps", JSON.stringify(parsedProps, null, 2));
               } catch (error) {
                 console.error("Error parsing initial props JSON:", error);
                 // Optionally handle error here
@@ -153,14 +178,14 @@ return (
     </div>
 
     <div className="col-5">
-      {Object.keys(routes).map((key) => (
+      {Object.keys(state.routes).map((key) => (
         <div
           key={key}
           className="d-flex m-2 p-1 justify-content-between align-items-center"
         >
           <Widget
             src="hack.near/widget/template.inline"
-            props={{ src: routes[key].path, hideDescription: true }}
+            props={{ src: state.routes[key].path, hideDescription: true }}
           />
           <button
             className="btn btn-outline-danger"

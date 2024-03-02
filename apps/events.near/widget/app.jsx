@@ -52,8 +52,8 @@ const config = {
           name: "Styles",
         },
       },
-      features: {
-        path: "${config/account}/widget/page.features",
+      router: {
+        path: "${config/account}/widget/page.router",
         blockHeight: "final",
         init: {
           name: "Features",
