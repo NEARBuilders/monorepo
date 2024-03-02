@@ -25,9 +25,6 @@ function Router({ config, ...passProps }) {
 
   if (!param) param = "page";
 
-  console.log("param", param);
-  console.log("passProps", passProps[param]);
-
   const defaultRoute = findDefaultRoute(routes) ?? (routes && Object.keys(routes).length && routes[Object.keys(routes)[0]]);
   const activeRoute =
     (routes && routes.hasOwnProperty(passProps[param]) && routes[passProps[param]]) ||
@@ -57,7 +54,6 @@ function Router({ config, ...passProps }) {
   } else {
     return (
       <Content key={param + JSON.stringify(activeRoute)}>
-        <p>{JSON.stringify(activeRoute)}</p>
         <Widget
           src={activeRoute.path}
           props={activeRoute.init}

@@ -123,8 +123,8 @@ const Card = ({
         >
           Join Now
         </Button>
-        {event.extendedProps.customButtonSrc && (
-          <Widget src={event.extendedProps.customButtonSrc} loading="" />
+        {event.extendedProps.customButtonCode && (
+          <Widget code={event.extendedProps.customButtonCode} loading="" />
         )}
         {handleDelete && (
           <Button

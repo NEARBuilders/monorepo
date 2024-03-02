@@ -21,11 +21,7 @@ const config = {
         props={{ routes: config.router.routes, ...passProps }}
       />
     ),
-    Footer: () => (
-      <>
-        <button onClick={() => console.log("create")}>create</button>
-      </>
-    ), // customize your footer
+    Footer: () => <></>, // customize your footer
   },
   router: {
     param: "page",
@@ -42,7 +38,7 @@ const config = {
         path: "${config/account}/widget/page.metadata",
         blockHeight: "final",
         init: {
-          name: "Metadata",
+          name: "Start",
         },
       },
       styles: {
@@ -71,7 +67,15 @@ const config = {
         blockHeight: "final",
         init: {
           name: "Preview",
-          ...props
+          ...props,
+        },
+      },
+      launch: {
+        path: "${config/account}/widget/page.launch",
+        blockHeight: "final",
+        init: {
+          name: "Launch",
+          ...props,
         },
       },
     },

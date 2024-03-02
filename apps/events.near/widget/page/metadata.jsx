@@ -50,62 +50,65 @@ const set = (k, v) => {
 };
 
 return (
-  <Form>
-    <FormGroup>
-      <Label>name</Label>
-      <Input
-        type="text"
-        value={state.name}
-        onChange={(e) => set("name", e.target.value)}
-      />
-    </FormGroup>
-    <FormGroup>
-      <Label>description</Label>
-      <textarea
-        className="form-control mb-3"
-        rows={5}
-        value={state.description}
-        onChange={(e) => set("description", e.target.value)}
-      />
-    </FormGroup>
-    <h5 className="mb-2">Logo</h5>
-    <div className="p-1 mb-3">
-      <Widget
-        src="mob.near/widget/ImageEditorTabs"
-        props={{
-          image: state.image,
-          onChange: (image) => set("image", image),
-        }}
-      />
-    </div>
-    <div className="m-2 mt-3">
-      <h5 className="m-1">Links</h5>
+  <>
+    <h3>describe your app</h3>
+    <Form>
+      <FormGroup>
+        <Label>name</Label>
+        <Input
+          type="text"
+          value={state.name}
+          onChange={(e) => set("name", e.target.value)}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Label>description</Label>
+        <textarea
+          className="form-control mb-3"
+          rows={5}
+          value={state.description}
+          onChange={(e) => set("description", e.target.value)}
+        />
+      </FormGroup>
+      <h5 className="mb-2">Logo</h5>
+      <div className="p-1 mb-3">
+        <Widget
+          src="mob.near/widget/ImageEditorTabs"
+          props={{
+            image: state.image,
+            onChange: (image) => set("image", image),
+          }}
+        />
+      </div>
+      <div className="m-2 mt-3">
+        <h5 className="m-1">Links</h5>
 
-      <div className="gap-3 p-1">
-        <input
-          type="text"
-          placeholder="https://twitter.com/nearbuilders"
-          value={state.twitter}
-          onChange={(e) => set("twitter", e.target.value)}
-        />
+        <div className="gap-3 p-1">
+          <input
+            type="text"
+            placeholder="https://twitter.com/nearbuilders"
+            value={state.twitter}
+            onChange={(e) => set("twitter", e.target.value)}
+          />
+        </div>
+        <div className="gap-3 p-1">
+          <input
+            type="text"
+            placeholder="https://github.com/nearbuilders"
+            value={state.github}
+            onChange={(e) => set("github", e.target.value)}
+          />
+        </div>
+        <div className="gap-3 p-1">
+          <input
+            type="text"
+            placeholder="https://t.me/+0yT1bqsQHxkzMDkx"
+            value={state.telegram}
+            onChange={(e) => set("telegram", e.target.value)}
+          />
+        </div>
       </div>
-      <div className="gap-3 p-1">
-        <input
-          type="text"
-          placeholder="https://github.com/nearbuilders"
-          value={state.github}
-          onChange={(e) => set("github", e.target.value)}
-        />
-      </div>
-      <div className="gap-3 p-1">
-        <input
-          type="text"
-          placeholder="https://t.me/+0yT1bqsQHxkzMDkx"
-          value={state.telegram}
-          onChange={(e) => set("telegram", e.target.value)}
-        />
-      </div>
-    </div>
-    {/* TODO: Preview */}
-  </Form>
+      {/* TODO: Preview */}
+    </Form>
+  </>
 );
