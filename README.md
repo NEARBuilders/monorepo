@@ -47,6 +47,19 @@ Then change "appAccount" to "account"
 pnpm add -g @archetype-org/create-bos-app
 ```
 
+
+### Deploying to web4
+
+```cmd
+cd near-bos-webcomponent
+yarn run web4:deploy (configure in package.json)
+```
+
+Need to have a web4 contract installed, be able to replace it
+https://github.com/vgrichina/web4
+
+
+
 ### TODO
 -[ ] combine create-bos-app to bos-workspace init
 -[ ] modify init to use zeeshan's template
