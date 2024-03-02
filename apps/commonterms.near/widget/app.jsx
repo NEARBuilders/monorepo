@@ -15,7 +15,7 @@ const config = {
     Header: () => (
       // customize your header
       <Widget
-        src="commonterms.near/widget/components.Navbar"
+        src="${config/account}/widget/components.Navbar"
         props={{ routes: config.router.routes, ...passProps }}
       />
     ),

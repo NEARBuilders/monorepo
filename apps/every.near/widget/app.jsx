@@ -124,7 +124,7 @@ const { routes } = {
   },
 };
 
-const { AppLayout } = VM.require("every.near/widget/layout") || {
+const { AppLayout } = VM.require("every.near/widget/layout@111042531") || {
   AppLayout: () => <>Layout loading...</>,
 };
 
