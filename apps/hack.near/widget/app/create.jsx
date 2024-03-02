@@ -301,6 +301,7 @@ return (
     <div className="m-2">
       <h5>Preview</h5>
       <hr />
+      <Widget src="every.near/widget/app.view" props={{  }} />
       <div className="m-2">
         <Widget
           src="hack.near/widget/Navbar.preview"

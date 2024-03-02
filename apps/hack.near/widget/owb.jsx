@@ -72,7 +72,7 @@ const ActionIcons = styled.div`
 
 const IconContainer = styled.div`
   position: absolute;
-    margin-left: 10px;
+  margin-left: 10px;
 
   margin-right: 10px;
   top: 50%;
@@ -127,6 +127,6 @@ return (
         </ActionButton>
       </ActionIcons>
     </Toolbar>
-    <Widget src={path || "hack.near/widget/thing"} />
+    <Widget src={"every.near/widget/thing"} props={{ path }} />
   </BrowserUI>
 );

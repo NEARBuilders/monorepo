@@ -7,12 +7,30 @@ const Content = styled.div`
   height: 100%;
 `;
 
-function Router({ active, routes, PageNotFound, debug, routerParam }) {
+function findDefaultRoute(routesObject) {
+  const routeKey = routesObject && Object.keys(routesObject).find(key => {
+      const route = routesObject[key];
+      return route.default === true;
+  });
+
+  if (routeKey) {
+      return routesObject[routeKey];
+  } else {
+      return null;
+  }
+}
+
+function Router({ config, ...passProps }) {
+  const { routes, PageNotFound, debug, param } = config;
+
+  const defaultRoute = findDefaultRoute(routes);
+  const activeRoute =
+    (routes && routes.hasOwnProperty(passProps[param]) && routes[passProps[param]]) ||
+    defaultRoute;
+
   if (!PageNotFound) PageNotFound = () => <p>404 Not Found</p>;
 
-  let currentRoute = routes[active];
-
-  if (!currentRoute) {
+  if (!activeRoute) {
     // Handle 404 or default case for unknown routes
     return <PageNotFound />;
   }
@@ -26,17 +44,17 @@ function Router({ active, routes, PageNotFound, debug, routerParam }) {
   // we may want to convert this to a widget for that purpose, to manage state?
   if (debug) {
     return (
-      <div key={active}>
-        <pre>{JSON.stringify(currentRoute, null, 2)}</pre>
+      <div key={JSON.stringify(activeRoute)}>
+        <pre>{JSON.stringify(activeRoute, null, 2)}</pre>
         <pre>{JSON.stringify(props, null, 2)}</pre>
       </div>
     );
   } else {
     return (
-      <Content key={active}>
+      <Content key={JSON.stringify(activeRoute)}>
         <Widget
-          src={currentRoute.path}
-          props={currentRoute.init}
+          src={activeRoute.path}
+          props={activeRoute.init}
           loading={<div style={{ height: "100%", width: "100%" }} />}
         />
       </Content>

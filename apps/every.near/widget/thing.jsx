@@ -334,6 +334,7 @@ function Thing() {
     }
   }
   // DEFAULT:
+  // if it is a 
   return <p>The type: {type} is not yet supported.</p>;
 }
 
