@@ -77,12 +77,7 @@ const removeRoute = (routeKey) => {
   State.update({
     routes: updatedRoutes,
   });
-  // // setRoutes((prevRoutes) => {
-  // //   const updatedRoutes = { ...prevRoutes };
-  // //   delete updatedRoutes[routeKey];
-  // //   return updatedRoutes;
-  // // });
-  set("routes", { ...state.routes, [routeKey]: undefined });
+  set("routes", updatedRoutes);
 };
 
 return (
@@ -116,16 +111,17 @@ return (
             <div className="p-1">
               <button
                 className="btn btn-dark"
-                disabled={!isValid || state.routeKey === ""}
+                disabled={(!isValid && state.createBlankPage) || state.routeKey === ""}
                 onClick={() => {
                   const newRouteData = {
                     path: state.routePath,
                     blockHeight: "final",
                     init: {
                       name: state.buttonText || state.routeKey,
+                      ...(JSON.parse(state.initialProps) || {}),
                     },
                   };
-                  addRoute(routeKey, newRouteData);
+                  addRoute(state.routeKey, newRouteData);
                 }}
               >
                 Add Route

@@ -1,5 +1,8 @@
+const store = Storage.get("events-app-creator");
+
+console.log("store", store);
 const launch = () => {
-  console.log("launch");
+  console.log(launch, JSON.stringify(store));
 };
 
 return (

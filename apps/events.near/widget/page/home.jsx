@@ -29,6 +29,6 @@ const Button = styled.button`
 
 return (
   <LandingPageContainer>
-    <Title>Welcome to the Event App Creator</Title>
+    <Title>event.app.create</Title>
   </LandingPageContainer>
 );
