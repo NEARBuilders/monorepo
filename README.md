@@ -1,6 +1,6 @@
-# Monorepo
+# the monorepo
 
-## Prerequisites
+## before you begin
 
 These packages utilize `pnpm` for monorepo capabilities.
 
@@ -8,19 +8,26 @@ These packages utilize `pnpm` for monorepo capabilities.
 npm install -g pnpm
 ```
 
-Then install packages:
+Then, we need to init the git submodules:
 
+```cmd
+pnpm run init
 ```
 
+and install dependencies:
+
+```cmd
+pnpm install
 ```
 
-## Getting Started
+// Merge this to main
+
+## get started
 
 To modify existing widgets in the /apps directory,
 
 ```cmd
-git submodule update --init --recursive
-
+pnpm run init 
 pnpm install
 
 pnpm run dev
@@ -48,7 +55,7 @@ pnpm add -g @archetype-org/create-bos-app
 ```
 
 
-### Deploying to web4
+## deploy to web4
 
 1. create a subaccount
 
