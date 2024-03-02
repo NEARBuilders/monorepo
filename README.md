@@ -50,13 +50,31 @@ pnpm add -g @archetype-org/create-bos-app
 
 ### Deploying to web4
 
+1. create a subaccount
+
 ```cmd
-cd near-bos-webcomponent
-yarn run web4:deploy (configure in package.json)
+near account create-account fund-myself web4.efiz.near '1 NEAR' autogenerate-new-keypair save-to-keychain sign-as efiz.near network-config mainnet sign-with-keychain send
 ```
 
-Need to have a web4 contract installed, be able to replace it
-https://github.com/vgrichina/web4
+2. deploy minimum contract
+
+```cmd
+cd packages/web4-deploy/data
+
+near contract deploy web4.efiz.near use-file web4-min.wasm without-init-call network-config mainnet sign-with-keychain send
+
+3. deploy near-bos-webcomponent
+
+make changes to set default widget you want
+
+```cmd
+cd near-bos-webcomponent
+yarn build
+
+near account export-account web4.efiz.near using-private-key network-config mainnet
+
+NEAR_ENV=mainnet NEAR_SIGNER_KEY=${PRIVATE_KEY} npx web4-deploy dist web4.efiz.near --nearfs
+```
 
 
 
