@@ -1,32 +1,36 @@
 # Monorepo
 
-This repository is set up with a clone of the [NearSocial/VM](https://github.com/NearSocial/VM), a simplified clone of [near-everything/viewer](https://github.com/near-everything/viewer) gateway ([everything.dev](https://everything.dev)), and a [bos-workspace](https://github.com/nearbuilders/bos-workspace).
-
-### Prerequisites
+## Prerequisites
 
 These packages utilize `pnpm` for monorepo capabilities.
 
-```
+```cmd
 npm install -g pnpm
+```
 
-pnpm add -g @archetype-org/create-bos-app
-
-create-bos-app 
---> what to name your app?
-
-cd /app
-npm install bos-workspace (so that we can update it)
-
-npm run dev
-
-npm run bw clone efiz.near
+Then install packages:
 
 ```
 
+```
 
-### Cloning
+## Getting Started
 
-If you'd like to clone accounts:
+To modify existing widgets in the /apps directory,
+
+```cmd
+git submodule update --init --recursive
+
+pnpm install
+
+pnpm run dev
+```
+
+This will install packages, then start a local gateway hooked up to the VM, and a default gateway serving your local widgets.
+
+To extend the monorepo, you can either:
+
+1. "clone" your near account
 
 ```cmd
 cd packages/bos-workspace
@@ -35,31 +39,18 @@ cd ../..
 ./packages/bos-workspace/bin/bos-workspace clone every.near
 ```
 
+Then change "appAccount" to "account"
+
+2. use create-bos-app to initialize a new workspace
+
+```cmd
+pnpm add -g @archetype-org/create-bos-app
+```
 
 ### TODO
 -[ ] combine create-bos-app to bos-workspace init
 -[ ] modify init to use zeeshan's template
 -[ ] create-bos-app needs recent version of bos-workspace
-
-### Getting started
-
-- This gateway uses git submodules and there are branches with specifc configurations
-    - dev: has bos-workspace develop branch on it 
-
-```cmd
-git clone https://github.com/NEARBuilders/monorepo
-git submodule update --init --recursive
-
-pnpm install
-
-pnpm run create-bos-app
-pnpm run bw clone efiz.near
-```
-
-
-pnpm add -g @archetype-org/create-bos-app
-
-
 
 ### Breakdown
 
