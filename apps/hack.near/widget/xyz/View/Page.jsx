@@ -1,0 +1,1 @@
+return (<Widget src="efiz.near/widget/TaggedWidgets" props={{hashtag: props.hashtag}} />);

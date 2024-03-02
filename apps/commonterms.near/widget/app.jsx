@@ -1,7 +1,10 @@
-const { Layout, Router } = VM.require("${config/account}/widget/components") || {
+const { Layout } = VM.require("${config/account}/widget/components") || { // I like this, but it's very generic
   Layout: () => <></>,
-  Router: () => <></>,
 };
+
+const { Router } = VM.require("devs.near/widget/Router") || {
+  Router: () => <></>
+}
 
 const { page, tab, ...passProps } = props;
 
@@ -9,34 +12,31 @@ const { routes } = {
   type: "app",
   routes: {
     home: {
-      path: "proofofvibes.near/widget/Vibes.DAO.main",
+      path: "${config/account}/widget/page.home",
       blockHeight: "final",
       init: {
         name: "Home",
       },
     },
-    people: {
-      path: "nearefi.near/widget/ReFi.DAO.members",
+    new: {
+      path: "${config/account}/widget/page.new",
       blockHeight: "final",
       init: {
-        name: "People",
-        daoId: "proofofvibes.sputnik-dao-near",
-        humanRequiredForSbt: true,
-        registry: "registry.i-am-human.near",
+        name: "New",
       },
     },
-    places: {
-      path: "efiz.near/widget/Mapbox",
+    view: {
+      path: "${config/account}/widget/page.view",
       blockHeight: "final",
       init: {
-        name: "Places",
+        name: "View",
       },
     },
-    things: {
-      path: "mintbase.near/widget/nft-marketplace",
+    end: {
+      path: "${config/account}/widget/page.end",
       blockHeight: "final",
       init: {
-        name: "Things",
+        name: "End",
       },
     },
   },
@@ -97,7 +97,7 @@ return (
         }}
       >
         <Content>
-          <Router active={page} routes={routes} />
+          <Router active={page} routes={routes} routerParam="page" />
         </Content>
       </Layout>
     </Container>

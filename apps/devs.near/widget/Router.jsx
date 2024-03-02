@@ -17,6 +17,13 @@ function Router({ active, routes, PageNotFound, debug, routerParam }) {
     return <PageNotFound />;
   }
 
+  // An improvement may be to "lazy load", e.g. load all widgets at once and only "display" the active one
+  // potentionally add a "lazy: true" prop to the route object
+
+  // for each route, if lazy, load the widget and store it in a map
+  // set display for the active route
+
+  // we may want to convert this to a widget for that purpose, to manage state?
   if (debug) {
     return (
       <div key={active}>
