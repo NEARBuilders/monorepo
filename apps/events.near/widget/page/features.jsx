@@ -1,9 +1,15 @@
+const store = VM.require("${config/account}/widget/store") || {
+  set: () => console.log("no set"),
+  get: () => console.log("no get"),
+};
+
 const defaultRoutes = Social.get(`${accountId}/project/${appId}/config`) ?? {
-  home: { // maybe this can be the canvas
+  home: {
+    // maybe this can be the canvas
     init: {
       name: "Home",
     },
-    required: true
+    required: true,
   },
   events: {
     path: "events.near/widget/events.Calendar",
@@ -11,7 +17,7 @@ const defaultRoutes = Social.get(`${accountId}/project/${appId}/config`) ?? {
     init: {
       name: "Calendar",
     },
-    required: true
+    required: true,
   },
   social: {
     path: "hack.near/widget/page.feed",
@@ -42,6 +48,7 @@ const addRoute = (newRouteKey, newRouteData) => {
     ...prevRoutes,
     [newRouteKey]: newRouteData,
   }));
+  Storage.set("data", "hello");
 };
 
 const removeRoute = (routeKey) => {
@@ -56,6 +63,7 @@ return (
   <div className="row">
     <div className="col-7">
       <div className="border p-3">
+        <button onClick={() => console.log(Storage.get("data"))}>get</button>
         <h5 className="m-1">Create Route</h5>
         <div className="m-2 d-flex flex-column gap-3">
           <div className="d-flex flex-row gap-3">

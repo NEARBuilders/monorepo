@@ -15,7 +15,7 @@ return (
           blocks: {
             Header: () => (
               <Widget
-                src="hack.near/widget/Navbar.preview"
+                src="${config/account}/widget/components.Navbar"
                 props={{
                   routes: routesConfigObject,
                   image: state.image,

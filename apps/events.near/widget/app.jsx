@@ -72,7 +72,7 @@ const config = {
         init: {
           name: "Preview",
         },
-      }
+      },
     },
   },
 };

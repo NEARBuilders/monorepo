@@ -31,12 +31,23 @@ const FormGroup = styled.div`
   flex-direction: column;
 `;
 
-const [name, setName] = useState("");
-const [description, setDescription] = useState("");
+const store = Storage.get("events-app-creator");
 
-State.init({
+const initState = store.metadata || {
   image,
-});
+  name: "",
+  description: "",
+  twitter: "",
+  github: "",
+  telegram: "",
+};
+
+State.init(initState);
+
+const set = (k, v) => {
+  State.update({ [k]: v });
+  Storage.set("events-app-creator", { ...store, metadata: state });
+};
 
 return (
   <Form>
@@ -44,8 +55,8 @@ return (
       <Label>name</Label>
       <Input
         type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={state.name}
+        onChange={(e) => set("name", e.target.value)}
       />
     </FormGroup>
     <FormGroup>
@@ -53,8 +64,8 @@ return (
       <textarea
         className="form-control mb-3"
         rows={5}
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        value={state.description}
+        onChange={(e) => set("description", e.target.value)}
       />
     </FormGroup>
     <h5 className="mb-2">Logo</h5>
@@ -63,9 +74,37 @@ return (
         src="mob.near/widget/ImageEditorTabs"
         props={{
           image: state.image,
-          onChange: (image) => State.update({ image }),
+          onChange: (image) => set("image", image),
         }}
       />
+    </div>
+    <div className="m-2 mt-3">
+      <h5 className="m-1">Links</h5>
+
+      <div className="gap-3 p-1">
+        <input
+          type="text"
+          placeholder="https://twitter.com/nearbuilders"
+          value={state.twitter}
+          onChange={(e) => set("twitter", e.target.value)}
+        />
+      </div>
+      <div className="gap-3 p-1">
+        <input
+          type="text"
+          placeholder="https://github.com/nearbuilders"
+          value={state.github}
+          onChange={(e) => set("github", e.target.value)}
+        />
+      </div>
+      <div className="gap-3 p-1">
+        <input
+          type="text"
+          placeholder="https://t.me/+0yT1bqsQHxkzMDkx"
+          value={state.telegram}
+          onChange={(e) => set("telegram", e.target.value)}
+        />
+      </div>
     </div>
   </Form>
 );
