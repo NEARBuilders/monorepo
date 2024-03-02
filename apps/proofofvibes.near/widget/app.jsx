@@ -37,6 +37,7 @@ const { routes } = {
       blockHeight: "final",
       init: {
         name: "Things",
+        contracts: ["vibes.mintbase1.near"]
       },
     },
     // end: {

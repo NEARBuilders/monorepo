@@ -23,6 +23,19 @@ npm run bw clone efiz.near
 
 ```
 
+
+### Cloning
+
+If you'd like to clone accounts:
+
+```cmd
+cd packages/bos-workspace
+git checkout main
+cd ../..
+./packages/bos-workspace/bin/bos-workspace clone every.near
+```
+
+
 ### TODO
 -[ ] combine create-bos-app to bos-workspace init
 -[ ] modify init to use zeeshan's template

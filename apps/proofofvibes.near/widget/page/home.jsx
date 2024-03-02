@@ -1,4 +1,4 @@
-return <img src="https://ipfs.near.social/ipfs/bafkreiaqltfma2yudatfg6ha53izmuv4ejffmoewnlhbqma6zvojf7abbi" height="100% />;
+return <img src="https://ipfs.near.social/ipfs/bafkreiaqltfma2yudatfg6ha53izmuv4ejffmoewnlhbqma6zvojf7abbi" height="100%" />;
 
 // const { href } = VM.require("buildhub.near/widget/lib.url") || {
 //   href: () => {},
