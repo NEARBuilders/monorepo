@@ -59,6 +59,13 @@ const config = {
           name: "Features",
         },
       },
+      button: {
+        path: "${config/account}/widget/page.button",
+        blockHeight: "final",
+        init: {
+          name: "Button",
+        },
+      },
       preview: {
         path: "${config/account}/widget/page.preview",
         blockHeight: "final",
