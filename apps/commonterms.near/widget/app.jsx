@@ -1,13 +1,15 @@
 const config = {
-  theme: {
+  theme: { // add key values to define colors
     "--main-color": "blue",
     "--secondary-color": "red",
     background: "var(--main-color)",
     color: "var(--secondary-color)",
   },
   layout: {
-    src: "commonterms.near/widget/components",
-    // variant: "grid",
+    src: "devs.near/widget/Layout", // input
+    props: { //textarea for json
+      variant: "standard",
+    }
   },
   blocks: { // these get passed to the layout and children
     Header: () => (

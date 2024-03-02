@@ -87,7 +87,7 @@ const Content = styled.div`
 return (
   <CSS style={config.theme}>
     <Container>
-      <Layout variant={config.layout?.variant ?? "standard"} blocks={config.blocks}>
+      <Layout {...config.layout?.props ?? { variant: "standard"}} blocks={config.blocks}>
         <Content>
           <Router config={config.router} {...passProps} />
         </Content>
