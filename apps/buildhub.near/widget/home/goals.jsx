@@ -1,246 +1,217 @@
-const GoalsContainer = styled.div`
-  width: 100%;
+const { Tag } = VM.require("buildhub.near/widget/components") || {
+  Tag: () => <></>,
+};
+
+const Container = styled.div`
+  padding: 32px 48px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 3.125rem;
-
-  position: relative;
-
-  padding: 6.25rem 3rem;
+  gap: 50px;
 
   @media screen and (max-width: 768px) {
-    padding: 6.25rem 1.5rem;
+    padding: 32px 20px;
   }
 `;
 
-const SectionPill = ({ title, icon }) => {
-  const Pill = styled.div`
-    display: flex;
-    padding: 8px 12px;
-    justify-content: center;
-    align-items: center;
-    gap: 4px;
+const HeadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
 
-    border-radius: 100px;
-    border: 1px solid var(--Yellow, #ffaf51);
-    background: rgba(255, 189, 52, 0.2);
-
-    color: var(--Yellow, #ffaf51);
+  h2 {
+    color: var(--paleta-escolhida-ffffff, #fff);
     text-align: center;
-    font-size: 12px;
-    font-style: normal;
+    font-family: "Poppins", sans-serif;
+
+    font-size: 48px;
+    line-height: 56px; /* 116.667% */
+    text-wrap: balance;
+
+    span {
+      color: var(--paleta-escolhida-ffffff, #fff);
+      font-weight: 600;
+    }
+  }
+
+  h3 {
+    color: var(--b-0-b-0-b-0, var(--White-50, #b0b0b0));
+    font-size: 24px;
     font-weight: 500;
-    line-height: normal;
-    text-transform: capitalize;
-
-    width: max-content;
-  `;
-
-  return (
-    <Pill>
-      <span>{title}</span> {icon}
-    </Pill>
-  );
-};
-
-const MagicIcon = (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="13"
-    viewBox="0 0 12 13"
-    fill="none"
-  >
-    <g clipPath="url(#clip0_1459_202)">
-      <path
-        d="M3 11.25L10.5 3.75L9 2.25L1.5 9.75L3 11.25Z"
-        stroke="#ffaf51"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7.5 3.75L9 5.25"
-        stroke="#ffaf51"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M4.5 2.25C4.5 2.51522 4.60536 2.76957 4.79289 2.95711C4.98043 3.14464 5.23478 3.25 5.5 3.25C5.23478 3.25 4.98043 3.35536 4.79289 3.54289C4.60536 3.73043 4.5 3.98478 4.5 4.25C4.5 3.98478 4.39464 3.73043 4.20711 3.54289C4.01957 3.35536 3.76522 3.25 3.5 3.25C3.76522 3.25 4.01957 3.14464 4.20711 2.95711C4.39464 2.76957 4.5 2.51522 4.5 2.25Z"
-        stroke="#ffaf51"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M9.5 7.25C9.5 7.51522 9.60536 7.76957 9.79289 7.95711C9.98043 8.14464 10.2348 8.25 10.5 8.25C10.2348 8.25 9.98043 8.35536 9.79289 8.54289C9.60536 8.73043 9.5 8.98478 9.5 9.25C9.5 8.98478 9.39464 8.73043 9.20711 8.54289C9.01957 8.35536 8.76522 8.25 8.5 8.25C8.76522 8.25 9.01957 8.14464 9.20711 7.95711C9.39464 7.76957 9.5 7.51522 9.5 7.25Z"
-        stroke="#ffaf51"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </g>
-    <defs>
-      <clipPath id="clip0_1459_202">
-        <rect
-          width="12"
-          height="12"
-          fill="white"
-          transform="translate(0 0.75)"
-        />
-      </clipPath>
-    </defs>
-  </svg>
-);
-
-const Title = styled.h2`
-  color: #fff;
-  text-align: center;
-  font-size: 2.5rem;
-  font-style: normal;
-  font-weight: 500;
-  line-height: 120%; /* 48px */
-  margin: 0;
-
-  span.yellow {
-    color: var(--Yellow, #ffaf51);
+    line-height: 140%; /* 33.6px */
+    font-family: "InterVariable", sans-serif;
+    margin: 0;
+    text-align: center;
   }
 
   @media screen and (max-width: 768px) {
-    font-size: 1.5rem;
+    h2 {
+      font-size: 24px;
+      line-height: 130%; /* 31.2px */
+    }
+
+    h3 {
+      font-size: 14px;
+    }
   }
 `;
 
-const GridContainer = styled.div`
+const GoalsContainer = styled.div`
   display: grid;
+  gap: 32px;
+
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.5rem;
 
   @media screen and (max-width: 768px) {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 20px;
   }
 `;
 
-const GridItem = ({ tag, title, description, image, isFirst }) => {
-  const Card = styled.div`
+const GridItem = styled.div`
+  display: flex;
+  grid-column: span 1 / span 2;
+  padding: 32px 56px;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 0 0;
+
+  border-radius: 16px;
+  border: 1px solid var(--White-50, #b0b0b0);
+  background: var(--000000, #000);
+
+  &.first {
     display: flex;
-    max-height: 635.75px;
-    padding: 2.5rem;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    ${isFirst && "grid-column: 1 / span 2;"}
-    ${isFirst && "flex-direction: row-reverse;"}
+    grid-column: span 2 / span 2;
+    padding: 32px 56px;
 
     border-radius: 16px;
-    background: var(--bg-2, #23242b);
-    border: 1px solid #51ffea;
+    border: 1px solid var(--Gradient-1, #4a21a5);
+    background: var(--000000, #000);
 
-    div {
-      flex: 0 1 auto;
+    .heading {
+      font-size: 40px;
     }
 
-    div.content {
-      width: 100%;
-      ${isFirst && "max-width: 50%;"}
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    overflow: hidden;
+  }
 
-      span.tag {
-        color: var(--Yellow, #ffaf51);
+  .category {
+    color: var(--eca-227, #eca227);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 160%; /* 22.4px */
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    margin: 0;
+  }
 
-        /* Other/CAPS */
-        font-size: 0.875rem;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 160%; /* 22.4px */
-        text-transform: uppercase;
-      }
+  .heading {
+    color: var(--paleta-escolhida-ffffff, #fff);
+    font-size: 32px;
+    font-weight: 400;
+    font-family: "Poppins", sans-serif;
+    margin: 0%;
+    z-index: 2;
 
-      h3 {
-        color: var(--white-100, #fff);
+    span {
+      color: var(--b-0-b-0-b-0, #b0b0b0);
+    }
+  }
 
-        /* H3/Large */
-        font-size: 1.5rem;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 140%; /* 33.6px */
-        margin: 0;
-      }
+  .content {
+    margin: 0;
+    color: var(--b-0-b-0-b-0, var(--White-50, #b0b0b0));
+    font-size: 16px;
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%; /* 22.4px */
+    z-index: 2;
+  }
 
-      p {
-        color: var(--white-50, rgba(255, 255, 255, 0.7));
+  @media screen and (max-width: 768px) {
+    padding: 24px 16px;
+    gap: 8px;
 
-        /* Body/Large */
-        font-size: 1rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 170%; /* 27.2px */
-        margin: 0;
+    &.first {
+      grid-column: span 1 / span 2;
+      padding: 24px 16px;
+
+      img {
+        height: 50%;
+        width: 50%;
+        object-fit: cover;
+        z-index: 1;
       }
     }
 
-    div.image img {
-      width: 100%;
-      max-width: 600px;
-      max-height: 400px;
-      height: 100%;
-      object-fit: cover;
+    .category {
+      font-size: 10px;
     }
 
-    @media screen and (max-width: 768px) {
-      flex-direction: column;
-      div.content {
-        max-width: 100%;
-      }
+    .heading {
+      font-size: 22px !important;
     }
-  `;
-  return (
-    <Card>
-      <div className="image">
-        <img src={image} alt="Item Image" />
-      </div>
-      <div className="content">
-        <span className="tag">{tag}</span>
-        <h3>{title}</h3>
-        <p>{description}</p>
-      </div>
-    </Card>
-  );
-};
+
+    .content {
+      font-size: 12px;
+      line-height: 140%;
+    }
+  }
+`;
 
 const Goals = () => {
   return (
-    <GoalsContainer className="container-xl">
-      <SectionPill title="Goals" icon={MagicIcon} />
-      <Title>
-        Primary <span className="yellow">Objectives</span>
-      </Title>
-      <GridContainer>
-        <GridItem
-          title="Support Builders"
-          tag="Development"
-          description="The core mission is to build open-source infrastructure and web applications for everyone. By creating systems to reward useful contributions, we can grow successful projects that solve problems and generate sustainable value."
-          image="https://ipfs.near.social/ipfs/bafkreiezfdf2y4zz3nm2dgfhfs2lq3wjuwm647vdn75c3rdwidru4l3ufy"
-          isFirst
-        />
-        <GridItem
-          title="Learn Together"
-          tag="Education"
-          description="We are cultivating a worldwide community of builders who are motivated to help others. Members can earn badges and get necessary resources for training potential contributors."
-          image="https://ipfs.near.social/ipfs/bafkreigdor4dtdj5sfq6g2m6wvsfihx72psb7sc5wtx6mbp7g7kxetrpsi"
-        />
-        <GridItem
-          title="Community"
-          tag="Facilitate Governance"
-          description="We introduced on-chain feedback channels to gather input from participants. This will be crucial for understanding common issues, optimizing documentation, and improving quality of experience."
-          image="https://ipfs.near.social/ipfs/bafkreiggevnacu45yy72igqlmq4gkdyea2jj7hswvolonjoqzvifdf57nq"
-        />
-      </GridContainer>
-    </GoalsContainer>
+    <Container className="container-xl">
+      <HeadingContainer>
+        <Tag label="Goals" />
+        <h2>
+          NEAR Builders Cooperative is a support system, owned and governed{" "}
+          <span>by members of Build DAO.</span>
+        </h2>
+        <h3>
+          Charting the Course: Primary Objectives Guiding the DAO's Mission
+        </h3>
+      </HeadingContainer>
+      <GoalsContainer>
+        <GridItem className="first position-relative">
+          <h6 className="category">Development</h6>
+          <h4 className="heading">
+            Support <span>Builders</span>
+          </h4>
+          <p className="content">
+            The core mission is to build open-source infrastructure and web
+            applications for everyone. By creating systems to reward useful
+            contributions, we can grow successful projects that solve problems
+            and generate sustainable value.
+          </p>
+          <img
+            src="https://ipfs.near.social/ipfs/bafkreictjgfbnpeytoy6mnbkpjajsxfp5bznh7uclyrtff4jcr4klkwtvm"
+            className="position-absolute top-0 end-0"
+          />
+        </GridItem>
+        <GridItem>
+          <h6 className="category">Education</h6>
+          <h4 className="heading">Learn Together</h4>
+          <p className="content">
+            We are cultivating a worldwide community of builders who are
+            motivated to help others. Members can earn badges and get necessary
+            resources for training potential contributors.
+          </p>
+        </GridItem>
+        <GridItem>
+          <h6 className="category">Community</h6>
+          <h4 className="heading">Facilitate Governance</h4>
+          <p className="content">
+            We introduced on-chain feedback channels to gather input from
+            participants. This will be crucial for understanding common issues,
+            optimizing documentation, and improving quality of experience.
+          </p>
+        </GridItem>
+      </GoalsContainer>
+    </Container>
   );
 };
 
