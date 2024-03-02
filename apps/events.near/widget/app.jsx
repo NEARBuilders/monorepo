@@ -71,6 +71,7 @@ const config = {
         blockHeight: "final",
         init: {
           name: "Preview",
+          ...props
         },
       },
     },

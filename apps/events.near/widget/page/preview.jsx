@@ -1,6 +1,6 @@
 const store = Storage.get("events-app-creator");
 
-
+console.log("preview, props", props);
 return (
   <div className="m-2">
     <h5>Preview</h5>
@@ -8,10 +8,10 @@ return (
     <Widget
       src="every.near/widget/app.view"
       props={{
+        ...props,
         config: {
           type: "every.near/type/app",
           router: {
-            v: "2",
             param: "tab",
             routes: store.router?.routes,
           },
@@ -28,6 +28,7 @@ return (
                 props={{
                   routes: store.router?.routes,
                   image: store.metadata?.image,
+                  param: "tab",
                 }}
               />
             ),

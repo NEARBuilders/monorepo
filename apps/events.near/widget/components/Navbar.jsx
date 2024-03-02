@@ -1,6 +1,4 @@
-const { Button } = VM.require(
-  "${config/account}/widget/components"
-) || {
+const { Button } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
 };
 
@@ -66,20 +64,40 @@ const { href } = VM.require("buildhub.near/widget/lib.url") || {
   href: () => {},
 };
 
-const NavLink = ({ to, children }) => (
-  <Link
-    key={to}
-    to={href({
-      widgetSrc: "${config/account}/widget/app",
-      params: {
-        page: "preview",
-        tab: to,
-      },
-    })}
-  >
-    {children}
-  </Link>
-);
+const { param } = props;
+
+const NavLink = ({ to, children }) => {
+  if (param === "tab") {
+    return (
+      <Link
+        key={to}
+        to={href({
+          widgetSrc: "${config/account}/widget/app",
+          params: {
+            page: "preview",
+            tab: to,
+          },
+        })}
+      >
+        {children}
+      </Link>
+    );
+  } else {
+    return (
+      <Link
+        key={to}
+        to={href({
+          widgetSrc: "${config/account}/widget/app",
+          params: {
+            page: to,
+          },
+        })}
+      >
+        {children}
+      </Link>
+    );
+  }
+};
 
 const [showMenu, setShowMenu] = useState(false);
 const toggleDropdown = () => setShowMenu(!showMenu);
@@ -173,7 +191,7 @@ const StyledDropdown = styled.div`
   }
 `;
 
-const Navbar = ({ page, routes, ...props }) => (
+const Navbar = ({ page, param, routes, ...props }) => (
   <StyledNavbar>
     <div className="d-flex align-items-center justify-content-between w-100">
       <DesktopNavigation className="container-xl">
@@ -212,8 +230,7 @@ const Navbar = ({ page, routes, ...props }) => (
           to={href({
             widgetSrc: "${config/account}/widget/app",
             params: {
-              page: "preview",
-              tab: "home"
+              [param]: "home",
             },
           })}
         >
