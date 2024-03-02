@@ -1,26 +1,3 @@
-const GlowLight = styled.span`
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 10px;
-  background-color: ${(props) => (props.isConnected ? "green" : "red")};
-  box-shadow: 0 0 8px ${(props) => (props.isConnected ? "green" : "red")};
-`;
-
-const Label = styled.span`
-  font-size: 16px;
-`;
-
-const StatusIndicator = ({ isConnected, label }) => {
-  return (
-    <div className="d-flex align-items-center">
-      <GlowLight isConnected={isConnected} />
-      <Label>{label}</Label>
-    </div>
-  );
-};
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;

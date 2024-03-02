@@ -47,7 +47,7 @@ return (
     <Section>
       <div>
         <SectionTitle>Configuration</SectionTitle>
-        <StatusIndicator isConnected={Urbit} label={"VM Configured"} />
+        <StatusIndicator isConnected={context.widgetSrc} label={"VM Configured"} />
       </div>
     </Section>
   </Container>

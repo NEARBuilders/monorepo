@@ -1,3 +1,4 @@
+import Big from "big.js";
 import React, {
   useCallback,
   useContext,
@@ -5,26 +6,22 @@ import React, {
   useLayoutEffect,
   useState,
 } from "react";
+import { ErrorBoundary } from "react-error-boundary";
+import uuid from "react-uuid";
+import { useAccountId } from "../data/account";
+import { useCache } from "../data/cache";
 import { useNear } from "../data/near";
-import ConfirmTransactions from "./ConfirmTransactions";
-import VM from "../vm/vm";
 import {
-  deepCopy,
-  deepEqual,
   ErrorFallback,
-  isObject,
-  isString,
-  isFunction,
   Loading,
   TGas,
   computeSrcOrCode,
+  deepCopy,
+  deepEqual
 } from "../data/utils";
-import { ErrorBoundary } from "react-error-boundary";
-import { useCache } from "../data/cache";
+import VM from "../vm/vm";
 import { CommitModal } from "./Commit";
-import { useAccountId } from "../data/account";
-import Big from "big.js";
-import uuid from "react-uuid";
+import ConfirmTransactions from "./ConfirmTransactions";
 import { EthersProviderContext } from "./ethers";
 
 export const Widget = React.forwardRef((props, forwardedRef) => {
