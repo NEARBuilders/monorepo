@@ -51,9 +51,5 @@ return (
         </Button>
       </Content>
     </HeaderContainer>
-    <Widget
-      src="hack.near/widget/Footer"
-      props={{ creatorId: props.accountId, appId: props.projectId }}
-    />
   </>
 );

@@ -23,7 +23,9 @@ function findDefaultRoute(routesObject) {
 function Router({ config, ...passProps }) {
   const { routes, PageNotFound, debug, param } = config;
 
-  const defaultRoute = findDefaultRoute(routes);
+  if (!param) param = "page";
+
+  const defaultRoute = findDefaultRoute(routes) ?? (routes && Object.keys(routes).length && routes[Object.keys(routes)[0]]);
   const activeRoute =
     (routes && routes.hasOwnProperty(passProps[param]) && routes[passProps[param]]) ||
     defaultRoute;

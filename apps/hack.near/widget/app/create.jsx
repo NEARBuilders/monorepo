@@ -48,17 +48,17 @@ State.init({
 
 const isValid = Social.get(`${routePath}/**`);
 
-const handleCreate = () => {
-  const routesConfigObject = Object.keys(routes).reduce((obj, routeKey) => {
-    const route = routes[routeKey];
-    obj[routeKey] = {
-      path: route.path,
-      blockHeight: route.blockHeight,
-      init: route.init,
-    };
-    return obj;
-  }, {});
+const routesConfigObject = Object.keys(routes).reduce((obj, routeKey) => {
+  const route = routes[routeKey];
+  obj[routeKey] = {
+    path: route.path,
+    blockHeight: route.blockHeight,
+    init: route.init,
+  };
+  return obj;
+}, {});
 
+const handleCreate = () => {
   Social.set({
     widget: {
       [projectId]: {
@@ -132,7 +132,7 @@ const Container = styled.div`
 `;
 
 const Logo = styled.img`
-height: 55px;
+  height: 55px;
   object-fit: cover;
   margin: 8px;
 `;
@@ -301,44 +301,39 @@ return (
     <div className="m-2">
       <h5>Preview</h5>
       <hr />
-      <Widget src="every.near/widget/app.view" props={{  }} />
-      <div className="m-2">
-        <Widget
-          src="hack.near/widget/Navbar.preview"
-          props={{
-            routes,
-            onRouteChange: handleRouteChange,
-            image: state.image,
-          }}
-        />{" "}
-      </div>
-      <Container>
-        <Content>
-          <Logo src={imageUrl} />
-          <h3 style={{ fontFamily: "Courier" }}>
-            <b>Construction Site</b>
-          </h3>
-          <Button variant="primary">
-            <a
-              style={{
-                textDecoration: "none",
-                color: "#000",
-              }}
-              href={props.buttonLink ?? "/hack.near/widget/app.create"}
-            >
-              <b>{props.buttonText ?? "BUILD"}</b>
-            </a>
-          </Button>
-        </Content>
-      </Container>
       <Widget
-        src="hack.near/widget/Footer.preview"
+        src="every.near/widget/app.view"
         props={{
-          creatorId: accountId,
-          appId: projectId,
-          twitter,
-          telegram,
-          github,
+          config: {
+            type: "every.near/type/app",
+            router: {
+              param: "page",
+              routes: routesConfigObject,
+            },
+            blocks: {
+              Header: () => (
+                <Widget
+                  src="hack.near/widget/Navbar.preview"
+                  props={{
+                    routes: routesConfigObject,
+                    image: state.image,
+                  }}
+                />
+              ),
+              Footer: () => (
+                <Widget
+                  src="hack.near/widget/Footer.preview"
+                  props={{
+                    creatorId: accountId,
+                    appId: projectId,
+                    twitter,
+                    telegram,
+                    github,
+                  }}
+                />
+              ),
+            },
+          },
         }}
       />
     </div>
