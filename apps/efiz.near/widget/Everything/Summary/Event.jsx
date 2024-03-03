@@ -1,0 +1,1 @@
+const data= props.data; return (<><p>Configure <a href="/#/edit/efiz.near/widget/Everything.Summary.Event">this widget</a> to attractively display your data below:</p><p>{JSON.stringify(data)}</p></>);

@@ -11,7 +11,7 @@ const events = props.events || [];
 
 const customCSS = `
   :root {
-    --fc-page-bg-color: var(--bg-color, #0b0c14);
+    --fc-page-bg-color: var(--bg-color, #000000);
     --fc-border-color: var(--stroke-color, rgba(255, 255, 255, 0.20));
     --fc-today-bg-color: #424451;
   }
@@ -55,7 +55,7 @@ const customCSS = `
 
   .fc-day-other {
     .fc-daygrid-day-frame {
-      background: var(--bg-1, #0b0c14);
+      background: var(--bg-1, #000000);
     }
   }
 
@@ -129,6 +129,29 @@ const hashtags =
     return it;
   }) ?? [];
 
+let eventAuthor;
+let eventApp;
+let eventType;
+let eventKey;
+if (data) {
+  eventAuthor = data?.extendedProps?.key?.split("/")[0] ?? "";
+  eventApp = data?.extendedProps?.key?.split("/")[1] ?? "";
+  eventType = data?.extendedProps?.key?.split("/")[2] ?? "";
+  eventKey = data?.extendedProps?.key?.split("/")[3] ?? "";
+}
+
+const handleDelete = () => {
+  Social.set({
+    [eventApp]: {
+      [eventType]: {
+        [eventKey]: {
+          "": null,
+        },
+      },
+    },
+  });
+};
+
 return (
   <>
     <iframe
@@ -146,16 +169,22 @@ return (
     {data && (
       <Modal open={showModal} onOpenChange={toggleModal} title={data.title}>
         <div style={{ maxWidth: 600 }}>
-          <div className="mb-3 d-flex align-items-center justify-content-between flex-wrap">
+          <div className="mb-3 d-flex align-items-center gap-5 flex-wrap">
             <span>
-              <i className="bi bi-calendar"></i> Start Date Time:{" "}
+              <h5 style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                START
+              </h5>
+              <i className="bi bi-calendar"></i>
               {new Date(data.start).toLocaleDateString("en-us", {
                 hour: "2-digit",
                 minute: "numeric",
               })}
             </span>
             <span>
-              <i className="bi bi-calendar"></i> End Date Time:{" "}
+              <h5 style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                END
+              </h5>
+              <i className="bi bi-calendar"></i>
               {new Date(data.end).toLocaleDateString("en-us", {
                 hour: "2-digit",
                 minute: "numeric",
@@ -164,43 +193,51 @@ return (
           </div>
           {data.extendedProps.description && (
             <div className="mb-3">
-              <h5>DESCRIPTION</h5>
+              <h5 style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                DESCRIPTION
+              </h5>
               <p>{data.extendedProps.description}</p>
             </div>
           )}
           {organizers.length > 0 && (
             <div className="mb-3">
-              <h5>ORGANIZERS</h5>
-              {organizers.map((organizer) => {
-                const organizerProfile = Social.getr(`${organizer}/profile`);
-                return (
-                  <span className="d-flex align-items-center gap-1">
-                    <Widget
-                      src="mob.near/widget/Image"
-                      loading=""
-                      props={{
-                        image: organizerProfile.image,
-                        fallbackUrl:
-                          "https://ipfs.near.social/ipfs/bafkreibas66y6ewop5ix2n6mgybpjz6epg7opqvcplmm5jw4jlhdik5nhe",
-                        style: {
-                          width: 24,
-                          height: 24,
-                          borderRadius: 12,
-                          objectFit: "cover",
-                        },
-                      }}
-                    />
-                    {organizerProfile.name ??
-                      organizers[0] ??
-                      "No name profile"}
-                  </span>
-                );
-              })}
+              <h5 style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                ORGANIZERS
+              </h5>
+              <div className="d-flex align-items-center gap-3 flex-wrap">
+                {organizers.map((organizer) => {
+                  const organizerProfile = Social.getr(`${organizer}/profile`);
+                  return (
+                    <span className="d-flex align-items-center gap-1">
+                      <Widget
+                        src="mob.near/widget/Image"
+                        loading=""
+                        props={{
+                          image: organizerProfile.image,
+                          fallbackUrl:
+                            "https://ipfs.near.social/ipfs/bafkreibas66y6ewop5ix2n6mgybpjz6epg7opqvcplmm5jw4jlhdik5nhe",
+                          style: {
+                            width: 24,
+                            height: 24,
+                            borderRadius: 12,
+                            objectFit: "cover",
+                          },
+                        }}
+                      />
+                      {organizerProfile.name ??
+                        organizers[0] ??
+                        "No name profile"}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
           )}
           {hashtags.length > 0 && (
             <div className="mb-3">
-              <h5>HASHTAGS</h5>
+              <h5 style={{ fontSize: 12, fontWeight: 700, marginBottom: 8 }}>
+                HASHTAGS
+              </h5>
               <div className="d-flex align-items-center gap-2 flex-wrap">
                 {hashtags.map((tag) => (
                   <Hashtag key={tag}>{tag}</Hashtag>
@@ -215,7 +252,7 @@ return (
             </span>
           )}
         </div>
-        <div>
+        <div className="d-flex align-items-center gap-3">
           <Button
             noLink={true}
             href={`${data?.url}`}
@@ -224,6 +261,18 @@ return (
           >
             Join Now
           </Button>
+          {data.extendedProps.customButtonSrc && (
+            <Widget src={data.extendedProps.customButtonSrc} loading="" />
+          )}
+          {eventAuthor === context.accountId && (
+            <Button
+              onClick={handleDelete}
+              style={{ background: "#ff2b2b" }}
+              variant="primary"
+            >
+              Delete Event
+            </Button>
+          )}
         </div>
       </Modal>
     )}

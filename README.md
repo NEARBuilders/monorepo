@@ -1,12 +1,107 @@
-# Monorepo
+# the monorepo
 
-This repository is set up with a clone of the [NearSocial/VM](https://github.com/NearSocial/VM), a simplified clone of [near-everything/viewer](https://github.com/near-everything/viewer) gateway ([everything.dev](https://everything.dev)), and a [bos-workspace](https://github.com/nearbuilders/bos-workspace).
+## before you begin
+
+These packages utilize `pnpm` for monorepo capabilities.
+
+```cmd
+npm install -g pnpm
+```
+
+Then, we need to init the git submodules:
+
+```cmd
+pnpm run init
+```
+
+and install dependencies:
+
+```cmd
+pnpm install
+```
+
+// Merge this to main
+
+## get started
+
+To modify existing widgets in the /apps directory,
+
+```cmd
+pnpm run init 
+pnpm install
+
+pnpm run dev
+```
+
+This will install packages, then start a local gateway hooked up to the VM, and a default gateway serving your local widgets.
+
+To extend the monorepo, you can either:
+
+1. "clone" your near account
+
+```cmd
+cd packages/bos-workspace
+git checkout main
+cd ../..
+./packages/bos-workspace/bin/bos-workspace clone every.near
+```
+
+Then change "appAccount" to "account"
+
+2. use create-bos-app to initialize a new workspace
+
+```cmd
+pnpm add -g @archetype-org/create-bos-app
+```
+
+
+## deploy to web4
+
+(needs [bos-cli-rs](https://github.com/bos-cli-rs/bos-cli-rs))
+
+1. create a subaccount
+
+```cmd
+near account create-account fund-myself web4.alice.near '1 NEAR' autogenerate-new-keypair save-to-keychain sign-as alice.near network-config mainnet sign-with-keychain send
+```
+
+2. deploy [minimum web4 contract](https://github.com/vgrichina/web4-min-contract)
+
+```cmd
+cd packages/web4-deploy/data
+
+near contract deploy web4.alice.near use-file web4-min.wasm without-init-call network-config mainnet sign-with-keychain send
+```
+
+3. change default widgetSrc in `near-bos-webcomponent/src/App#24` and build
+
+```cmd
+cd near-bos-webcomponent
+yarn build
+```
+
+4. export keys to use in web4 deploy of `dist`
+
+```cmd
+near account export-account web4.alice.near using-private-key network-config mainnet
+
+NEAR_ENV=mainnet NEAR_SIGNER_KEY=${PRIVATE_KEY} npx web4-deploy dist web4.alice.near --nearfs
+```
+
+5. done, app deployed at alice.near.page
+
+### TODO
+
+- [ ] combine create-bos-app to bos-workspace init
+- [ ] modify init to use zeeshan's template
+- [ ] create-bos-app needs recent version of bos-workspace
 
 ### Breakdown
 
 - /VM - What is the VM?
 - /gateway - runs a local React App configured with the VM for displaying widgets served from /apps
 - /apps - widgets to be served by bos-workspace, displayed on the gateway. The root account is "urbit.near" as configured in apps/urbit/bos.config.json. Nested paths in /widget will resolve to dot notation (e.g. urbit.near/widget/page.home). Your gateway will redirect references to prioritize the widgets from local.
+/packages - has bos-workspace and create-bos-app
 
 ### TODO
 

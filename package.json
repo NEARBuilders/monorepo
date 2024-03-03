@@ -1,18 +1,19 @@
 {
-  "name": "urbit-playground",
+  "name": "monorepo",
   "version": "0.0.0",
   "description": "",
   "author": "",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"pnpm run dev:gateway\" \"bos-workspace dev\"",
+    "init": "git submodule update --init --recursive",
+    "dev": "concurrently \"pnpm run dev:gateway\" \"pnpm run bw workspace dev\"",
     "dev:gateway": "npx nx run-many --target=dev --projects=viewer",
-    "bw": "bos-workspace",
-    "build": "concurrently \"pnpm run -r build\" \"bos-workspace build\""
+    "bw": "./node_modules/bos-workspace/bin/bw.js",
+    "build": "concurrently \"pnpm run -r build\" \"pnpm run bw build\""
   },
   "devDependencies": {
-    "bos-workspace": "*",
+    "bos-workspace": "workspace:*",
     "concurrently": "^8.2.2"
   },
   "dependencies": {
@@ -23,7 +24,6 @@
   "workspaces": [
     "gateway",
     "VM",
-    "packages/*",
-    "node_modules/bos-workspace"
+    "packages/*"
   ]
 }

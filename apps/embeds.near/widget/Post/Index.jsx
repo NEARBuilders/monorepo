@@ -24,6 +24,20 @@ const item = {
   blockHeight,
 };
 
+const [edit, setEdit] = useState(false);
+
+const modifications = Social.index("modify", item, { limit: 1, order: "desc" });
+
+if (modifications.length) {
+  const modification = modifications[0].value;
+  if (modification.type === "edit") {
+    content = modification.value;
+    console.log("content", content);
+  } else if (modification.type === "delete") {
+    return <></>;
+  }
+}
+
 const link =
   props.link ??
   props.fullPostLink ??
@@ -32,26 +46,45 @@ const link =
 const Wrapper = styled.div`
   margin: 0 -12px;
   line-height: normal;
-  
+
   .post {
     position: relative;
     padding: 12px;
     padding-bottom: 4px;
     display: flex;
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-size: 16px !important;
     }
-    @media(max-width: 767px) {
+    @media (max-width: 767px) {
       font-size: 15px !important;
-      h1, h2, h3, h4, h5, h6 {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         font-size: 15px !important;
       }
     }
 
-    h1, h2, h3, h4, h5, h6, strong, b {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    strong,
+    b {
       font-weight: 500 !important;
     }
-    ol, ul, dl {
+    ol,
+    ul,
+    dl {
       margin-bottom: 0.5rem;
       white-space: inherit;
     }
@@ -69,16 +102,18 @@ const Wrapper = styled.div`
       min-width: 5em;
     }
 
-    .table>:not(caption)>*>* {
-      padding: .3rem;
+    .table > :not(caption) > * > * {
+      padding: 0.3rem;
     }
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.03);
       .expand-post {
-        background-image : linear-gradient(to bottom, 
-                      rgba(0,0,0, 0), 
-                      rgba(247.35,247.35,247.35, 1) 25%);
+        background-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0),
+          rgba(247.35, 247.35, 247.35, 1) 25%
+        );
       }
     }
 
@@ -108,11 +143,11 @@ const Wrapper = styled.div`
     background-color: #ddd;
     z-index: -1;
   }
-  
+
   .left {
     margin-right: 12px;
-    min-width: 40px;
-    width: 40px;
+    min-width: 60px;
+    width: 60px;
     overflow: hidden;
   }
   .right {
@@ -137,24 +172,36 @@ const Wrapper = styled.div`
   }
 `;
 
-const contentWidget = (
-  <Widget
-    key="content"
-    loading={
-      <div
-        className="overflow-hidden w-100 placeholder-glow"
-        style={{ minHeight: "100px" }}
+const Content = () => {
+  if (edit) {
+    return (
+      <Widget
+        src="embeds.near/widget/Post.Editor"
+        loading=""
+        props={{ ...content, item }}
       />
-    }
-    src="embeds.near/widget/Post.Content"
-    props={{
-      content,
-      raw,
-      truncateContent: props.truncateContent,
-      noEmbed: props.noEmbed,
-    }}
-  />
-);
+    );
+  } else {
+    return (
+      <Widget
+        key="content"
+        loading={
+          <div
+            className="overflow-hidden w-100 placeholder-glow"
+            style={{ minHeight: "100px" }}
+          />
+        }
+        src="embeds.near/widget/Post.Content"
+        props={{
+          content,
+          raw,
+          truncateContent: props.truncateContent,
+          noEmbed: props.noEmbed,
+        }}
+      />
+    );
+  }
+};
 
 return (
   <Wrapper
@@ -173,6 +220,27 @@ return (
           src="mob.near/widget/MainPage.N.Post.Left"
           props={{ accountId, groupId }}
         />
+        {context.accountId === accountId && (
+          <>
+            <button onClick={() => setEdit(!edit)}>Edit</button>
+            <button
+              onClick={() =>
+                Social.set({
+                  index: {
+                    modify: JSON.stringify({
+                      key: item,
+                      value: {
+                        type: "delete",
+                      },
+                    }),
+                  },
+                })
+              }
+            >
+              Delete
+            </button>
+          </>
+        )}
       </div>
       <div className="right">
         <Widget
@@ -195,10 +263,10 @@ return (
             href={fullPostLink}
             className="text-decoration-none link-dark"
           >
-            {contentWidget}
+            <Content />
           </a>
         ) : (
-          contentWidget
+          <Content />
         )}
         {props.customButtons ? (
           props.customButtons

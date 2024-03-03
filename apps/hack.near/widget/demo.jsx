@@ -1,0 +1,2 @@
+const accountId = props.accountId ?? context.accountId; const ownerId = props.ownerId ?? "hack.near"; const pageId = props.pageId ?? "community.page"; return <Widget src="hack.near/widget/community.page" props={{ accountId, communityId: "multi.near", contractId: "mint.sharddog.near", h1: "Communities",
+        h2: "DAO", tagline: "Open Governance", mainColor: "#000", buttonText: "Start Here", link: "https://near.org" }} />

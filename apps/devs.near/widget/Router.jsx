@@ -1,70 +1,67 @@
-const routes = props.routes;
-if (!routes) {
-  routes = [];
-}
-const Navigator = props.Navigator;
+const { href } = VM.require("buildhub.near/widget/lib.url") || {
+  href: () => "/",
+};
 
-State.init({
-  CurrentWidget: null,
-});
+const Content = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
-function init() {
-  if (!state.CurrentWidget) {
-    // TODO: check from local storage or props
-    const initialSrc = Object.values(props.routes)[0].src;
-    State.update({ CurrentWidget: initialSrc });
-    // () => <Widget src={initialSrc.path} blockHeight={initialSrc.blockHeight} />
+function findDefaultRoute(routesObject) {
+  const routeKey = routesObject && Object.keys(routesObject).find(key => {
+      const route = routesObject[key];
+      return route.default === true;
+  });
+
+  if (routeKey) {
+      return routesObject[routeKey];
+  } else {
+      return null;
   }
 }
 
-init();
+function Router({ config, ...passProps }) {
+  const { routes, PageNotFound, debug, param } = config;
 
-// Function to handle navigation
-function handleNavigate(newRoute, passProps) {
-  const currentSrc = props.routes[newRoute]?.src;
-  State.update({ CurrentWidget: currentSrc, passProps });
+  if (!param) param = "page";
+
+  const defaultRoute = findDefaultRoute(routes) ?? (routes && Object.keys(routes).length && routes[Object.keys(routes)[0]]);
+  const activeRoute =
+    (routes && routes.hasOwnProperty(passProps[param]) && routes[passProps[param]]) ||
+    defaultRoute;
+
+  if (!PageNotFound) PageNotFound = () => <p>404 Not Found</p>;
+
+  if (!activeRoute) {
+    // Handle 404 or default case for unknown routes
+    return <PageNotFound />;
+  }
+
+  // An improvement may be to "lazy load", e.g. load all widgets at once and only "display" the active one
+  // potentionally add a "lazy: true" prop to the route object
+
+  // for each route, if lazy, load the widget and store it in a map
+  // set display for the active route
+
+  // we may want to convert this to a widget for that purpose, to manage state?
+  if (debug) {
+    return (
+      <div key={JSON.stringify(activeRoute)}>
+        <pre>{JSON.stringify(activeRoute, null, 2)}</pre>
+        <pre>{JSON.stringify(props, null, 2)}</pre>
+      </div>
+    );
+  } else {
+    return (
+      <Content key={JSON.stringify(activeRoute)}>
+        <Widget
+          src={activeRoute.path}
+          props={activeRoute.init}
+          loading={<div style={{ height: "100%", width: "100%" }} />}
+        />
+      </Content>
+    );
+  }
 }
 
-// const activePage = pages.find((p) => p.active);
-
-// const navigate = (v, params) => {
-//   State.update({ page: v, project: params?.project });
-//   const url = Url.construct("#/devs.near/widget/home", params);
-//   Storage.set("url", url);
-// };
-
-function RouterLink({ to, children, passProps }) {
-  return (
-    <span
-      onClick={() => handleNavigate(to, passProps)}
-      key={"link-to-" + to}
-      style={{ cursor: "pointer" }}
-    >
-      {children}
-    </span>
-  );
-}
-
-// Render the current widget or a default message if the route is not found
-return (
-  <div>
-    {/* Navigation buttons -- this should be passed to a Navigator widget */}
-    <div>
-      <Widget
-        src={Navigator.src.path || "devs.near/widget/Navigator"}
-        blockHeight={Navigator.src.blockHeight || "final"}
-        props={{ RouterLink, routes: props.routes }}
-      />
-    </div>
-    {/** This could already render all of the children, but just put them as display none (lazy loading) */}
-    {state.CurrentWidget ? (
-      <Widget
-        src={state.CurrentWidget.path}
-        blockHeight={state.CurrentWidget.blockHeight}
-        props={{ RouterLink, ...state.passProps }}
-      />
-    ) : (
-      <div>{JSON.stringify(state.CurrentWidget)}</div>
-    )}
-  </div>
-);
+return { Router };

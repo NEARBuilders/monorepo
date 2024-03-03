@@ -10,3 +10,12 @@
 [submodule "packages/create-bos-app"]
 	path = packages/create-bos-app
 	url = https://github.com/archetype-org/create-bos-app
+[submodule "near-bos-webcomponent"]
+	path = near-bos-webcomponent
+	url = https://github.com/petersalomonsen/near-bos-webcomponent
+[submodule "web4-min-contract"]
+	path = web4-min-contract
+	url = https://github.com/vgrichina/web4-min-contract.git
+[submodule "packages/web4-deploy"]
+	path = packages/web4-deploy
+	url = https://github.com/vgrichina/web4-deploy.git
