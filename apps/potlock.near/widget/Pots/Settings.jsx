@@ -1,16 +1,14 @@
 // get settings
-const { ownerId } = props;
-
 return (
   <>
     <Widget
-      src={`${ownerId}/widget/Pots.NavOptionsMobile`}
+      src={"${config/account}/widget/Pots.NavOptionsMobile"}
       props={{
         ...props,
       }}
     />
     <Widget
-      src={`${ownerId}/widget/Pots.ConfigForm`}
+      src={"${config/account}/widget/Pots.ConfigForm"}
       props={{
         ...props,
       }}

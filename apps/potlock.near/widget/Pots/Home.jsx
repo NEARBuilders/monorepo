@@ -1,5 +1,3 @@
-const { ownerId } = props;
-
 let PotFactorySDK =
   VM.require("potlock.near/widget/SDK.potfactory") ||
   (() => ({
@@ -14,7 +12,9 @@ const potFactoryConfig = PotFactorySDK.getConfig();
 const pots = PotFactorySDK.getPots();
 const canDeploy = PotFactorySDK.canUserDeployPot(context.accountId);
 
-const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
+const loraCss = fetch(
+  "https://fonts.googleapis.com/css2?family=Lora&display=swap"
+).body;
 
 const Container = styled.div`
   display: flex;
@@ -142,7 +142,7 @@ return (
       <Row>
         {canDeploy && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "primary",
               text: "Deploy Pot",
@@ -151,7 +151,7 @@ return (
           />
         )}
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             type: canDeploy ? "secondary" : "primary",
             text: "Learn More",
@@ -177,7 +177,7 @@ return (
     <containerStyle>
       {state.pots.map((pot) => (
         <Widget
-          src={`${ownerId}/widget/Pots.Card`}
+          src={"${config/account}/widget/Pots.Card"}
           // loading={
           //   <div
           //     style={{
@@ -201,13 +201,13 @@ return (
 
     {pots && (
       <Widget
-        src={`${ownerId}/widget/Project.ListSection`}
+        src={"${config/account}/widget/Project.ListSection"}
         props={{
           ...props,
           items: pots,
           renderItem: (pot) => (
             <Widget
-              src={`${ownerId}/widget/Pots.Card`}
+              src={"${config/account}/widget/Pots.Card"}
               props={{
                 ...props,
                 potId: pot.id,

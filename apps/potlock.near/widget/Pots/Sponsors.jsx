@@ -1,8 +1,7 @@
 // get donations
 const { potId, potDetail } = props;
 
-const { ownerId, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
@@ -25,18 +24,23 @@ if (!state.allDonations) {
         SUPPORTED_FTS.NEAR.fromIndivisible(a.total_amount)
     );
     // add % share of total to each donation
-    const total = SUPPORTED_FTS.NEAR.fromIndivisible(potDetail.matching_pool_balance);
+    const total = SUPPORTED_FTS.NEAR.fromIndivisible(
+      potDetail.matching_pool_balance
+    );
     donations = donations.map((donation) => {
       return {
         ...donation,
-        percentage_share: (SUPPORTED_FTS.NEAR.fromIndivisible(donation.net_amount) / total) * 100,
+        percentage_share:
+          (SUPPORTED_FTS.NEAR.fromIndivisible(donation.net_amount) / total) *
+          100,
       };
     });
     State.update({ donations });
   });
 }
 
-if (!state.donations) return <div class="spinner-border text-secondary" role="status" />;
+if (!state.donations)
+  return <div class="spinner-border text-secondary" role="status" />;
 
 const columns = ["Rank", "Donor", "Amount", "Percentage"];
 
@@ -148,14 +152,14 @@ const maxRowItemLength = 14;
 return (
   <>
     <Widget
-      src={`${ownerId}/widget/Pots.NavOptionsMobile`}
+      src={"${config/account}/widget/Pots.NavOptionsMobile"}
       props={{
         ...props,
       }}
     />
     <Container>
       <Widget
-        src={`${ownerId}/widget/Pots.SponsorsBoard`}
+        src={"${config/account}/widget/Pots.SponsorsBoard"}
         props={{
           donations: state.donations.slice(0, 6),
           base_currency: base_currency,
@@ -173,9 +177,12 @@ return (
           <Row style={{ padding: "12px" }}>No donations to display</Row>
         ) : (
           state.donations.map((donation, index) => {
-            const { donor_id, total_amount, donated_at, percentage_share } = donation;
+            const { donor_id, total_amount, donated_at, percentage_share } =
+              donation;
             const totalDonationAmount =
-              SUPPORTED_FTS[base_currency.toUpperCase()].fromIndivisible(total_amount);
+              SUPPORTED_FTS[base_currency.toUpperCase()].fromIndivisible(
+                total_amount
+              );
 
             return (
               <Row key={index}>
@@ -184,7 +191,7 @@ return (
                 </RowItem>
                 <RowItem style={{ width: "22%" }}>
                   <Widget
-                    src={`${ownerId}/widget/Project.ProfileImage`}
+                    src={"${config/account}/widget/Project.ProfileImage"}
                     props={{
                       ...props,
                       accountId: donor_id,

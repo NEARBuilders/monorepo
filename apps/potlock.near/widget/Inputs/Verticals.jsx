@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 /** @type {{text:string;value:string}[]} */
 const options = [
   { text: "DeSci", value: "desci" },
@@ -62,7 +60,7 @@ const mapOptionToValue = (option) => {
 
 return (
   <Widget
-    src={`${ownerId}/widget/Inputs.MultiSelect`}
+    src={"${config/account}/widget/Inputs.MultiSelect"}
     props={{
       label: "Verticals *",
       noLabel: props.noLabel,

@@ -8,9 +8,8 @@ const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback } = VM.requ
   yoctosToUsdWithFallback: () => "",
 };
 
-const { NADA_BOT_URL, ownerId, ToDo, MAX_DONATION_MESSAGE_LENGTH, SUPPORTED_FTS, ONE_TGAS } =
+const { NADA_BOT_URL, ToDo, MAX_DONATION_MESSAGE_LENGTH, SUPPORTED_FTS, ONE_TGAS } =
   VM.require("potlock.near/widget/constants") || {
-    ownerId: "",
     ONE_TGAS: 0,
     NADA_BOT_URL: "",
     ToDo: "",
@@ -26,8 +25,11 @@ const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
 const publicRoundDonations = PotSDK.getPublicRoundDonations(potId);
 
 const { calcNetDonationAmount, filterByDate } = VM.require(
-  `${ownerId}/widget/Components.DonorsUtils`
-);
+  "${config/account}/widget/Components.DonorsUtils"
+) || {
+  calcNetDonationAmount: () => "",
+  filterByDate: () => []
+};
 // console.log("pot detail: ", potDetail);
 
 const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
@@ -444,7 +446,7 @@ return (
       <Row style={{ gap: "24px" }}>
         {/* Application tag */}
         <Widget
-          src={`${ownerId}/widget/Pots.Tag`}
+          src={"${config/account}/widget/Pots.Tag"}
           props={{
             ...props,
             backgroundColor: applicationOpen ? "#EFFEFA" : "#EBEBEB",
@@ -454,7 +456,7 @@ return (
             textStyle: { fontWeight: 500, marginLeft: applicationOpen ? "8px" : "0px" },
             preElements: applicationOpen ? (
               <Widget
-                src={`${ownerId}/widget/Components.Indicator`}
+                src={"${config/account}/widget/Components.Indicator"}
                 props={{
                   colorOuter: "#CAFDF3",
                   colorInner: "#33DDCB",
@@ -466,7 +468,7 @@ return (
         />
         {/* Matching round tag */}
         <Widget
-          src={`${ownerId}/widget/Pots.Tag`}
+          src={"${config/account}/widget/Pots.Tag"}
           props={{
             ...props,
             backgroundColor: publicRoundOpen ? "#F7FDE8" : "#EBEBEB",
@@ -476,7 +478,7 @@ return (
             textStyle: { fontWeight: 500, marginLeft: publicRoundOpen ? "8px" : "0px" },
             preElements: publicRoundOpen ? (
               <Widget
-                src={`${ownerId}/widget/Components.Indicator`}
+                src={"${config/account}/widget/Components.Indicator"}
                 props={{
                   colorOuter: "#D7F5A1",
                   colorInner: "#9ADD33",
@@ -523,7 +525,7 @@ return (
             >
               <Row>
                 <Widget
-                  src={`${ownerId}/widget/Components.Indicator`}
+                  src={"${config/account}/widget/Components.Indicator"}
                   props={{
                     colorOuter: "#CAFDF3",
                     colorInner: "#33DDCB",
@@ -554,7 +556,7 @@ return (
             >
               <Row>
                 <Widget
-                  src={`${ownerId}/widget/Components.Indicator`}
+                  src={"${config/account}/widget/Components.Indicator"}
                   props={{
                     colorOuter: "#D7F5A1",
                     colorInner: "#9ADD33",
@@ -576,7 +578,7 @@ return (
         {publicRoundClosed && (
           <Row>
             <Widget
-              src={`${ownerId}/widget/Components.Indicator`}
+              src={"${config/account}/widget/Components.Indicator"}
               props={{
                 colorOuter: "#DBDBDB",
                 colorInner: "#A6A6A6",
@@ -589,7 +591,7 @@ return (
       <Row>
         {canApply && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "primary",
               // text: registryRequirementMet ? "Apply to pot" : "Register to Apply",
@@ -604,7 +606,7 @@ return (
         )}
         {now < public_round_end_ms && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: publicRoundOpen || canApply ? "secondary" : "primary",
               text: "Fund matching pool",
@@ -615,7 +617,7 @@ return (
         )}
         {publicRoundOpen && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "primary",
               text: sybilRequirementMet ? "Donate to projects" : "Verify to Donate",
@@ -629,7 +631,7 @@ return (
         )}
         {canPayoutsBeSet && (
           <Widget
-            src={`${ownerId}/widget/Pots.CalculateSetPayoutsButton`}
+            src={"${config/account}/widget/Pots.CalculateSetPayoutsButton"}
             props={{
               ...props,
               potDetail,
@@ -638,7 +640,7 @@ return (
         )}
         {canPayoutsBeProcessed && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               ...props,
               type: "primary",
@@ -670,7 +672,7 @@ return (
       </RefLink>
     </Column>
     <Widget
-      src={`${ownerId}/widget/Components.Modal`}
+      src={"${config/account}/widget/Components.Modal"}
       props={{
         ...props,
         isModalOpen: state.isMatchingPoolModalOpen,
@@ -684,7 +686,7 @@ return (
                 : `(Min. ${yoctosToNear(min_matching_pool_donation_amount)})`}
             </ModalTitle>
             <Widget
-              src={`${ownerId}/widget/Inputs.Text`}
+              src={"${config/account}/widget/Inputs.Text"}
               props={{
                 inputStyle: {
                   background: "#FAFAFA",
@@ -701,7 +703,7 @@ return (
               }}
             />
             <Widget
-              src={`${ownerId}/widget/Inputs.TextArea`}
+              src={"${config/account}/widget/Inputs.TextArea"}
               props={{
                 noLabel: true,
                 inputRows: 5,
@@ -728,7 +730,7 @@ return (
             {/* <props.ToDo>Display fees breakdown and amount after fees</props.ToDo> */}
             <Row>
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "bypassProtocolFeeSelector",
                   checked: state.bypassProtocolFee,
@@ -744,7 +746,7 @@ return (
                   target="_blank"
                 >
                   <Widget
-                    src={`${ownerId}/widget/Project.ProfileImage`}
+                    src={"${config/account}/widget/Project.ProfileImage"}
                     props={{
                       ...props,
                       accountId: protocolConfig?.account_id,
@@ -763,7 +765,7 @@ return (
             {potDetail?.chef && potDetail?.chef_fee_basis_points > 0 && (
               <Row style={{ marginTop: "6px" }}>
                 <Widget
-                  src={`${ownerId}/widget/Inputs.Checkbox`}
+                  src={"${config/account}/widget/Inputs.Checkbox"}
                   props={{
                     id: "bypassChefFeeSelector",
                     checked: state.bypassChefFee,
@@ -779,7 +781,7 @@ return (
                     target="_blank"
                   >
                     <Widget
-                      src={`${ownerId}/widget/Project.ProfileImage`}
+                      src={"${config/account}/widget/Project.ProfileImage"}
                       props={{
                         ...props,
                         accountId: potDetail?.chef,
@@ -821,7 +823,7 @@ return (
             </Row>
             <Row style={{ justifyContent: "flex-end", marginTop: "12px" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   disabled:

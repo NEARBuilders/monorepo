@@ -1,6 +1,5 @@
 const accountId = props.accountId;
 const projectId = props.projectId;
-const ownerId = props.ownerId;
 if (!accountId) {
   return "";
 }

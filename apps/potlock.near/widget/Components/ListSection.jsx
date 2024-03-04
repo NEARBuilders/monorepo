@@ -1,5 +1,4 @@
 const {
-  ownerId,
   removeProjectsFromCart,
   addProjectsToCart,
   setIsCartModalOpen,
@@ -137,11 +136,10 @@ const loadProjects = () => {
   setDisplayProject(
     totalProjects.slice(0, lastNumberOfProject + 9).map((item) => (
       <Widget
-        src={`${ownerId}/widget/Components.ProjectCard`}
+        src={"${config/account}/widget/Components.ProjectCard"}
         props={{
           ...props,
           ...item,
-          ownerId: ownerId,
           showModal: true,
           isExistedInCart: props.cart && !!props.cart[item.id],
           donnorProjectId: donnorProjectId,
@@ -497,12 +495,11 @@ return (
         <ProjectList>
           {featuredProjects.map((item) => (
             <Widget
-              src={`${ownerId}/widget/Components.ProjectCard`}
+              src={"${config/account}/widget/Components.ProjectCard"}
               props={{
                 ...props,
                 ...item,
                 referrerId: props.referrerId,
-                ownerId: ownerId,
                 showModal: true,
                 transactionHashes: props.transactionHashes,
                 isExistedInCart: props.cart && !!props.cart[item.id],
@@ -554,7 +551,7 @@ return (
         </Title>
         {/* Search bar */}
         <Widget
-          src={`${ownerId}/widget/Project.SearchBar`}
+          src={"${config/account}/widget/Project.SearchBar"}
           props={{
             title: "Sort",
             tab: tab,

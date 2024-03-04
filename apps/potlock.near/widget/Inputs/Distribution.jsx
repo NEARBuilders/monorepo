@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 const options = [
   { text: "Open source", value: "open-source" },
   { text: "Partial", value: "partial" },
@@ -8,7 +6,7 @@ const options = [
 
 return (
   <Widget
-    src={`${ownerId}/widget/Inputs.Select`}
+    src={"${config/account}/widget/Inputs.Select"}
     props={{
       label: "What is your projects distribution model?",
       noLabel: props.noLabel,

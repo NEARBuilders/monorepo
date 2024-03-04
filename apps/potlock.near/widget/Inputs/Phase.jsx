@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 const options = [
   { text: "Idea stage", value: "idea" },
   { text: "Testnet launched", value: "testnet" },
@@ -10,7 +8,7 @@ const options = [
 
 return (
   <Widget
-    src={`${ownerId}/widget/Inputs.Select`}
+    src={"${config/account}/widget/Inputs.Select"}
     props={{
       label: "Development phase *",
       noLabel: props.noLabel,

@@ -1,6 +1,3 @@
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { nearToUsd, nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
   nearToUsd: 1,
   nearToUsdWithFallback: () => "",
@@ -61,7 +58,7 @@ const [totalDonations, totalDonors, totalReferralFees] = useMemo(() => {
 return (
   <Container>
     <Widget
-      src={`${ownerId}/widget/Components.InfoCard`}
+      src={"${config/account}/widget/Components.InfoCard"}
       props={{
         infoTextPrimary: nearToUsd
           ? `$${(totalDonations * nearToUsd).toFixed(2)}`
@@ -70,7 +67,7 @@ return (
       }}
     />
     <Widget
-      src={`${ownerId}/widget/Components.InfoCard`}
+      src={"${config/account}/widget/Components.InfoCard"}
       props={{
         infoTextPrimary: totalReferralFees ? nearToUsdWithFallback(totalReferralFees) : "-",
         infoTextSecondary: "Referral Fees",

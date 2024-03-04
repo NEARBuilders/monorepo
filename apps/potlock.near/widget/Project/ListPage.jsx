@@ -125,9 +125,6 @@ const CardSkeleton = () => (
 // ListPage Content
 
 const { userIsRegistryAdmin, tab } = props;
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || { yoctosToUsd: () => "" };
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 const HERO_BACKGROUND_IMAGE_URL =
@@ -746,7 +743,7 @@ return (
 
         <ButtonsContainer>
           {/* <Widget
-            src={`${ownerId}/widget/Project.ButtonDonateRandomly`}
+            src={"${config/account}/widget/Project.ButtonDonateRandomly"}
             props={{
               ...props,
             }}
@@ -754,7 +751,7 @@ return (
           <Button onClick={donateRandomly}>Donate Randomly</Button>
           {state.isModalOpen && (
             <Widget
-              src={`${ownerId}/widget/Project.ModalDonation`}
+              src={"${config/account}/widget/Project.ModalDonation"}
               props={{
                 ...props,
                 isModalOpen: state.isModalOpen,
@@ -773,7 +770,7 @@ return (
           )}
           {state.successfulDonation && (
             <Widget
-              src={`${ownerId}/widget/Project.ModalSuccess`}
+              src={"${config/account}/widget/Project.ModalSuccess"}
               props={{
                 ...props,
                 successfulDonation: state.successfulDonation,
@@ -786,7 +783,7 @@ return (
             />
           )}
           {/* <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "secondary",
               text: "Register Your Project",
@@ -812,7 +809,7 @@ return (
           {featuredProjects.map((project) => {
             return (
               <Widget
-                src={`${ownerId}/widget/Project.Card`}
+                src={"${config/account}/widget/Project.Card"}
                 loading={
                   <div
                     style={{
@@ -851,7 +848,7 @@ return (
         </span>
       </Title>
       <Widget
-        src={`${ownerId}/widget/Project.SearchBar`}
+        src={"${config/account}/widget/Project.SearchBar"}
         props={{
           title: sort,
           tab: tab,
@@ -869,14 +866,14 @@ return (
     </Header>
     <ProjectsContainer>
       <Widget
-        src={`${ownerId}/widget/Project.ListSection`}
+        src={"${config/account}/widget/Project.ListSection"}
         props={{
           ...props,
           items: filteredProjects,
           renderItem: (project) => {
             return (
               <Widget
-                src={`${ownerId}/widget/Project.Card`}
+                src={"${config/account}/widget/Project.Card"}
                 loading={<CardSkeleton />}
                 props={{
                   ...props,

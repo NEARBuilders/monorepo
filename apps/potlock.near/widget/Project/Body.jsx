@@ -1,5 +1,4 @@
 const {
-  ownerId,
   REGISTRY_CONTRACT_ID,
   userIsRegistryAdmin,
   SUPPORTED_FTS: { NEAR },
@@ -134,7 +133,7 @@ const projectLink = `https://near.social/potlock.near/widget/Index?tab=project&p
 
 const Actions = () => (
   <Widget
-    src={`${ownerId}/widget/Project.Actions`}
+    src={"${config/account}/widget/Project.Actions"}
     props={{
       ...props,
     }}
@@ -193,7 +192,7 @@ return (
         <Name>{profile.name}</Name>
         {canEdit && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "secondary",
               text: "Edit profile",
@@ -206,7 +205,7 @@ return (
       <AccountInfoContainer>
         <AccountId>@{props.projectId}</AccountId>
         <Widget
-          src={`${ownerId}/widget/Project.Share`}
+          src={"${config/account}/widget/Project.Share"}
           props={{
             text: projectLink,
             // label: "Share",
@@ -215,7 +214,7 @@ return (
         />
       </AccountInfoContainer>
       <Widget
-        src={`${ownerId}/widget/Project.Tags`}
+        src={"${config/account}/widget/Project.Tags"}
         props={{
           ...props,
           tags,
@@ -225,7 +224,7 @@ return (
     <Actions />
     {userIsRegistryAdmin && (
       <Widget
-        src={`${ownerId}/widget/Inputs.Select`}
+        src={"${config/account}/widget/Inputs.Select"}
         props={{
           noLabel: true,
           options: props.PROJECT_STATUSES.map((status) => ({
@@ -245,7 +244,7 @@ return (
       />
     )}
     <Widget
-      src={`${ownerId}/widget/Project.NavOptionsMobile`}
+      src={"${config/account}/widget/Project.NavOptionsMobile"}
       props={{
         ...props,
       }}
@@ -259,7 +258,7 @@ return (
       />
     </div>
     <Widget
-      src={`${ownerId}/widget/Components.Modal`}
+      src={"${config/account}/widget/Components.Modal"}
       props={{
         ...props,
         isModalOpen: statusReview.modalOpen,
@@ -268,7 +267,7 @@ return (
           <>
             <ModalTitle>Enter Notes for changing status to {statusReview.newStatus}</ModalTitle>
             <Widget
-              src={`${ownerId}/widget/Inputs.TextArea`}
+              src={"${config/account}/widget/Inputs.TextArea"}
               props={{
                 noLabel: true,
                 inputRows: 5,
@@ -285,7 +284,7 @@ return (
             />
             <Row style={{ justifyContent: "flex-end", marginTop: "12px" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   text: "Submit",

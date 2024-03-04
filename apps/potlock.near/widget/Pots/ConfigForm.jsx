@@ -4,12 +4,10 @@ const { validateNearAddress } = VM.require("potlock.near/widget/utils") || {
 };
 const {
   NADABOT_HUMAN_METHOD,
-  ownerId,
   ONE_TGAS,
   SUPPORTED_FTS: { NEAR },
 } = VM.require("potlock.near/widget/constants") || {
   NADABOT_HUMAN_METHOD: "",
-  ownerId: "",
   ONE_TGAS: 0,
   SUPPORTED_FTS: {},
 };
@@ -477,7 +475,7 @@ return (
       {FormSectionLeft("Pot details", "")}
       <FormSectionRightDiv>
         <Widget
-          src={`${ownerId}/widget/Inputs.Text`}
+          src={"${config/account}/widget/Inputs.Text"}
           props={{
             label: "Owner *",
             placeholder: `E.g. ${context.accountId}`,
@@ -495,7 +493,7 @@ return (
         {/* <props.ToDo>ADD ADMINS multi-entry</props.ToDo> */}
         <Label>Admins</Label>
         <Widget
-          src={`${ownerId}/widget/Components.AccountsList`}
+          src={"${config/account}/widget/Components.AccountsList"}
           props={{
             accountIds: state.admins
               .filter((account) => !account.remove)
@@ -506,7 +504,7 @@ return (
         />
         {(!isUpdate || userIsOwner) && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "tertiary",
               text: "Add admins",
@@ -516,7 +514,7 @@ return (
           />
         )}
         <Widget
-          src={`${ownerId}/widget/Inputs.Text`}
+          src={"${config/account}/widget/Inputs.Text"}
           props={{
             label: "Name *",
             placeholder: "E.g. DeFi Center",
@@ -534,7 +532,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Inputs.Text`}
+          src={"${config/account}/widget/Inputs.Text"}
           props={{
             label: "Custom handle (optional - will slugify name by default)",
             placeholder: "e.g. my-pot-handle",
@@ -562,7 +560,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Inputs.TextArea`}
+          src={"${config/account}/widget/Inputs.TextArea"}
           props={{
             label: "Description",
             placeholder: "Type description",
@@ -583,7 +581,7 @@ return (
         />
         <Row>
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Referrer fee % (matching pool)",
               placeholder: "0",
@@ -605,7 +603,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Referrer fee % (public round)",
               placeholder: "0",
@@ -627,7 +625,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Protocol fee %",
               value: protocolConfig ? protocolConfig.basis_points / 100 : "-",
@@ -638,7 +636,7 @@ return (
         </Row>
         <Row>
           <Widget
-            src={`${ownerId}/widget/Inputs.Date`}
+            src={"${config/account}/widget/Inputs.Date"}
             props={{
               label: "Application start date",
               //   placeholder: "0", // TODO: possibly add this back in
@@ -666,7 +664,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Inputs.Date`}
+            src={"${config/account}/widget/Inputs.Date"}
             props={{
               label: "Application end date",
               //   placeholder: "0", // TODO: possibly add this back in
@@ -692,7 +690,7 @@ return (
         </Row>
         <Row>
           <Widget
-            src={`${ownerId}/widget/Inputs.Date`}
+            src={"${config/account}/widget/Inputs.Date"}
             props={{
               label: "Matching round start date",
               selectTime: true,
@@ -714,7 +712,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Inputs.Date`}
+            src={"${config/account}/widget/Inputs.Date"}
             props={{
               label: "Matching round end date",
               //   placeholder: "0", // TODO: possibly add this back in
@@ -736,7 +734,7 @@ return (
         </Row>
         <Row>
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Optional: Min matching pool donation amount (in NEAR)",
               placeholder: "0",
@@ -760,7 +758,7 @@ return (
       <FormSectionRightDiv>
         <Row>
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Assign chef",
               placeholder: "E.g. user.near",
@@ -776,7 +774,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Inputs.Text`}
+            src={"${config/account}/widget/Inputs.Text"}
             props={{
               label: "Chef fee %",
               placeholder: "0",
@@ -805,7 +803,7 @@ return (
       {FormSectionLeft("Application details", "")}
       <FormSectionRightDiv>
         <Widget
-          src={`${ownerId}/widget/Inputs.Text`}
+          src={"${config/account}/widget/Inputs.Text"}
           props={{
             label: "Max. approved projects",
             placeholder: "e.g. 20",
@@ -828,7 +826,7 @@ return (
         <Row>
           <Checkbox>
             <Widget
-              src={`${ownerId}/widget/Inputs.Checkbox`}
+              src={"${config/account}/widget/Inputs.Checkbox"}
               props={{
                 id: "registrationSelector",
                 checked: state.usePotlockRegistry,
@@ -853,7 +851,7 @@ return (
         <Row>
           <Checkbox>
             <Widget
-              src={`${ownerId}/widget/Inputs.Checkbox`}
+              src={"${config/account}/widget/Inputs.Checkbox"}
               props={{
                 id: "sybilSelector",
                 checked: state.useNadabotSybil,
@@ -871,7 +869,7 @@ return (
         <Row style={{ justifyContent: "flex-end", marginTop: "36px" }}>
           {!isUpdate && isAdminOrGreater && (
             <Widget
-              src={`${ownerId}/widget/Components.Button`}
+              src={"${config/account}/widget/Components.Button"}
               props={{
                 type: "tertiary",
                 text: "Cancel",
@@ -884,7 +882,7 @@ return (
           )}
           {((isUpdate && isAdminOrGreater) || !isUpdate) && (
             <Widget
-              src={`${ownerId}/widget/Components.Button`}
+              src={"${config/account}/widget/Components.Button"}
               props={{
                 type: "primary",
                 text: isUpdate ? "Save changes" : "Deploy",
@@ -898,7 +896,7 @@ return (
       </FormSectionRightDiv>
     </FormSectionContainer>
     <Widget
-      src={`${ownerId}/widget/Components.ModalMultiAccount`}
+      src={"${config/account}/widget/Components.ModalMultiAccount"}
       props={{
         ...props,
         isModalOpen: state.isAdminsModalOpen,

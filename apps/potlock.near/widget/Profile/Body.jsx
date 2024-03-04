@@ -1,19 +1,24 @@
 const { projectId } = props;
-const { getTagsFromSocialProfileData } = VM.require("potlock.near/widget/utils") || {
+const { getTagsFromSocialProfileData } = VM.require(
+  "potlock.near/widget/utils"
+) || {
   getTagsFromSocialProfileData: () => [],
 };
 const {
-  ownerId,
   SUPPORTED_FTS: { NEAR },
 } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
   SUPPORTED_FTS: {},
 };
 const accountId = props.accountId ?? context.accountId;
 
-const [statusReview, setStatusReview] = useState({ modalOpen: false, notes: "", newStatus: "" });
+const [statusReview, setStatusReview] = useState({
+  modalOpen: false,
+  notes: "",
+  newStatus: "",
+});
 
-let RegistrySDK = VM.require("potlock.near/widget/SDK.registry") || (() => ({}));
+let RegistrySDK =
+  VM.require("potlock.near/widget/SDK.registry") || (() => ({}));
 RegistrySDK = RegistrySDK({ env: props.env });
 const userIsRegistryAdmin = RegistrySDK.isUserRegistryAdmin(context.accountId);
 
@@ -99,7 +104,7 @@ const { PROJECT_STATUSES } = VM.require("potlock.near/widget/constants") || {
 return (
   <Wrapper>
     <Widget
-      src={`${ownerId}/widget/Profile.BannerHeader`}
+      src={"${config/account}/widget/Profile.BannerHeader"}
       props={{
         ...props,
         accountId: projectId || accountId,
@@ -114,20 +119,20 @@ return (
     <Container>
       {/* Side Nav */}
       <Widget
-        src={`${ownerId}/widget/Project.NavOptionsMobile`}
+        src={"${config/account}/widget/Project.NavOptionsMobile"}
         props={{
           ...props,
         }}
       />
       <SidebarContainer>
         <Widget
-          src={`${ownerId}/widget/Components.NavOptions`}
+          src={"${config/account}/widget/Components.NavOptions"}
           props={{
             ...props,
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Profile.Linktree`}
+          src={"${config/account}/widget/Profile.Linktree"}
           props={{
             ...props,
           }}
@@ -137,7 +142,7 @@ return (
       {/* Body */}
       <Details>
         <Widget
-          src={`${ownerId}/widget/Profile.BodyHeader`}
+          src={"${config/account}/widget/Profile.BodyHeader"}
           props={{
             ...props,
             accountId,
@@ -145,17 +150,24 @@ return (
         />
         {userIsRegistryAdmin && projectId && (
           <Widget
-            src={`${ownerId}/widget/Inputs.Select`}
+            src={"${config/account}/widget/Inputs.Select"}
             props={{
               noLabel: true,
               options: PROJECT_STATUSES.map((status) => ({
                 value: status,
                 text: status,
               })),
-              value: { text: props.project.status, value: props.project.status },
+              value: {
+                text: props.project.status,
+                value: props.project.status,
+              },
               onChange: (status) => {
                 if (status.value != project.status) {
-                  setStatusReview({ ...statusReview, newStatus: status.value, modalOpen: true });
+                  setStatusReview({
+                    ...statusReview,
+                    newStatus: status.value,
+                    modalOpen: true,
+                  });
                 }
               },
               containerStyles: {
@@ -166,7 +178,9 @@ return (
         )}
         <div className="nav-view">
           <Widget
-            src={props.navOptions.find((option) => option.id == props.nav).source}
+            src={
+              props.navOptions.find((option) => option.id == props.nav).source
+            }
             props={{
               ...props,
             }}
@@ -175,16 +189,18 @@ return (
       </Details>
     </Container>
     <Widget
-      src={`${ownerId}/widget/Components.Modal`}
+      src={"${config/account}/widget/Components.Modal"}
       props={{
         ...props,
         isModalOpen: statusReview.modalOpen,
         onClose: () => setStatusReview({ ...statusReview, modalOpen: false }),
         children: (
           <>
-            <ModalTitle>Enter Notes for changing status to {statusReview.newStatus}</ModalTitle>
+            <ModalTitle>
+              Enter Notes for changing status to {statusReview.newStatus}
+            </ModalTitle>
             <Widget
-              src={`${ownerId}/widget/Inputs.TextArea`}
+              src={"${config/account}/widget/Inputs.TextArea"}
               props={{
                 noLabel: true,
                 inputRows: 5,
@@ -193,7 +209,8 @@ return (
                 },
                 placeholder: "Your notes here...",
                 value: statusReview.notes,
-                onChange: (notes) => setStatusReview({ ...statusReview, notes }),
+                onChange: (notes) =>
+                  setStatusReview({ ...statusReview, notes }),
                 validate: () => {
                   // none necessary
                 },
@@ -201,7 +218,7 @@ return (
             />
             <Row style={{ justifyContent: "flex-end", marginTop: "12px" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   text: "Submit",

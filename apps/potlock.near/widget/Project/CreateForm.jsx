@@ -13,7 +13,6 @@ const {
 };
 const HORIZON_CONTRACT_ID = "nearhorizon.near";
 const SOCIAL_CONTRACT_ID = "social.near";
-const ownerId = "potlock.near";
 Big.PE = 100;
 const FIFTY_TGAS = "50000000000000";
 const THREE_HUNDRED_TGAS = "300000000000000";
@@ -32,7 +31,7 @@ const MAX_TEAM_MEMBERS_DISPLAY_COUNT = 5;
 if (!context.accountId) {
   return (
     <Widget
-      src={`${ownerId}/widget/Components.InfoSegment`}
+      src={"${config/account}/widget/Components.InfoSegment"}
       props={{
         title: "Not logged in!",
         description: "You must log in to create a new project!",
@@ -637,33 +636,33 @@ const handleCreateOrUpdateProject = (e) => {
       star: {
         key: {
           type: "social",
-          path: `${ownerId}/widget/Index`,
+          path: "${config/account}/widget/Index",
         },
         value: {
           type: "star",
         },
       },
       notify: {
-        key: ownerId,
+        key: "${config/account}",
         value: {
           type: "star",
           item: {
             type: "social",
-            path: `${ownerId}/widget/Index`,
+            path: "${config/account}/widget/Index",
           },
         },
       },
     },
     graph: {
       star: {
-        [ownerId]: {
+        ["${config/account}"]: {
           widget: {
             Index: "",
           },
         },
       },
       follow: {
-        [ownerId]: "",
+        ["${config/account}"]: "",
       },
     },
   };
@@ -918,7 +917,7 @@ return (
         <h1 style={{ textAlign: "center" }}>You've successfully registered!</h1>
         <ButtonsContainer>
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "primary",
               text: "View your project",
@@ -929,7 +928,7 @@ return (
             }}
           />
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               type: "secondary",
               text: "View all projects",
@@ -942,7 +941,7 @@ return (
     ) : (
       <>
         <Widget
-          src={`${ownerId}/widget/Profile.BannerHeader`}
+          src={"${config/account}/widget/Profile.BannerHeader"}
           props={{
             ...props,
             projectId: state.isDao && state.daoAddress ? state.daoAddress : context.accountId, // TODO: consider updating to use dao address if available, but will look weird bc no DAOs prob have a banner image on near social
@@ -982,7 +981,7 @@ return (
                 </LowerBannerContainerLeft>
                 <LowerBannerContainerRight>
                   <Widget
-                    src={`${ownerId}/widget/Components.AccountsStack`}
+                    src={"${config/account}/widget/Components.AccountsStack"}
                     props={{
                       accountIds: state.teamMembers,
                       sendToBack: state.isMultiAccountModalOpen,
@@ -1003,7 +1002,7 @@ return (
             )}
             <FormSectionRightDiv>
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "masterSelector",
                   checked: state.isDao,
@@ -1025,7 +1024,7 @@ return (
                 }}
               />
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: state.isDao ? "DAO address *" : "Project ID *",
                   value: state.isDao ? state.daoAddressTemp : context.accountId,
@@ -1095,7 +1094,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "Project name *",
                   placeholder: "Enter project name",
@@ -1122,7 +1121,7 @@ return (
               <Space height={24} />
 
               <Widget
-                src={`${ownerId}/widget/Inputs.TextArea`}
+                src={"${config/account}/widget/Inputs.TextArea"}
                 props={{
                   label: "Overview *",
                   placeholder: "Give a short description of your project",
@@ -1144,7 +1143,7 @@ return (
               <Space height={24} />
 
               <Widget
-                src={`${ownerId}/widget/Inputs.TextArea`}
+                src={"${config/account}/widget/Inputs.TextArea"}
                 props={{
                   label: "Reason for considering yourself a public good *",
                   placeholder: "Type response",
@@ -1166,7 +1165,7 @@ return (
               <Space height={24} />
 
               <Widget
-                src={`${ownerId}/widget/Inputs.SelectMultiple`}
+                src={"${config/account}/widget/Inputs.SelectMultiple"}
                 props={{
                   label: "Select category (select multiple) *",
                   placeholder: "Choose category",
@@ -1181,7 +1180,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "hasSmartContractsSelector",
                   checked: state.hasSmartContracts,
@@ -1195,7 +1194,7 @@ return (
                 }}
               />
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "hasReceivedFundingSelector",
                   checked: state.hasReceivedFunding,
@@ -1224,7 +1223,7 @@ return (
                     return (
                       <Row style={{ marginBottom: "12px" }} key={index}>
                         <Widget
-                          src={`${ownerId}/widget/Inputs.Text`}
+                          src={"${config/account}/widget/Inputs.Text"}
                           props={{
                             label: "GitHub Repo URL #" + (index + 1),
                             // preInputChildren: <InputPrefix>github.com/</InputPrefix>,
@@ -1269,7 +1268,7 @@ return (
                     );
                   })}
                   <Widget
-                    src={`${ownerId}/widget/Components.Button`}
+                    src={"${config/account}/widget/Components.Button"}
                     props={{
                       type: "tertiary",
                       text: "Add another repository",
@@ -1299,7 +1298,7 @@ return (
                     return (
                       <Row style={{ marginBottom: "12px" }} key={index}>
                         <Widget
-                          src={`${ownerId}/widget/Inputs.Select`}
+                          src={"${config/account}/widget/Inputs.Select"}
                           props={{
                             label: "Add chain",
                             noLabel: false,
@@ -1326,7 +1325,7 @@ return (
                           }}
                         />
                         <Widget
-                          src={`${ownerId}/widget/Inputs.Text`}
+                          src={"${config/account}/widget/Inputs.Text"}
                           props={{
                             label: "Contract address",
                             placeholder: "Enter address",
@@ -1387,7 +1386,7 @@ return (
                     );
                   })}
                   <Widget
-                    src={`${ownerId}/widget/Components.Button`}
+                    src={"${config/account}/widget/Components.Button"}
                     props={{
                       type: "tertiary",
                       text: "Add another contract",
@@ -1465,7 +1464,7 @@ return (
                 }
               )}
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "tertiary",
                   text: "Add funding source",
@@ -1502,7 +1501,7 @@ return (
             )}
             <FormSectionRightDiv>
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "Twitter",
                   preInputChildren: <InputPrefix>twitter.com/</InputPrefix>,
@@ -1523,7 +1522,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "Telegram",
                   preInputChildren: <InputPrefix>t.me/</InputPrefix>,
@@ -1538,7 +1537,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "GitHub",
                   preInputChildren: <InputPrefix>github.com/</InputPrefix>,
@@ -1553,7 +1552,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "Website",
                   preInputChildren: <InputPrefix>https://</InputPrefix>,
@@ -1568,7 +1567,7 @@ return (
               />
               <Space height={24} />
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   prefix: "https://",
@@ -1588,7 +1587,7 @@ return (
           </FormSectionContainer>
         </FormBody>
         <Widget
-          src={`${ownerId}/widget/Components.ModalMultiAccount`}
+          src={"${config/account}/widget/Components.ModalMultiAccount"}
           props={{
             ...props,
             isModalOpen: state.isMultiAccountModalOpen,
@@ -1611,7 +1610,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Project.ModalAddFundingSource`}
+          src={"${config/account}/widget/Project.ModalAddFundingSource"}
           props={{
             ...props,
             isModalOpen: state.fundingSourceIndex !== null,

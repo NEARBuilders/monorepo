@@ -1,10 +1,9 @@
 const { projectId, tab } = props;
 
-const { DONATION_CONTRACT_ID, ownerId } = VM.require("potlock.near/widget/constants") || {
+const { DONATION_CONTRACT_ID } = VM.require("potlock.near/widget/constants") || {
   DONATION_CONTRACT_ID: "",
-  ownerId: "",
 };
-const { ProjectOptions } = VM.require(`${ownerId}/widget/Project.Options`);
+const { ProjectOptions } = VM.require("${config/account}/widget/Project.Options");
 
 let DonateSDK =
   VM.require("potlock.near/widget/SDK.donate") ||
@@ -112,10 +111,10 @@ const Wrapper = styled.div`
 return (
   <Wrapper>
     {project.status !== "Approved" && (
-      <Widget src={`${ownerId}/widget/Project.ProjectBanner`} props={{ ...props, project }} />
+      <Widget src={"${config/account}/widget/Project.ProjectBanner"} props={{ ...props, project }} />
     )}
     <Widget
-      src={`${ownerId}/widget/Profile.Body`}
+      src={"${config/account}/widget/Profile.Body"}
       props={{
         ...props,
         profile,

@@ -1,4 +1,3 @@
-const ownerId = "potlock.near";
 const label = props.label ?? "Account ID";
 const placeholder = props.placeholder ?? "Enter your account ID";
 const value = props.value ?? "";
@@ -132,7 +131,7 @@ const validate = async () => {
 
 return (
   <Widget
-    src={`${ownerId}/widget/Inputs.Text`}
+    src={"${config/account}/widget/Inputs.Text"}
     props={{
       label,
       placeholder,

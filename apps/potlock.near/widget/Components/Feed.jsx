@@ -1,5 +1,3 @@
-const { ownerId } = props;
-
 let RegistrySDK =
   VM.require("potlock.near/widget/SDK.registry") ||
   (() => ({
@@ -23,6 +21,6 @@ const Container = styled.div`
 
 return (
   <Container>
-    <Widget key="feed" src={`${ownerId}/widget/Profile.Feed`} props={{ accounts: projectIds }} />
+    <Widget key="feed" src={"${config/account}/widget/Profile.Feed"} props={{ accounts: projectIds }} />
   </Container>
 );

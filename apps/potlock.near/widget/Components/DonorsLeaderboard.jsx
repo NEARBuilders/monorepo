@@ -1,7 +1,6 @@
 const { sponsors, sortedDonations, filter, currentTab } = props;
 const donations = currentTab === "sponsors" ? sponsors : sortedDonations;
 
-const { ownerId } = VM.require("potlock.near/widget/constants");
 const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
   nearToUsd: 1,
 };
@@ -17,7 +16,7 @@ const nearLogo =
   "https://ipfs.near.social/ipfs/bafkreicdcpxua47eddhzjplmrs23mdjt63czowfsa2jnw4krkt532pa2ha";
 
 const { getTimePassed, _address, calcNetDonationAmount, reverseArr } = VM.require(
-  `${ownerId}/widget/Components.DonorsUtils`
+  "${config/account}/widget/Components.DonorsUtils"
 );
 
 const Container = styled.div`

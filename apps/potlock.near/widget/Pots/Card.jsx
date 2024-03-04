@@ -1,7 +1,4 @@
 const { potId } = props;
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { daysUntil, yoctosToNear, yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
   daysUntil: () => "",
   yoctosToNear: () => "",
@@ -135,7 +132,7 @@ return (
       {/* Application tag */}
       {applicationOpen && (
         <Widget
-          src={`${ownerId}/widget/Pots.Tag`}
+          src={"${config/account}/widget/Pots.Tag"}
           props={{
             ...props,
             backgroundColor: "#EFFEFA",
@@ -145,7 +142,7 @@ return (
             textStyle: { fontWeight: 500, marginLeft: "8px" },
             preElements: (
               <Widget
-                src={`${ownerId}/widget/Components.Indicator`}
+                src={"${config/account}/widget/Components.Indicator"}
                 props={{
                   colorOuter: "#CAFDF3",
                   colorInner: "#33DDCB",
@@ -159,7 +156,7 @@ return (
       {/* Matching round tag */}
       {publicRoundOpen && (
         <Widget
-          src={`${ownerId}/widget/Pots.Tag`}
+          src={"${config/account}/widget/Pots.Tag"}
           props={{
             ...props,
             backgroundColor: publicRoundOpen ? "#F7FDE8" : "#EBEBEB",
@@ -171,7 +168,7 @@ return (
             textStyle: { fontWeight: 500, marginLeft: "8px" },
             preElements: (
               <Widget
-                src={`${ownerId}/widget/Components.Indicator`}
+                src={"${config/account}/widget/Components.Indicator"}
                 props={{
                   colorOuter: publicRoundOpen ? "#D7F5A1" : "#DBDBDB",
                   colorInner: publicRoundOpen ? "#9ADD33" : "#A6A6A6",

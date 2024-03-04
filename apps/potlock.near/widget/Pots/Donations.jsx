@@ -1,10 +1,9 @@
 // get donations
 const { potId, potDetail } = props;
-const { ownerId, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
-const { getTimePassed } = VM.require(`${ownerId}/widget/Components.DonorsUtils`) || {
+const { getTimePassed } = VM.require("${config/account}/widget/Components.DonorsUtils") || {
   getTimePassed: () => "",
 };
 
@@ -180,7 +179,7 @@ const searchDonations = (searchTerm) => {
 return (
   <Container>
     <Widget
-      src={`${ownerId}/widget/Pots.NavOptionsMobile`}
+      src={"${config/account}/widget/Pots.NavOptionsMobile"}
       props={{
         ...props,
       }}
@@ -226,7 +225,7 @@ return (
             <Row key={index}>
               <RowItem href={`?tab=project&projectId=${project_id}`} target={"_blank"}>
                 <Widget
-                  src={`${ownerId}/widget/Project.ProfileImage`}
+                  src={"${config/account}/widget/Project.ProfileImage"}
                   props={{
                     ...props,
                     accountId: project_id,
@@ -240,7 +239,7 @@ return (
               </RowItem>
               <RowItem href={`?tab=profile&accountId=${donor_id}`} target={"_blank"}>
                 <Widget
-                  src={`${ownerId}/widget/Project.ProfileImage`}
+                  src={"${config/account}/widget/Project.ProfileImage"}
                   props={{
                     ...props,
                     accountId: donor_id,

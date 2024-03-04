@@ -1,10 +1,8 @@
 const { onClose } = props;
 const {
-  ownerId,
   SUPPORTED_FTS: { NEAR },
   IPFS_BASE_URL,
 } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
   SUPPORTED_FTS: {},
   IPFS_BASE_URL: "",
 };
@@ -202,7 +200,7 @@ const twitterIntent = useMemo(() => {
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
   let url =
     DEFAULT_GATEWAY +
-    `${ownerId}/widget/Index?tab=project&projectId=${state.successfulDonation.recipient_id}&referrerId=${context.accountId}`;
+    `${config/account}/widget/Index?tab=project&projectId=${state.successfulDonation.recipient_id}&referrerId=${context.accountId}`;
   let text = `I just donated to ${
     state.recipientProfile
       ? state.recipientProfile.linktree?.twitter
@@ -217,7 +215,7 @@ const twitterIntent = useMemo(() => {
 
 return (
   <Widget
-    src={`${ownerId}/widget/Components.Modal`}
+    src={"${config/account}/widget/Components.Modal"}
     props={{
       ...props,
       contentStyle: {
@@ -263,7 +261,7 @@ return (
               >
                 {state.successfulDonation && (
                   <Widget
-                    src={`${ownerId}/widget/Project.ProfileImage`}
+                    src={"${config/account}/widget/Project.ProfileImage"}
                     props={{
                       ...props,
                       accountId:
@@ -280,7 +278,7 @@ return (
               </UserChipLink>
             </Row>
             <Widget
-              src={`${ownerId}/widget/Cart.BreakdownSummary`}
+              src={"${config/account}/widget/Cart.BreakdownSummary"}
               props={{
                 ...props,
                 referrerId: state.successfulDonation?.referrer_id,
@@ -295,7 +293,7 @@ return (
             />
             <Row style={{ width: "100%", justifyContent: "center", gap: "24px" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "secondary",
                   text: "Do it again!",
@@ -307,7 +305,7 @@ return (
                 }}
               />
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "secondary",
                   text: "Explore projects",
@@ -325,7 +323,7 @@ return (
               <UserChip>
                 {state.donorProfile && (
                   <Widget
-                    src={`${ownerId}/widget/Project.ProfileImage`}
+                    src={"${config/account}/widget/Project.ProfileImage"}
                     props={{
                       ...props,
                       accountId: state.successfulDonation?.donor_id,

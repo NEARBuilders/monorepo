@@ -1,6 +1,3 @@
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { name, description, plPublicGoodReason } = props.profile;
 const { getTeamMembersFromSocialProfileData } = VM.require("potlock.near/widget/utils") || {
   getTeamMembersFromSocialProfileData: () => [],
@@ -30,7 +27,7 @@ const HeaderContainer = styled.div`
 
 const DonationsInfo = () => (
   <Widget
-    src={`${ownerId}/widget/Project.DonationsInfo`}
+    src={"${config/account}/widget/Project.DonationsInfo"}
     props={{
       ...props,
     }}
@@ -39,7 +36,7 @@ const DonationsInfo = () => (
 
 const About = () => (
   <Widget
-    src={`${ownerId}/widget/Project.AboutItem`}
+    src={"${config/account}/widget/Project.AboutItem"}
     props={{
       ...props,
       title: "Overview",
@@ -50,7 +47,7 @@ const About = () => (
 
 const PublicGoodReason = () => (
   <Widget
-    src={`${ownerId}/widget/Project.AboutItem`}
+    src={"${config/account}/widget/Project.AboutItem"}
     props={{
       ...props,
       title: "Public Good Reason",
@@ -61,7 +58,7 @@ const PublicGoodReason = () => (
 
 const Team = () => (
   <Widget
-    src={`${ownerId}/widget/Project.Team`}
+    src={"${config/account}/widget/Project.Team"}
     props={{
       ...props,
       team: getTeamMembersFromSocialProfileData(props.profile),

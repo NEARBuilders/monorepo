@@ -1,8 +1,7 @@
 const { basisPointsToPercent } = VM.require("potlock.near/widget/utils") || {
   basisPointsToPercent: () => 0,
 };
-const { ownerId, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const {  SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
@@ -114,7 +113,7 @@ return (
   <ItemContainer>
     <ItemLeft>
       <Widget
-        src={`${ownerId}/widget/Inputs.Checkbox`}
+        src={"${config/account}/widget/Inputs.Checkbox"}
         props={{
           id: "selector-" + projectId,
           checked,
@@ -146,7 +145,7 @@ return (
             {profile.name ?? ""}
           </Title>
           <Widget
-            src={`${ownerId}/widget/Pots.Tag`}
+            src={"${config/account}/widget/Pots.Tag"}
             props={{
               ...props,
               backgroundColor: isPotDonation ? "#FEF6EE" : "#F6F5F3",
@@ -162,7 +161,7 @@ return (
         </Row>
         <Description>{profile.description ?? ""}</Description>
         <Widget
-          src={`${ownerId}/widget/Inputs.Text`}
+          src={"${config/account}/widget/Inputs.Text"}
           props={{
             label: "Amount",
             placeholder: "0",
@@ -187,7 +186,7 @@ return (
             },
             preInputChildren: (
               <Widget
-                src={`${ownerId}/widget/Inputs.Select`}
+                src={"${config/account}/widget/Inputs.Select"}
                 props={{
                   noLabel: true,
                   placeholder: "",
@@ -233,7 +232,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Cart.BreakdownSummary`}
+          src={"${config/account}/widget/Cart.BreakdownSummary"}
           props={{
             ...props,
             referrerId,

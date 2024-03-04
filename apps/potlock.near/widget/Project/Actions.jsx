@@ -1,7 +1,8 @@
 const [isModalDonationOpen, setIsModalDonationOpen] = useState(false);
-const [isModalDonationSucessOpen, setIsModalDonationSucessOpen] = useState(false);
+const [isModalDonationSucessOpen, setIsModalDonationSucessOpen] =
+  useState(false);
 
-const { ownerId, projectId } = props;
+const { projectId } = props;
 
 let RegistrySDK =
   VM.require("potlock.near/widget/SDK.registry") ||
@@ -90,15 +91,18 @@ return (
   <Container>
     <SubRow1>
       <Widget
-        src={`${ownerId}/widget/Project.FollowStats`}
+        src={"${config/account}/widget/Project.FollowStats"}
         props={{ ...props, accountId: props.id }}
       />
-      <Widget src={`${ownerId}/widget/Project.FollowButton`} props={{ accountId: props.id }} />
+      <Widget
+        src={"${config/account}/widget/Project.FollowButton"}
+        props={{ accountId: props.id }}
+      />
     </SubRow1>
     {props.tab === "project" && projectIsApproved && (
       <SubRow2>
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             type: "primary",
             text: "Donate",
@@ -106,7 +110,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Project.ModalDonation`}
+          src={"${config/account}/widget/Project.ModalDonation"}
           props={{
             ...props,
             isModalOpen: isModalDonationOpen,
@@ -127,7 +131,7 @@ return (
     )}
     {state.successfulDonation && (
       <Widget
-        src={`${ownerId}/widget/Project.ModalSuccess`}
+        src={"${config/account}/widget/Project.ModalSuccess"}
         props={{
           ...props,
           successfulDonation: state.successfulDonation,

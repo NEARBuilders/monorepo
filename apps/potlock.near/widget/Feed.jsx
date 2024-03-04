@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 const projects = props.registeredProjects || [];
 
 const projectIds = useMemo(() => projects.map((project) => project.id), [projects]);
@@ -14,6 +12,6 @@ const Container = styled.div`
 
 return (
   <Container>
-    <Widget key="feed" src={`${ownerId}/widget/Project.Feed`} props={{ accounts: projectIds }} />
+    <Widget key="feed" src={"${config/account}/widget/Project.Feed"} props={{ accounts: projectIds }} />
   </Container>
 );

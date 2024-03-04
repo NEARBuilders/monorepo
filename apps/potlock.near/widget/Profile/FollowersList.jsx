@@ -1,4 +1,4 @@
-const { accountId, nav, ownerId } = props;
+const { accountId, nav } = props;
 if (!accountId) {
   return "";
 }
@@ -45,7 +45,7 @@ return (
     {followers.map(([accountId], i) => (
       <div className="profile-row" key={i}>
         <div className="me-4">
-          <Widget src={`${ownerId}/widget/Profile.Preview`} props={{ ...props, accountId }} />
+          <Widget src={"${config/account}/widget/Profile.Preview"} props={{ ...props, accountId }} />
         </div>
         <div>
           <Widget src="mob.near/widget/FollowButton" props={{ accountId }} />

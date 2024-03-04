@@ -823,7 +823,7 @@ return (
       </ModalBody>
     </ModalDonate>
     <Widget
-      src={`${props.ownerId}/widget/Components.ModalDonationSuccess`}
+      src={"${config/account}/widget/Components.ModalDonationSuccess"}
       props={{
         ...props,
         transactionHashes: props.transactionHashes,

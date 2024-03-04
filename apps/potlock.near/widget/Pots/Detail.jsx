@@ -3,11 +3,9 @@ const { doesUserHaveDaoFunctionCallProposalPermissions } = VM.require(
   "potlock.near/widget/utils"
 ) || { doesUserHaveDaoFunctionCallProposalPermissions: () => "" };
 const {
-  ownerId,
   ONE_TGAS,
   SUPPORTED_FTS: { NEAR },
 } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
   ONE_TGAS: 0,
   SUPPORTED_FTS: {},
 };
@@ -149,42 +147,42 @@ props.navOptions = [
     label: "Projects",
     id: "projects",
     disabled: false,
-    source: `${ownerId}/widget/Pots.Projects`,
+    source: "${config/account}/widget/Pots.Projects",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=projects`),
   },
   {
     label: "Applications",
     id: "applications",
     disabled: false,
-    source: `${ownerId}/widget/Pots.Applications`,
+    source: "${config/account}/widget/Pots.Applications",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=applications`),
   },
   {
     label: "Donations",
     id: "donations",
     disabled: false,
-    source: `${ownerId}/widget/Pots.Donations`,
+    source: "${config/account}/widget/Pots.Donations",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=donations`),
   },
   {
     label: "Sponsors",
     id: "sponsors",
     disabled: false,
-    source: `${ownerId}/widget/Pots.Sponsors`,
+    source: "${config/account}/widget/Pots.Sponsors",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=sponsors`),
   },
   {
     label: "Payouts",
     id: "payouts",
     disabled: !state.potDetail.payouts.length,
-    source: `${ownerId}/widget/Pots.Payouts`,
+    source: "${config/account}/widget/Pots.Payouts",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=payouts`),
   },
   {
     label: "Settings",
     id: "settings",
     disabled: false,
-    source: `${ownerId}/widget/Pots.Settings`,
+    source: "${config/account}/widget/Pots.Settings",
     href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=settings`),
   },
 ];
@@ -318,7 +316,7 @@ return (
   <Wrapper>
     <>
       <Widget
-        src={`${ownerId}/widget/Pots.Header`}
+        src={"${config/account}/widget/Pots.Header"}
         props={{
           ...props,
           potDetail: state.potDetail,
@@ -334,7 +332,7 @@ return (
           // class="col-3"
           >
             <Widget
-              src={`${ownerId}/widget/Components.NavOptions`}
+              src={"${config/account}/widget/Components.NavOptions"}
               props={{
                 ...props,
               }}
@@ -356,7 +354,7 @@ return (
       </Container>
     </>
     <Widget
-      src={`${ownerId}/widget/Components.Modal`}
+      src={"${config/account}/widget/Components.Modal"}
       props={{
         ...props,
         isModalOpen: state.isApplicationModalOpen,
@@ -367,7 +365,7 @@ return (
               Application message <span style={{ color: "#DD3345" }}>*</span>
             </ModalTitle>
             <Widget
-              src={`${ownerId}/widget/Inputs.TextArea`}
+              src={"${config/account}/widget/Inputs.TextArea"}
               props={{
                 noLabel: true,
                 inputRows: 5,
@@ -392,7 +390,7 @@ return (
             />
             <Row style={{ margin: "12px 0px" }}>
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "isDaoSelector",
                   checked: state.isDao,
@@ -411,7 +409,7 @@ return (
             </Row>
             {state.isDao && (
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "DAO address *",
                   placeholder: "E.g. mydao.sputnikdao.near",
@@ -446,7 +444,7 @@ return (
             )}
             <Row style={{ justifyContent: "flex-end", marginTop: "12px" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   text: registryRequirementMet

@@ -2,8 +2,7 @@
 const { potId, potDetail } = props;
 const { formatDate } = VM.require("potlock.near/widget/utils") || { formatDate: () => "" };
 
-const { ownerId, ToDo, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { ToDo, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   ToDo: "",
   SUPPORTED_FTS: {},
 };
@@ -71,7 +70,7 @@ return (
         <RowOuter key={index}>
           <RowInner>
             <Widget
-              src={`${ownerId}/widget/Project.ProfileImage`}
+              src={"${config/account}/widget/Project.ProfileImage"}
               props={{
                 ...props,
                 accountId: project_id,

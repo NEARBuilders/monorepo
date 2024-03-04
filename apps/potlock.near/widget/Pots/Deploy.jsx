@@ -1,4 +1,3 @@
-const { ownerId } = props;
 // const potFactoryContractId = "potfactory1.tests.potlock.near"; // TODO: update to production address when contract is deployed to prod
 
 // const DEFAULT_REGISTRY_PROVIDER = "registry.potlock.near";
@@ -206,7 +205,7 @@ return (
       <SuccessContainer>
         <HeaderTitle>Deployment Successful!</HeaderTitle>
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             type: "primary",
             text: "View all pots",
@@ -228,7 +227,7 @@ return (
           </a>
         </HeaderContent>
         <Widget
-          src={`${ownerId}/widget/Pots.ConfigForm`}
+          src={"${config/account}/widget/Pots.ConfigForm"}
           props={{
             ...props,
           }}

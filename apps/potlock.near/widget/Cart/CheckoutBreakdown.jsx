@@ -1,6 +1,5 @@
 const { yoctosToNear } = VM.require("potlock.near/widget/utils") || { yoctosToNear: () => "" };
-const { ownerId, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
@@ -240,7 +239,7 @@ return (
       <TotalText>{totalAmount.toFixed(2)} N</TotalText>
     </TotalContainer>
     <Widget
-      src={`${ownerId}/widget/Components.Button`}
+      src={"${config/account}/widget/Components.Button"}
       props={{
         type: "primary",
         text: `Donate ${`${totalAmount.toFixed(2)} N`}`,

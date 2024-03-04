@@ -7,8 +7,7 @@ const { nearToUsd, ipfsUrlFromCid, yoctosToNear, yoctosToUsdWithFallback } = VM.
   yoctosToUsdWithFallback: () => "",
   nearToUsd: 1,
 };
-const { ownerId, NADA_BOT_URL, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { NADA_BOT_URL, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
@@ -586,7 +585,7 @@ return (
     </Card>
     {state.donateModal.isOpen && (
       <Widget
-        src={`${ownerId}/widget/Project.ModalDonation`}
+        src={"${config/account}/widget/Project.ModalDonation"}
         loading={""}
         props={{
           ...props,
@@ -621,7 +620,7 @@ return (
     )}
     {state.successfulDonation && (
       <Widget
-        src={`${ownerId}/widget/Project.ModalSuccess`}
+        src={"${config/account}/widget/Project.ModalSuccess"}
         props={{
           ...props,
           successfulDonation: state.successfulDonation,

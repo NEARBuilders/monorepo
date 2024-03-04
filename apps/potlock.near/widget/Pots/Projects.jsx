@@ -121,7 +121,7 @@ const CardSkeleton = () => (
 );
 
 // get projects
-const { ownerId, potId, potDetail, sybilRequirementMet } = props;
+const { potId, potDetail, sybilRequirementMet } = props;
 const { calculatePayouts } = VM.require("potlock.near/widget/utils") || {
   calculatePayouts: () => {},
 };
@@ -144,13 +144,13 @@ const payouts = useMemo(() => {
 return (
   <>
     <Widget
-      src={`${ownerId}/widget/Pots.NavOptionsMobile`}
+      src={"${config/account}/widget/Pots.NavOptionsMobile"}
       props={{
         ...props,
       }}
     />
     <Widget
-      src={`${ownerId}/widget/Project.ListSection`}
+      src={"${config/account}/widget/Project.ListSection"}
       props={{
         ...props,
         maxCols: 2,
@@ -158,7 +158,7 @@ return (
         renderItem: (project) => {
           return (
             <Widget
-              src={`${ownerId}/widget/Project.Card`}
+              src={"${config/account}/widget/Project.Card"}
               loading={<CardSkeleton />}
               props={{
                 ...props,

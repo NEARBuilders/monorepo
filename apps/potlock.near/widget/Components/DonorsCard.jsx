@@ -1,9 +1,9 @@
-const { donor, ownerId } = props;
+const { donor } = props;
 const { id, rank, className, amount } = donor;
 const { nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
   nearToUsdWithFallback: () => "",
 };
-const { _address } = VM.require(`${ownerId}/widget/Components.DonorsUtils`);
+const { _address } = VM.require("${config/account}/widget/Components.DonorsUtils");
 
 const Container = styled.div`
   display: flex;

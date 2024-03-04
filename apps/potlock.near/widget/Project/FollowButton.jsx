@@ -1,4 +1,3 @@
-const { ownerId } = props;
 if (!props.accountId || !context.accountId || context.accountId === props.accountId) {
   return "";
 }

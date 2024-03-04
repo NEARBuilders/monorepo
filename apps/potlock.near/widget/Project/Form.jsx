@@ -1,9 +1,7 @@
-const ownerId = "potlock.near";
-
 if (!context.accountId) {
   return (
     <Widget
-      src={`${ownerId}/widget/InfoSegment`}
+      src={"${config/account}/widget/InfoSegment"}
       props={{
         title: "Not logged in!",
         description: "You must log in to create a new project!",
@@ -183,7 +181,7 @@ return (
     <Form>
       <FormHeader>General</FormHeader>
       <Widget
-        src={`${ownerId}/widget/Inputs.Text`}
+        src={"${config/account}/widget/Inputs.Text"}
         props={{
           label: "Project name *",
           placeholder: "Enter project name",
@@ -208,7 +206,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.AccountId`}
+        src={"${config/account}/widget/Inputs.AccountId"}
         props={{
           label: "Your project's NEAR Account *",
           placeholder:
@@ -220,7 +218,7 @@ return (
       />
       {state.addInfo && state.accountId !== context.accountId ? (
         <Widget
-          src={`${ownerId}/widget/InfoSegment`}
+          src={"${config/account}/widget/InfoSegment"}
           props={{
             title: "Account ID of project",
             description: (
@@ -230,7 +228,7 @@ return (
                 account id, and visit the{" "}
                 <a
                   target="_blank"
-                  href={`/${ownerId}/widget/Index?tab=permissions&accountIds=${context.accountId}`}
+                  href={`/${config/account}/widget/Index?tab=permissions&accountIds=${context.accountId}`}
                 >
                   link
                 </a>{" "}
@@ -245,7 +243,7 @@ return (
         <></>
       )}
       <Widget
-        src={`${ownerId}/widget/Inputs.Verticals`}
+        src={"${config/account}/widget/Inputs.Verticals"}
         props={{
           verticals: state.verticals,
           update: (verticals) => State.update({ verticals }),
@@ -254,7 +252,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.ProductType`}
+        src={"${config/account}/widget/Inputs.ProductType"}
         props={{
           productType: state.productType,
           update: (productType) => State.update({ productType }),
@@ -263,7 +261,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.Integration`}
+        src={"${config/account}/widget/Inputs.Integration"}
         props={{
           category: state.integration,
           update: (integration) => State.update({ integration }),
@@ -277,7 +275,7 @@ return (
       >
         <Hidable>
           <Widget
-            src={`${ownerId}/widget/Inputs.MultiSelect`}
+            src={"${config/account}/widget/Inputs.MultiSelect"}
             props={{
               label: "Other chains",
               placeholder:
@@ -294,7 +292,7 @@ return (
         </Hidable>
       </Collapsible.Root>
       <Widget
-        src={`${ownerId}/widget/Inputs.Phase`}
+        src={"${config/account}/widget/Inputs.Phase"}
         props={{
           dev: state.dev,
           update: (dev) => State.update({ dev }),
@@ -303,7 +301,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.Text`}
+        src={"${config/account}/widget/Inputs.Text"}
         props={{
           label: "Tagline",
           placeholder: "Write a one liner about your project",
@@ -323,7 +321,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.TextArea`}
+        src={"${config/account}/widget/Inputs.TextArea"}
         props={{
           label: "Description",
           placeholder: "Give a short description of your project",
@@ -344,7 +342,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.Distribution`}
+        src={"${config/account}/widget/Inputs.Distribution"}
         props={{
           distribution: state.distribution,
           update: (distribution) => State.update({ distribution }),
@@ -353,7 +351,7 @@ return (
         }}
       />
       {/*<Widget
-        src={`${ownerId}/widget/Inputs.MultiSelect`}
+        src={"${config/account}/widget/Inputs.MultiSelect"}
         props={{
           label: "Tags",
           placeholder: "Add tags",
@@ -368,7 +366,7 @@ return (
         }}
       />*/}
       <Widget
-        src={`${ownerId}/widget/Inputs.Text`}
+        src={"${config/account}/widget/Inputs.Text"}
         props={{
           label: "Website",
           placeholder: "Website URL (near.org)",
@@ -387,7 +385,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.Number`}
+        src={"${config/account}/widget/Inputs.Number"}
         props={{
           label: "Team size",
           placeholder: 10,
@@ -404,7 +402,7 @@ return (
         }}
       />
       <Widget
-        src={`${ownerId}/widget/Inputs.Text`}
+        src={"${config/account}/widget/Inputs.Text"}
         props={{
           label: "Location",
           placeholder: "San Fancisco, CA",
@@ -424,7 +422,7 @@ return (
       />
       <FormFooter>
         <Widget
-          src={`${ownerId}/widget/Buttons.Green`}
+          src={"${config/account}/widget/Buttons.Green"}
           props={{
             disabled: !validateForm(),
             onClick: () => {
@@ -484,7 +482,7 @@ return (
                   args: { data },
                 },
                 {
-                  contractName: ownerId,
+                  contractName: "${config/account}",
                   methodName: "register",
                   args: { name: state.name }, // TODO: add team members?
                 },

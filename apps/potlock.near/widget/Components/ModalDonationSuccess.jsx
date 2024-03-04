@@ -1,4 +1,3 @@
-const { onDonation, ownerId } = props;
 const Modal = styled.div`
   position: fixed;
   top: 0;
@@ -444,7 +443,7 @@ const twitterIntent = useMemo(() => {
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
   let url =
     DEFAULT_GATEWAY +
-    `${ownerId}/widget/Index?tab=project&projectId=${projectId}&referrerId=${context.accountId}`;
+    `${config/account}/widget/Index?tab=project&projectId=${projectId}&referrerId=${context.accountId}`;
   let text = `I just donated to ${
     state.successfulDonationRecipientProfile
       ? state.successfulDonationRecipientProfile.linktree?.twitter

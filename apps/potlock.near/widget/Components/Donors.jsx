@@ -1,9 +1,9 @@
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { calcNetDonationAmount, filterByDate } = VM.require(
-  `${ownerId}/widget/Components.DonorsUtils`
-);
+  "${config/account}/widget/Components.DonorsUtils"
+) || {
+  calcNetDonationAmount: () => "",
+  filterByDate: () => []
+};
 
 let PotFactorySDK =
   VM.require("potlock.near/widget/SDK.potfactory") ||
@@ -318,13 +318,13 @@ return (
         <div className="leaderboard">
           <h1>Donors Leaderboard</h1>
           <Widget
-            src={`${ownerId}/widget/Components.DonorsCards`}
+            src={"${config/account}/widget/Components.DonorsCards"}
             props={{ ...props, sponsors, sortedDonations, currentTab }}
           />
         </div>
         <Tabs>
           <Widget
-            src={`${ownerId}/widget/Inputs.Dropdown`}
+            src={"${config/account}/widget/Inputs.Dropdown"}
             props={{
               sortVal: title,
               title: (
@@ -357,7 +357,7 @@ return (
           </Filter>
         </Tabs>
         <Widget
-          src={`${ownerId}/widget/${options.find((option) => option.tab == currentTab).src}`}
+          src={"${config/account}/widget/${options.find((option) => option.tab == currentTab).src}"}
           props={{
             ...props,
             allDonations: allDonations,

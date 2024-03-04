@@ -1,9 +1,5 @@
 const { projectId } = props;
 
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
-
 let PotFactorySDK =
   VM.require("potlock.near/widget/SDK.potfactory") ||
   (() => ({
@@ -41,14 +37,14 @@ const Container = styled.div`
 return potIds ? (
   <Container>
     <Widget
-      src={`${ownerId}/widget/Project.ListSection`}
+      src={"${config/account}/widget/Project.ListSection"}
       props={{
         ...props,
         tab: "pots",
         items: potIds,
         renderItem: (pot) => (
           <Widget
-            src={`${ownerId}/widget/Pots.Card`}
+            src={"${config/account}/widget/Pots.Card"}
             props={{
               ...props,
               potId: pot,

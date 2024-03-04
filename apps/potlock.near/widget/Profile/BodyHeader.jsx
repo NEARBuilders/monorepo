@@ -1,4 +1,4 @@
-const { profile, ownerId, accountId, projectId } = props;
+const { profile, accountId, projectId } = props;
 
 const Header = styled.div`
   display: flex;
@@ -107,7 +107,7 @@ return (
       <Name>{profile.name}</Name>
       {canEdit && (
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             type: "secondary",
             text: "Edit profile",
@@ -120,7 +120,7 @@ return (
     <AccountInfoContainer>
       <AccountId>@{projectId || accountId}</AccountId>
       <Widget
-        src={`${ownerId}/widget/Project.Share`}
+        src={"${config/account}/widget/Project.Share"}
         props={{
           text: projectId ? projectLink : profileLink,
           clipboardIcon: ShareIcon,
@@ -128,13 +128,13 @@ return (
       />
     </AccountInfoContainer>
     <Widget
-      src={`${ownerId}/widget/Profile.Tags`}
+      src={"${config/account}/widget/Profile.Tags"}
       props={{
         ...props,
       }}
     />
     <Widget
-      src={`${ownerId}/widget/Project.Actions`}
+      src={"${config/account}/widget/Project.Actions"}
       props={{
         ...props,
       }}

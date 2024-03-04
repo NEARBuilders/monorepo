@@ -1,5 +1,4 @@
 const {
-  ownerId,
   isModalOpen,
   onClose,
   handleAddFundingSource,
@@ -75,7 +74,7 @@ const Row = styled.div`
 
 return (
   <Widget
-    src={`${ownerId}/widget/Components.Modal`}
+    src={"${config/account}/widget/Components.Modal"}
     props={{
       isModalOpen,
       onClose,
@@ -97,7 +96,7 @@ return (
           </ModalHeader>
           <ModalBody>
             <Widget
-              src={`${ownerId}/widget/Inputs.Text`}
+              src={"${config/account}/widget/Inputs.Text"}
               props={{
                 label: "Name of investor",
                 placeholder: "Enter investor name",
@@ -118,7 +117,7 @@ return (
               }}
             />
             <Widget
-              src={`${ownerId}/widget/Inputs.TextArea`}
+              src={"${config/account}/widget/Inputs.TextArea"}
               props={{
                 label: "Description",
                 placeholder: "Type description",
@@ -135,7 +134,7 @@ return (
               }}
             />
             <Widget
-              src={`${ownerId}/widget/Inputs.Text`}
+              src={"${config/account}/widget/Inputs.Text"}
               props={{
                 label: "Denomination of investment",
                 placeholder: "e.g. NEAR, USD, USDC, etc.",
@@ -156,7 +155,7 @@ return (
               }}
             />
             <Widget
-              src={`${ownerId}/widget/Inputs.Text`}
+              src={"${config/account}/widget/Inputs.Text"}
               props={{
                 label: "Investment amount",
                 placeholder: "e.g. 1000",
@@ -175,7 +174,7 @@ return (
             />
             <Row style={{ width: "100%", justifyContent: "flex-end" }}>
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "primary",
                   text: "Add Funding Source",

@@ -1,5 +1,4 @@
 const accountId = props.accountId ?? context.accountId;
-const ownerId = props.ownerId;
 const profile = Social.getr(`${accountId}/profile`);
 
 const name = profile.name;

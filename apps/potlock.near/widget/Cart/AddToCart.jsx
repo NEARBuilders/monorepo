@@ -1,11 +1,10 @@
-const { ownerId } = props;
 const existsInCart = props.cart && !!props.cart[props.projectId];
 
 // console.log("props in AddToCart: ", props);
 // console.log("existsInCart: ", props);
 return (
   <Widget
-    src={`${ownerId}/widget/Components.Button`}
+    src={"${config/account}/widget/Components.Button"}
     props={{
       type: "primary",
       text: existsInCart ? "Remove from cart" : "Add to cart",

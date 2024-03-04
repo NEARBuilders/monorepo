@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 const options = [
   { text: "Native", value: "native" },
   { text: "Multichain", value: "multichain" },
@@ -9,7 +7,7 @@ const options = [
 
 return (
   <Widget
-    src={`${ownerId}/widget/Inputs.Select`}
+    src={"${config/account}/widget/Inputs.Select"}
     props={{
       label: "Integration with NEAR *",
       noLabel: props.noLabel,

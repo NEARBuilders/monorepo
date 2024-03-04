@@ -2,13 +2,10 @@ const { sponsors, sortedDonations, currentTab } = props;
 
 const donations = currentTab === "sponsors" ? sponsors : sortedDonations;
 
-const { ownerId } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
-};
 const { nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
   nearToUsdWithFallback: () => "",
 };
-const { _address } = VM.require(`${ownerId}/widget/Components.DonorsUtils`);
+const { _address } = VM.require("${config/account}/widget/Components.DonorsUtils");
 
 const Container = styled.div`
   display: flex;

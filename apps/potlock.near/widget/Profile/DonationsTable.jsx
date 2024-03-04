@@ -1,6 +1,5 @@
 const { projectId, donations, hrefWithParams } = props;
-const { ownerId, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
-  ownerId: "",
+const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
@@ -10,7 +9,7 @@ const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
 const nearLogo =
   "https://ipfs.near.social/ipfs/bafkreicdcpxua47eddhzjplmrs23mdjt63czowfsa2jnw4krkt532pa2ha";
 
-const { _address } = VM.require(`${ownerId}/widget/Components.DonorsUtils`) || {
+const { _address } = VM.require("${config/account}/widget/Components.DonorsUtils") || {
   _address: () => "",
 };
 
@@ -325,7 +324,7 @@ return (
     </Stats>
     <div className="search-bar">
       <Widget
-        src={`${ownerId}/widget/Project.SearchBar`}
+        src={"${config/account}/widget/Project.SearchBar"}
         props={{
           title: sortVal,
           tab: tab,

@@ -1,4 +1,3 @@
-const { ownerId } = props;
 const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
 
 const headerTitleFontSizePx = 88;
@@ -112,6 +111,6 @@ return (
       {props.buttonPrimary && props.buttonPrimary}
       {props.buttonSecondary && props.buttonSecondary}
     </ButtonsContainer>
-    {showStats && <Widget src={`${ownerId}/widget/Project.DonationStats`} props={{ ...props }} />}
+    {showStats && <Widget src={"${config/account}/widget/Project.DonationStats"} props={{ ...props }} />}
   </HeaderContainer>
 );

@@ -1,5 +1,3 @@
-const ownerId = "potlock.near";
-
 const navHeightPx = 110;
 const navHeightPxMobile = 96;
 
@@ -500,7 +498,7 @@ return (
           // return <CartItem projectId={projectId} Object.keys(props.cart).length={Object.keys(props.cart).length} />;
           return (
             <Widget
-              src={`${ownerId}/widget/Cart.CartModalItem`}
+              src={"${config/account}/widget/Cart.CartModalItem"}
               props={{
                 ...props,
                 projectId,
@@ -517,7 +515,7 @@ return (
       )}
       <ButtonContainer>
         <Widget
-          src={`${ownerId}/widget/Buttons.NavigationButton`}
+          src={"${config/account}/widget/Buttons.NavigationButton"}
           props={{
             type: "primary",
             text: "Proceed to donate",
@@ -530,7 +528,7 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Buttons.ActionButton`}
+          src={"${config/account}/widget/Buttons.ActionButton"}
           props={{
             type: Object.keys(props.cart).length === 0 ? "primary" : "secondary",
             text: "Continue shopping",

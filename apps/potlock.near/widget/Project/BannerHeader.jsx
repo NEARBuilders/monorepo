@@ -1,4 +1,3 @@
-const { ownerId } = props;
 const accountId = props.projectId;
 if (!accountId) {
   return "No account ID";
@@ -233,7 +232,7 @@ return (
         onChange={props.profileImageOnChange}
       >
         <Widget
-          src={`${ownerId}/widget/Project.ProfileImage`}
+          src={`${config/account}/widget/Project.ProfileImage`}
           props={{
             profile,
             accountId,

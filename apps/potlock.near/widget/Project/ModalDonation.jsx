@@ -209,11 +209,10 @@ const {
   NADABOT_CONTRACT_ID,
   POT,
 } = props;
-const { ownerId, DONATION_CONTRACT_ID, NADABOT_HUMAN_METHOD, NADA_BOT_URL, SUPPORTED_FTS } =
+const { DONATION_CONTRACT_ID, NADABOT_HUMAN_METHOD, NADA_BOT_URL, SUPPORTED_FTS } =
   VM.require("potlock.near/widget/constants") || {
     DONATION_CONTRACT_ID: "",
     NADABOT_HUMAN_METHOD: "",
-    ownerId: "",
     NADA_BOT_URL: "",
     SUPPORTED_FTS: {},
   };
@@ -528,7 +527,7 @@ const handleDonate = () => {
 
 return (
   <Widget
-    src={`${ownerId}/widget/Components.Modal`}
+    src={"${config/account}/widget/Components.Modal"}
     props={{
       ...props,
       onClose: (e) => {
@@ -554,12 +553,12 @@ return (
           <ModalBody>
             {recipientId ? (
               profile === null ? (
-                <Widget src={`${ownerId}/widget/Components.Loading`} />
+                <Widget src={"${config/account}/widget/Components.Loading"} />
               ) : (
                 <Row>
                   <Column>
                     <Widget
-                      src={`${ownerId}/widget/Project.ProfileImage`}
+                      src={"${config/account}/widget/Project.ProfileImage"}
                       props={{
                         ...props,
                         accountId: recipientId,
@@ -593,7 +592,7 @@ return (
             )}
             <Column style={{ width: "100%" }}>
               <Widget
-                src={`${ownerId}/widget/Inputs.Text`}
+                src={"${config/account}/widget/Inputs.Text"}
                 props={{
                   label: "Amount",
                   placeholder: "0",
@@ -609,7 +608,7 @@ return (
                   },
                   preInputChildren: (
                     <Widget
-                      src={`${ownerId}/widget/Inputs.Select`}
+                      src={"${config/account}/widget/Inputs.Select"}
                       props={{
                         noLabel: true,
                         placeholder: "",
@@ -655,7 +654,7 @@ return (
             </Column>
             <Row style={{ padding: "0px", gap: "0px" }}>
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "bypassProtocolFeeSelector",
                   checked: state.bypassProtocolFee,
@@ -673,7 +672,7 @@ return (
                   target="_blank"
                 >
                   <Widget
-                    src={`${ownerId}/widget/Project.ProfileImage`}
+                    src={"${config/account}/widget/Project.ProfileImage"}
                     props={{
                       ...props,
                       accountId: protocolFeeRecipientAccount,
@@ -692,7 +691,7 @@ return (
             {potDetail?.chef && potDetail?.chef_fee_basis_points > 0 && (
               <Row style={{ padding: "0px", gap: "0px" }}>
                 <Widget
-                  src={`${ownerId}/widget/Inputs.Checkbox`}
+                  src={"${config/account}/widget/Inputs.Checkbox"}
                   props={{
                     id: "bypassChefFeeSelector",
                     checked: state.bypassChefFee,
@@ -708,7 +707,7 @@ return (
                     target="_blank"
                   >
                     <Widget
-                      src={`${ownerId}/widget/Project.ProfileImage`}
+                      src={"${config/account}/widget/Project.ProfileImage"}
                       props={{
                         ...props,
                         accountId: potDetail?.chef,
@@ -724,7 +723,7 @@ return (
               </Row>
             )}
             <Widget
-              src={`${ownerId}/widget/Cart.BreakdownSummary`}
+              src={"${config/account}/widget/Cart.BreakdownSummary"}
               props={{
                 ...props,
                 referrerId,
@@ -734,7 +733,7 @@ return (
             />
             {state.addNote ? (
               <Widget
-                src={`${ownerId}/widget/Inputs.TextArea`}
+                src={"${config/account}/widget/Inputs.TextArea"}
                 props={{
                   label: "Note",
                   inputRows: 2,
@@ -794,7 +793,7 @@ return (
           <ModalFooter>
             {recipientId && (
               <Widget
-                src={`${ownerId}/widget/Components.Button`}
+                src={"${config/account}/widget/Components.Button"}
                 props={{
                   type: "tertiary",
                   text: "Add to cart",
@@ -806,7 +805,7 @@ return (
               />
             )}
             <Widget
-              src={`${ownerId}/widget/Components.Button`}
+              src={"${config/account}/widget/Components.Button"}
               props={{
                 type: "primary",
                 text: userShouldVerify ? "Nah, I want to have less impact" : "Donate",
@@ -821,7 +820,7 @@ return (
               }}
             />
             {/* <Widget
-              src={`${ownerId}/widget/Components.Button`}
+              src={"${config/account}/widget/Components.Button`}
               props={{
                 type: "primary",
                 text: userShouldVerify ? "Verify Now" : "Donate",

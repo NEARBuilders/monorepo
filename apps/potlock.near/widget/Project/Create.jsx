@@ -1,8 +1,7 @@
-const { ownerId } = props;
 return (
-  <>
+  <div className="form">
     <Widget
-      src={`${ownerId}/widget/Components.Header`}
+      src={"${config/account}/widget/Components.Header"}
       props={{
         ...props,
         title1: props.edit ? "Edit your project" : "Create new project",
@@ -15,6 +14,6 @@ return (
         },
       }}
     />
-    <Widget src={`${ownerId}/widget/Project.CreateForm`} props={props} />
-  </>
+    <Widget src={"${config/account}/widget/Project.CreateForm"} props={props} />
+  </div>
 );

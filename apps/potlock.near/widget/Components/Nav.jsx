@@ -1,6 +1,10 @@
-const { ownerId } = props;
+const { href } = VM.require("buildhub.near/widget/lib.url") || {
+  href: () => {},
+};
+
 const navHeightPx = 110;
 const navHeightPxMobile = 96;
+const cartItems = props.cart && Object.keys(props.cart);
 
 const Nav = styled.div`
   // commenting out stickiness for now
@@ -58,7 +62,7 @@ const NavRightMobile = styled.div`
   }
 `;
 
-const NavLogo = styled.a`
+const NavLogo = styled("Link")`
   text-align: center;
   color: #2e2e2e;
   font-size: 23.95px;
@@ -86,7 +90,7 @@ const NavTabs = styled.div`
   }
 `;
 
-const NavTab = styled.a`
+const NavTab = styled("Link")`
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   color: ${(props) => (props.selected ? "#2E2E2E" : "#7B7B7B")};
   font-size: 14px;
@@ -106,7 +110,8 @@ const NavTab = styled.a`
 `;
 
 const CartButton = styled.div`
-  padding: ${(props) => (props.containsItems ? "8px 8px 8px 16px" : "8px 16px")};
+  padding: ${(props) =>
+    props.containsItems ? "8px 8px 8px 16px" : "8px 16px"};
   background: #2e2e2e;
   border-radius: 6px;
   cursor: pointer;
@@ -351,7 +356,9 @@ const Modal = ({ isOpen, onClose, children }) => {
 
   return (
     <CartModal onClick={onClose}>
-      <CartModalContent onClick={(e) => e.stopPropagation()}>{children}</CartModalContent>
+      <CartModalContent onClick={(e) => e.stopPropagation()}>
+        {children}
+      </CartModalContent>
     </CartModal>
   );
 };
@@ -397,14 +404,28 @@ return (
     )}
     <Nav>
       <NavLeft>
-        <NavLogo href={props.hrefWithParams(`?tab=projects`)}>🫕 Potlock</NavLogo>
+        <NavLogo
+          href={href({
+            widgetSrc: "${config/account}/widget/app",
+            params: {
+              tab: tab.link,
+            },
+          })}
+        >
+          🫕 Potlock
+        </NavLogo>
       </NavLeft>
       <NavRight>
         <NavTabs>
           {tabOptions.map((tab) => {
             return (
               <NavTab
-                href={tab.href ?? props.hrefWithParams(`?tab=${tab.link}`)}
+                href={href({
+                  widgetSrc: "${config/account}/widget/app",
+                  params: {
+                    tab: tab.link,
+                  },
+                })}
                 disabled={tab.disabled}
                 target={tab.newTab ? "_blank" : ""}
                 onClick={(e) => {
@@ -431,9 +452,11 @@ return (
             }}
           >
             <CartText>Cart</CartText>
-            {Object.keys(props.cart).length > 0 && (
+            {cartItems.length > 0 && (
               <CartCountContainer>
-                <CartText style={{ fontSize: "12px" }}>{Object.keys(props.cart).length}</CartText>
+                <CartText style={{ fontSize: "12px" }}>
+                  {cartItems.length}
+                </CartText>
               </CartCountContainer>
             )}
           </CartButton>
@@ -444,12 +467,14 @@ return (
           onClick={(e) => {
             props.setIsCartModalOpen(!props.isCartModalOpen);
           }}
-          containsItems={Object.keys(props.cart).length > 0}
+          containsItems={cartItems.length > 0}
         >
           <CartText>Cart</CartText>
-          {Object.keys(props.cart).length > 0 && (
+          {cartItems.length > 0 && (
             <CartCountContainer>
-              <CartText style={{ fontSize: "12px" }}>{Object.keys(props.cart).length}</CartText>
+              <CartText style={{ fontSize: "12px" }}>
+                {cartItems.length}
+              </CartText>
             </CartCountContainer>
           )}
         </CartButton>
@@ -470,7 +495,10 @@ return (
             viewBox="0 0 24 24"
             fill="none"
           >
-            <path d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z" fill="#7B7B7B" />
+            <path
+              d="M3 18H21V16H3V18ZM3 13H21V11H3V13ZM3 6V8H21V6H3Z"
+              fill="#7B7B7B"
+            />
           </svg>
         </NavTab>
       </NavRightMobile>
@@ -480,7 +508,12 @@ return (
         {tabOptions.map((tab) => {
           return (
             <NavMenuItem
-              href={props.hrefWithParams(`?tab=${tab.link}`)}
+              href={href({
+                widgetSrc: "${config/account}/widget/app",
+                params: {
+                  tab: tab.link,
+                },
+              })}
               disabled={tab.disabled}
               onClick={(e) => {
                 if (tab.disabled) e.preventDefault();
@@ -494,26 +527,30 @@ return (
         })}
       </NavMenu>
     )}
-    <Modal isOpen={props.isCartModalOpen} onClose={() => props.setIsCartModalOpen(false)}>
+    <Modal
+      isOpen={props.isCartModalOpen}
+      onClose={() => props.setIsCartModalOpen(false)}
+    >
       {/* <div>hi</div> */}
       <ModalHeader>
         <ModalHeaderText>Donation cart</ModalHeaderText>
         <ModalHeaderText>
-          {Object.keys(props.cart).length}{" "}
+          {cartItems.length}{" "}
           <span style={{ fontWeight: 400, color: "#7B7B7B" }}>
-            {Object.keys(props.cart).length === 1 ? "project" : "projects"}
+            {cartItems.length === 1 ? "project" : "projects"}
           </span>
         </ModalHeaderText>
         {/* <Ear /> */}
       </ModalHeader>
-      {Object.keys(props.cart).length === 0 ? (
+      {cartItems.length === 0 ? (
         <NoProjectsText>Your cart is empty! 💸</NoProjectsText>
       ) : (
+        props.cart &&
         Object.keys(props.cart).map((projectId) => {
           // return <CartItem projectId={projectId} Object.keys(props.cart).length={Object.keys(props.cart).length} />;
           return (
             <Widget
-              src={`${ownerId}/widget/Cart.CartModalItem`}
+              src={"${config/account}/widget/Cart.CartModalItem"}
               props={{
                 ...props,
                 projectId,
@@ -530,12 +567,17 @@ return (
       )}
       <ButtonContainer>
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             type: "primary",
             text: "Proceed to donate",
-            disabled: Object.keys(props.cart).length === 0,
-            href: props.hrefWithParams(`?tab=cart`),
+            disabled: cartItems.length === 0,
+            href: href({
+              widgetSrc: "${config/account}/widget/app",
+              params: {
+                tab: "cart",
+              },
+            }),
             style: {
               width: "100%",
               marginBottom: "16px",
@@ -543,9 +585,9 @@ return (
           }}
         />
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
-            type: Object.keys(props.cart).length === 0 ? "primary" : "secondary",
+            type: cartItems.length === 0 ? "primary" : "secondary",
             text: "Continue shopping",
             onClick: () => props.setIsCartModalOpen(false),
             style: {

@@ -1,4 +1,3 @@
-const { ownerId } = props;
 const donationContractId = "donate.potlock.near";
 
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
@@ -220,7 +219,7 @@ const twitterIntent = useMemo(() => {
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
   let url =
     DEFAULT_GATEWAY +
-    `${ownerId}/widget/Index?tab=project&projectId=${state.successfulDonationRecipientId}&referrerId=${context.accountId}`;
+    `${config/account}/widget/Index?tab=project&projectId=${state.successfulDonationRecipientId}&referrerId=${context.accountId}`;
   let text = `I just donated to ${
     state.successfulDonationRecipientProfile
       ? state.successfulDonationRecipientProfile.linktree?.twitter
@@ -241,7 +240,7 @@ return (
         <Title>Thanks for donating!</Title>
         {twitterIntent && (
           <Widget
-            src={`${ownerId}/widget/Components.Button`}
+            src={"${config/account}/widget/Components.Button"}
             props={{
               href: twitterIntent,
               target: "_blank",
@@ -255,7 +254,7 @@ return (
           />
         )}
         <Widget
-          src={`${ownerId}/widget/Components.Button`}
+          src={"${config/account}/widget/Components.Button"}
           props={{
             href: props.hrefWithParams(`?tab=projects`),
             type: twitterIntent ? "secondary" : "primary",
@@ -275,7 +274,7 @@ return (
         ) : (
           props.checkoutSuccessTxHash && (
             <Widget
-              src={`${ownerId}/widget/Components.Button`}
+              src={"${config/account}/widget/Components.Button"}
               props={{
                 href: `https://nearblocks.io/txns/${props.checkoutSuccessTxHash}`,
                 target: "_blank",
@@ -297,7 +296,7 @@ return (
           <ActionsContainer>
             <InnerContainer>
               <Widget
-                src={`${ownerId}/widget/Inputs.Checkbox`}
+                src={"${config/account}/widget/Inputs.Checkbox"}
                 props={{
                   id: "masterSelector",
                   disabled: Object.keys(props.cart).length === 0,
@@ -343,7 +342,7 @@ return (
               const checked = state.selectedProjectIds.includes(projectId);
               return (
                 <Widget
-                  src={`${ownerId}/widget/Cart.CheckoutItem`}
+                  src={"${config/account}/widget/Cart.CheckoutItem"}
                   props={{
                     ...props,
                     projectId,
@@ -376,7 +375,7 @@ return (
         </ColumnLeft>
         <ColumnRight>
           <Widget
-            src={`${ownerId}/widget/Cart.CheckoutBreakdown`}
+            src={"${config/account}/widget/Cart.CheckoutBreakdown"}
             props={{
               ...props,
               projectId: projectId,

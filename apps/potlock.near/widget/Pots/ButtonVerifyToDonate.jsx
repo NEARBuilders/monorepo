@@ -1,8 +1,6 @@
-const { ownerId } = props;
-
 return (
   <Widget
-    src={`${ownerId}/widget/Components.Button`}
+    src={"${config/account}/widget/Components.Button"}
     props={{
       ...props,
       type: "primary",

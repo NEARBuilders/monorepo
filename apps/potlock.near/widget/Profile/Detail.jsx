@@ -1,9 +1,8 @@
 const {
   SUPPORTED_FTS: { NEAR },
 } = props;
-const { DONATION_CONTRACT_ID, ownerId } = VM.require("potlock.near/widget/constants") || {
+const { DONATION_CONTRACT_ID } = VM.require("potlock.near/widget/constants") || {
   DONATION_CONTRACT_ID: "",
-  ownerId: "",
 };
 
 let DonateSDK =
@@ -28,7 +27,7 @@ const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
 
 const accountId = props.accountId ?? context.accountId;
 
-const { ProfileOptions } = VM.require(`${ownerId}/widget/Profile.Options`);
+const { ProfileOptions } = VM.require("${config/account}/widget/Profile.Options");
 
 if (!accountId) {
   return "No account ID";
@@ -102,7 +101,7 @@ const Wrapper = styled.div`
 return (
   <Wrapper>
     <Widget
-      src={`${ownerId}/widget/Profile.Body`}
+      src={"${config/account}/widget/Profile.Body"}
       props={{
         ...props,
         profile,
