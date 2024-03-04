@@ -5,6 +5,7 @@ const {
 } = VM.require("potlock.near/widget/utils") || {
   getTagsFromSocialProfileData: () => [],
   getTeamMembersFromSocialProfileData: () => [],
+  href: () => {},
 };
 
 // Card Skeleton - Loading fallback

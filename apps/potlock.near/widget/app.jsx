@@ -46,15 +46,15 @@ const config = {
           ...props,
         },
       },
-      projects: {
-        path: "${config/account}/widget/Project.ListPage",
+      project: {
+        path: "${config/account}/widget/Project.Detail",
         blockHeight: "final",
         init: {
           ...props,
         },
       },
-      project: {
-        path: "${config/account}/widget/Project.Detail",
+      projects: {
+        path: "${config/account}/widget/Project.ListPage",
         blockHeight: "final",
         init: {
           ...props,

@@ -6,6 +6,7 @@ const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback, href } = V
   daysUntil: () => "",
   yoctosToNear: () => "",
   yoctosToUsdWithFallback: () => "",
+  href: () => {},
 };
 
 const { NADA_BOT_URL, ToDo, MAX_DONATION_MESSAGE_LENGTH, SUPPORTED_FTS, ONE_TGAS } =

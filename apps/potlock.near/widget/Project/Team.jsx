@@ -99,6 +99,10 @@ const Col2 = styled.div`
 //   "root.near",
 // ];
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 return (
   <Container>
     {/* <Column className="col-3"> */}

@@ -12,13 +12,10 @@ const { NADA_BOT_URL, SUPPORTED_FTS } = VM.require(
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
-const { getTagsFromSocialProfileData } = VM.require(
+const { getTagsFromSocialProfileData, href } = VM.require(
   "potlock.near/widget/utils"
 ) || {
   getTagsFromSocialProfileData: () => [],
-};
-
-const { href } = VM.require("potlock.near/widget/utils") || {
   href: () => {},
 };
 
@@ -447,7 +444,7 @@ return (
   <>
     <Card href={href({
       params: {
-        page: "project",
+        tab: "project",
         projectId,
         potId,
         referralId,

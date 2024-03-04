@@ -1,5 +1,9 @@
 const { navOptions } = props;
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const getSelectedNavOption = () => {
   const navOption = navOptions.find((option) => option.id == props.nav);
   return navOption ?? navOptions[0];
@@ -49,7 +53,7 @@ return (
           <NavOption
             selected={selected}
             disabled={option.disabled}
-            href={`?tab=project&projectId=${props.projectId}&nav=${option.id}`}
+            href={href({ params: { tab: "project", projectId: props.projectId, nav: option.id}})}
           >
             {option.label}
           </NavOption>

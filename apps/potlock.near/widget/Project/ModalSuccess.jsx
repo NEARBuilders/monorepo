@@ -6,8 +6,9 @@ const {
   SUPPORTED_FTS: {},
   IPFS_BASE_URL: "",
 };
-const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+const { yoctosToUsd, href } = VM.require("potlock.near/widget/utils") || {
   yoctosToUsd: () => "",
+  href: () => {},
 };
 const loraCss = fetch(
   "https://fonts.googleapis.com/css2?family=Lora&display=swap"

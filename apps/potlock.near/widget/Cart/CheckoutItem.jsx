@@ -1,5 +1,6 @@
-const { basisPointsToPercent } = VM.require("potlock.near/widget/utils") || {
+const { basisPointsToPercent, href } = VM.require("potlock.near/widget/utils") || {
   basisPointsToPercent: () => 0,
+  href: () => {},
 };
 const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},

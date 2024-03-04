@@ -18,6 +18,10 @@ const [projectId, setProjectId] = useState("");
 //   }
 // `;
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 let RegistrySDK =
   VM.require("potlock.near/widget/SDK.registry") ||
   (() => ({
