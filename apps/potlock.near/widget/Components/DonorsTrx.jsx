@@ -9,9 +9,12 @@ useEffect(() => {
 const nearLogo =
   "https://ipfs.near.social/ipfs/bafkreicdcpxua47eddhzjplmrs23mdjt63czowfsa2jnw4krkt532pa2ha";
 
-const { getTimePassed, _address, calcNetDonationAmount, reverseArr } = VM.require(
-  "${config/account}/widget/Components.DonorsUtils"
-);
+const { getTimePassed, _address, calcNetDonationAmount, reverseArr } =
+  VM.require("${config/account}/widget/Components.DonorsUtils");
+
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
 
 const Container = styled.div`
   display: flex;
@@ -134,7 +137,10 @@ const NoResult = styled.div`
 `;
 
 const ProfileImg = ({ address }) => (
-  <Widget src="mob.near/widget/ProfileImage" props={{ accountId: address, style: {} }} />
+  <Widget
+    src="mob.near/widget/ProfileImage"
+    props={{ accountId: address, style: {} }}
+  />
 );
 
 return allDonations.length ? (
@@ -153,23 +159,27 @@ return allDonations.length ? (
 
           return (
             <TrRow>
-              <a
-                href={props.hrefWithParams(`?tab=project&projectId=${recipient_id}`)}
+              <Link
+                to={href({
+                  params: { tab: "project", projectId: recipient_id },
+                })}
                 className="address"
                 target="_blank"
               >
                 <ProfileImg address={recipient_id} />
                 {_address(recipient_id)}
-              </a>
+              </Link>
 
-              <a
-                href={props.hrefWithParams(`?tab=profile&accountId=${donor_id}`)}
+              <Link
+                to={href({
+                  params: { tab: "profile", accountId: donor_id },
+                })}
                 className="address"
                 target="_blank"
               >
                 <ProfileImg address={donor_id} />
                 {_address(donor_id)}
-              </a>
+              </Link>
 
               <div className="price">
                 <img src={nearLogo} alt="NEAR" />

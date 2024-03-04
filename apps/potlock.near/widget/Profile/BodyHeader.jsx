@@ -1,5 +1,9 @@
 const { profile, accountId, projectId } = props;
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const Header = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,7 +116,7 @@ return (
             type: "secondary",
             text: "Edit profile",
             disabled: false,
-            href: props.hrefWithParams(`?tab=editproject&projectId=${projectId}`),
+            href: href({ params: { tab: "editproject", projectId: projectId, referralId: props.referralId, env: props.env}})
           }}
         />
       )}

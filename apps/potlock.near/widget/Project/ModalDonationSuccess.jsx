@@ -3,8 +3,13 @@ const {
   IPFS_BASE_URL,
   SUPPORTED_FTS: { NEAR },
 } = props;
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
 
-const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
+const loraCss = fetch(
+  "https://fonts.googleapis.com/css2?family=Lora&display=swap"
+).body;
 
 const HEADER_ICON_URL =
   IPFS_BASE_URL + "bafkreiholfe7utobo5y2znjdr6ou26qmlcgf5teoxtyjo2undgfpl5kcwe";
@@ -162,7 +167,8 @@ if (props.isModalOpen && !state.successfulDonation) {
     }).then((donorData) => {
       State.update({
         successfulDonation,
-        recipientProfile: recipientData[recipient_id || project_id]?.profile || {},
+        recipientProfile:
+          recipientData[recipient_id || project_id]?.profile || {},
         donorProfile: donorData[donor_id]?.profile || {},
       });
     });
@@ -172,9 +178,14 @@ if (props.isModalOpen && !state.successfulDonation) {
 const twitterIntent = useMemo(() => {
   if (!state.recipientProfile) return;
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
-  let url =
-    DEFAULT_GATEWAY +
-    `${config/account}/widget/Index?tab=project&projectId=${state.successfulDonation.recipient_id}&referrerId=${context.accountId}`;
+  let url = href({
+    gateway: DEFAULT_GATEWAY,
+    params: {
+      tab: "project",
+      projectId: state.successfulDonation.recipient_id,
+      referrerId: context.accountId,
+    },
+  });
   let text = `I just donated to ${
     state.recipientProfile
       ? state.recipientProfile.linktree?.twitter
@@ -184,7 +195,12 @@ const twitterIntent = useMemo(() => {
   } on @${POTLOCK_TWITTER_ACCOUNT_ID}! Support public goods at `;
   text = encodeURIComponent(text);
   url = encodeURIComponent(url);
-  return twitterIntentBase + text + `&url=${url}` + `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`;
+  return (
+    twitterIntentBase +
+    text +
+    `&url=${url}` +
+    `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`
+  );
 }, [state.successfulDonation, state.recipientProfile]);
 
 return (
@@ -204,7 +220,9 @@ return (
                 <AmountNear>
                   {state.successfulDonation?.total_amount
                     ? parseFloat(
-                        NEAR.fromIndivisible(state.successfulDonation.total_amount).toString()
+                        NEAR.fromIndivisible(
+                          state.successfulDonation.total_amount
+                        ).toString()
                       )
                     : "-"}
                 </AmountNear>
@@ -219,11 +237,14 @@ return (
             <Row style={{ gap: "8px" }}>
               <TextBold>Has been donated to</TextBold>
               <UserChipLink
-                href={props.hrefWithEnv(
-                  `?tab=project&projectId=${
-                    state.successfulDonation.recipient_id || state.successfulDonation.project_id
-                  }`
-                )}
+                href={href({
+                  params: {
+                    tab: "project",
+                    projectId:
+                      state.successfulDonation.recipient_id ||
+                      state.successfulDonation.project_id,
+                  },
+                })}
                 target="_blank"
               >
                 {state.successfulDonation && (
@@ -258,7 +279,9 @@ return (
                 headerStyle: { justifyContent: "center" },
               }}
             />
-            <Row style={{ width: "100%", justifyContent: "center", gap: "24px" }}>
+            <Row
+              style={{ width: "100%", justifyContent: "center", gap: "24px" }}
+            >
               <Widget
                 src={"${config/account}/widget/Components.Button"}
                 props={{

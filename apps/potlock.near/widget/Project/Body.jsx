@@ -5,6 +5,11 @@ const {
   getTagsFromSocialProfileData,
 } = props;
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
+
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 
 const profile = props.profile;
@@ -197,7 +202,7 @@ return (
               type: "secondary",
               text: "Edit profile",
               disabled: false,
-              href: props.hrefWithEnv(`?tab=editproject&projectId=${props.projectId}`),
+              href: href({ params: { tab: "editproject", projectId: props.projectId, env: props.env }})
             }}
           />
         )}

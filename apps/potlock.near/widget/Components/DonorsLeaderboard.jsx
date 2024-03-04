@@ -1,8 +1,9 @@
 const { sponsors, sortedDonations, filter, currentTab } = props;
 const donations = currentTab === "sponsors" ? sponsors : sortedDonations;
 
-const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsd, href } = VM.require("potlock.near/widget/utils") || {
   nearToUsd: 1,
+  href: () => {},
 };
 
 const [page, setPage] = useState(0);
@@ -15,9 +16,8 @@ useEffect(() => {
 const nearLogo =
   "https://ipfs.near.social/ipfs/bafkreicdcpxua47eddhzjplmrs23mdjt63czowfsa2jnw4krkt532pa2ha";
 
-const { getTimePassed, _address, calcNetDonationAmount, reverseArr } = VM.require(
-  "${config/account}/widget/Components.DonorsUtils"
-);
+const { getTimePassed, _address, calcNetDonationAmount, reverseArr } =
+  VM.require("${config/account}/widget/Components.DonorsUtils");
 
 const Container = styled.div`
   display: flex;
@@ -147,7 +147,10 @@ donations.forEach((donation) => {
 });
 
 const ProfileImg = ({ donor_id }) => (
-  <Widget src="mob.near/widget/ProfileImage" props={{ accountId: donor_id, style: {} }} />
+  <Widget
+    src="mob.near/widget/ProfileImage"
+    props={{ accountId: donor_id, style: {} }}
+  />
 );
 
 return donations.length ? (
@@ -159,31 +162,33 @@ return donations.length ? (
         <div>Amount</div>
         {nearToUsd && <div>Amount (USD)</div>}
       </div>
-      {donations.slice(page * perPage, (page + 1) * perPage).map((donation, idx) => {
-        const { donor_id, amount } = donation;
+      {donations
+        .slice(page * perPage, (page + 1) * perPage)
+        .map((donation, idx) => {
+          const { donor_id, amount } = donation;
 
-        return (
-          <TrRow>
-            <div className="rank">#{idx + 1 + page * perPage}</div>
+          return (
+            <TrRow>
+              <div className="rank">#{idx + 1 + page * perPage}</div>
 
-            <a
-              href={props.hrefWithParams(`?tab=profile&accountId=${donor_id}`)}
-              className="address"
-              target="_blank"
-            >
-              <ProfileImg donor_id={donor_id} />
+              <Link
+                href={href({ params: { tab: profile, accountId: donor_id } })}
+                className="address"
+                target="_blank"
+              >
+                <ProfileImg donor_id={donor_id} />
 
-              {_address(donor_id, 15)}
-            </a>
+                {_address(donor_id, 15)}
+              </Link>
 
-            <div className="price">
-              <img src={nearLogo} alt="NEAR" />
-              {amount.toFixed(2)}
-            </div>
-            {nearToUsd && <div>~${(amount * nearToUsd).toFixed(2)}</div>}
-          </TrRow>
-        );
-      })}
+              <div className="price">
+                <img src={nearLogo} alt="NEAR" />
+                {amount.toFixed(2)}
+              </div>
+              {nearToUsd && <div>~${(amount * nearToUsd).toFixed(2)}</div>}
+            </TrRow>
+          );
+        })}
     </div>
     <Widget
       src="baam25.near/widget/pagination"

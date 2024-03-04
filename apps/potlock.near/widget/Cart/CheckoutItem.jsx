@@ -1,7 +1,7 @@
 const { basisPointsToPercent } = VM.require("potlock.near/widget/utils") || {
   basisPointsToPercent: () => 0,
 };
-const {  SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
@@ -98,7 +98,8 @@ const Row = styled.div`
 
 const { projectId, checked, handleCheckboxClick } = props;
 
-const profile = props.profile || Social.get(`${projectId}/profile/**`, "final") || {};
+const profile =
+  props.profile || Social.get(`${projectId}/profile/**`, "final") || {};
 
 State.init({
   showBreakdown: false,
@@ -141,7 +142,9 @@ return (
       </ImageContainer>
       <DetailsContainer>
         <Row>
-          <Title href={props.hrefWithParams(`?tab=project&projectId=${projectId}`)}>
+          <Title
+            href={href({ params: { tab: "project", projectId: projectId } })}
+          >
             {profile.name ?? ""}
           </Title>
           <Widget
@@ -149,7 +152,9 @@ return (
             props={{
               ...props,
               backgroundColor: isPotDonation ? "#FEF6EE" : "#F6F5F3",
-              borderColor: isPotDonation ? "rgba(219, 82, 27, 0.36)" : "#DBDBDB",
+              borderColor: isPotDonation
+                ? "rgba(219, 82, 27, 0.36)"
+                : "#DBDBDB",
               textColor: isPotDonation ? "#EA6A25" : "#292929",
               text: isPotDonation
                 ? cartItem.potDetail

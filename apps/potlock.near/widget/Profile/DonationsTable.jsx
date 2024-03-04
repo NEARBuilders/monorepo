@@ -1,9 +1,10 @@
-const { projectId, donations, hrefWithParams } = props;
+const { projectId, donations } = props;
 const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   SUPPORTED_FTS: {},
 };
-const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsd, href } = VM.require("potlock.near/widget/utils") || {
   nearToUsd: 1,
+  href: () => {},
 };
 
 const nearLogo =
@@ -387,7 +388,7 @@ return (
           );
           return (
             <TrRow>
-              <a href={hrefWithParams(url)} className="address" target="_blank">
+              <a href={`/potlock.near/widget/app${url})`} className="address" target="_blank">
                 {type === "SPONSORSHIP" ? (
                   <img
                     className="profile-image"

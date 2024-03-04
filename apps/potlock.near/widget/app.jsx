@@ -1,16 +1,3 @@
-const hrefWithParams = (href) => {
-  // pass env & referrerId to all links
-  if (props.env) {
-    href = `${href}${href.includes("?") ? "&" : "?"}env=${props.env}`;
-  }
-  if (props.referrerId) {
-    href = `${href}${href.includes("?") ? "&" : "?"}referrerId=${
-      props.referrerId
-    }`;
-  }
-  return href;
-};
-
 const config = {
   theme: {
     // add key values to define colors
@@ -48,7 +35,6 @@ const config = {
         path: "${config/account}/widget/Project.Create",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -56,7 +42,6 @@ const config = {
         path: "${config/account}/widget/Project.Create",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           edit: true,
           ...props,
         },
@@ -65,7 +50,6 @@ const config = {
         path: "${config/account}/widget/Project.ListPage",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -73,7 +57,6 @@ const config = {
         path: "${config/account}/widget/Project.Detail",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -81,7 +64,6 @@ const config = {
         path: "${config/account}/widget/Cart.Checkout",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -89,7 +71,6 @@ const config = {
         path: "${config/account}/widget/Components.Feed",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -97,7 +78,6 @@ const config = {
         path: "${config/account}/widget/Pots.Home",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -105,7 +85,6 @@ const config = {
         path: "${config/account}/widget/Pots.Deploy",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -113,7 +92,6 @@ const config = {
         path: "${config/account}/widget/Pots.Detail",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -121,7 +99,6 @@ const config = {
         path: "${config/account}/widget/Components.Donors",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -129,7 +106,6 @@ const config = {
         path: "${config/account}/widget/Profile.Detail",
         blockHeight: "final",
         init: {
-          hrefWithParams: hrefWithParams,
           ...props,
         },
       },
@@ -174,6 +150,14 @@ const Root = styled.div`
     font-weight: 700;
     src: local("Mona-Sans"),
       url(https://fonts.cdnfonts.com/s/91271/Mona-Sans-Bold.woff) format("woff");
+  }
+
+  a {
+    text-decoration: none;
+    
+    &:hover: {
+      text-decoration: none;
+    }
   }
 `;
 

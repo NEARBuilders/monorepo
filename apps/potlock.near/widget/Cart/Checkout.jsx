@@ -180,7 +180,11 @@ const allSelected =
 //   }
 // }, [props.transactionHashes]);
 
-if (props.transactionHashes && registeredProjects && !state.successfulDonationRecipientId) {
+if (
+  props.transactionHashes &&
+  registeredProjects &&
+  !state.successfulDonationRecipientId
+) {
   const body = JSON.stringify({
     jsonrpc: "2.0",
     id: "dontcare",
@@ -206,7 +210,10 @@ if (props.transactionHashes && registeredProjects && !state.successfulDonationRe
   }
 }
 
-if (state.successfulDonationRecipientId && !state.successfulDonationRecipientProfile) {
+if (
+  state.successfulDonationRecipientId &&
+  !state.successfulDonationRecipientProfile
+) {
   const profile = Social.getr(`${state.successfulDonationRecipientId}/profile`);
   // console.log("profile: ", profile);
   if (profile) {
@@ -219,7 +226,9 @@ const twitterIntent = useMemo(() => {
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
   let url =
     DEFAULT_GATEWAY +
-    `${config/account}/widget/Index?tab=project&projectId=${state.successfulDonationRecipientId}&referrerId=${context.accountId}`;
+    `${config / account}/widget/Index?tab=project&projectId=${
+      state.successfulDonationRecipientId
+    }&referrerId=${context.accountId}`;
   let text = `I just donated to ${
     state.successfulDonationRecipientProfile
       ? state.successfulDonationRecipientProfile.linktree?.twitter
@@ -229,8 +238,16 @@ const twitterIntent = useMemo(() => {
   } on @${POTLOCK_TWITTER_ACCOUNT_ID}! Support public goods at `;
   text = encodeURIComponent(text);
   url = encodeURIComponent(url);
-  return twitterIntentBase + text + `&url=${url}` + `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`;
-}, [state.successfulDonationRecipientId, state.successfulDonationRecipientProfile]);
+  return (
+    twitterIntentBase +
+    text +
+    `&url=${url}` +
+    `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`
+  );
+}, [
+  state.successfulDonationRecipientId,
+  state.successfulDonationRecipientProfile,
+]);
 
 return (
   // <div>
@@ -256,7 +273,7 @@ return (
         <Widget
           src={"${config/account}/widget/Components.Button"}
           props={{
-            href: props.hrefWithParams(`?tab=projects`),
+            href: href({ params: { tab: "projects" } }),
             type: twitterIntent ? "secondary" : "primary",
             text: "Explore projects",
             style: {
@@ -304,12 +321,14 @@ return (
                   onClick: (e) => {
                     // if allSelected, then deselect all
                     // if not allSelected, then select all
-                    const selectedProjectIds = Object.keys(props.cart).filter((_) => {
-                      if (allSelected) {
-                        return false;
+                    const selectedProjectIds = Object.keys(props.cart).filter(
+                      (_) => {
+                        if (allSelected) {
+                          return false;
+                        }
+                        return true;
                       }
-                      return true;
-                    });
+                    );
                     State.update({
                       selectedProjectIds,
                       masterSelectorSelected: !allSelected,
@@ -327,7 +346,10 @@ return (
                 // delete selected projects
                 props.removeProjectsFromCart(state.selectedProjectIds);
                 // uncheck box
-                State.update({ selectedProjectIds: [], masterSelectorSelected: false });
+                State.update({
+                  selectedProjectIds: [],
+                  masterSelectorSelected: false,
+                });
               }}
             >
               <Icon src={TRASH_ICON_URL} />
@@ -352,7 +374,9 @@ return (
                       // else, select
                       let selectedProjectIds = state.selectedProjectIds;
                       if (checked) {
-                        selectedProjectIds = selectedProjectIds.filter((id) => id !== projectId);
+                        selectedProjectIds = selectedProjectIds.filter(
+                          (id) => id !== projectId
+                        );
                       } else {
                         selectedProjectIds.push(projectId);
                       }
@@ -361,7 +385,8 @@ return (
                       };
                       if (
                         selectedProjectIds.length !== 0 &&
-                        selectedProjectIds.length !== Object.keys(props.cart).length
+                        selectedProjectIds.length !==
+                          Object.keys(props.cart).length
                       ) {
                         updatedState.masterSelectorSelected = false;
                       }

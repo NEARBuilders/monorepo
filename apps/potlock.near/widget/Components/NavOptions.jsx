@@ -21,7 +21,7 @@ const NavOptionContainer = styled.div`
   align-items: center;
 `;
 
-const NavOption = styled.a`
+const NavOption = styled.div`
   font-size: 14px;
   padding: 8px 16px;
   font-weight: ${(props) => (props.selected ? 600 : 400)};
@@ -46,11 +46,23 @@ return (
       ) : (
         <NavOptionContainer>
           {selected && (
-            <div style={{ width: 2, height: 16, background: "#DD3345", borderRadius: 2 }} />
+            <div
+              style={{
+                width: 2,
+                height: 16,
+                background: "#DD3345",
+                borderRadius: 2,
+              }}
+            />
           )}
-          <NavOption selected={selected} disabled={option.disabled} href={option.href}>
-            {option.label}
-          </NavOption>
+          <Link to={option.href} style={{ textDecoration: "none" }}>
+            <NavOption
+              selected={selected}
+              disabled={option.disabled}
+            >
+              {option.label}
+            </NavOption>
+          </Link>
         </NavOptionContainer>
       );
     })}

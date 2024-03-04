@@ -1,8 +1,11 @@
 const { potId } = props;
-const { daysUntil, yoctosToNear, yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+const { daysUntil, yoctosToNear, yoctosToUsd, href } = VM.require(
+  "potlock.near/widget/utils"
+) || {
   daysUntil: () => "",
   yoctosToNear: () => "",
   yoctosToUsd: () => "",
+  href: () => {},
 };
 
 const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
@@ -13,7 +16,7 @@ const potConfig = PotSDK.getConfig(potId);
 const MAX_DESCRIPTION_LENGTH = 100;
 const MAX_TITLE_LENGTH = 36;
 
-const Card = styled.a`
+const Card = styled.div`
   display: flex;
   flex-direction: column;
   // width: 100%;
@@ -108,7 +111,8 @@ const now = Date.now();
 const applicationNotStarted = now < application_start_ms;
 const applicationOpen = now >= application_start_ms && now < application_end_ms;
 const publicRoundNotStarted = now < public_round_start_ms;
-const publicRoundOpen = now >= public_round_start_ms && now < public_round_end_ms;
+const publicRoundOpen =
+  now >= public_round_start_ms && now < public_round_end_ms;
 // const publicRoundOpen = true;
 const publicRoundClosed = now >= public_round_end_ms;
 
@@ -116,69 +120,90 @@ const amountNear = yoctosToNear(matching_pool_balance);
 const amountUsd = yoctosToUsd(matching_pool_balance);
 
 return (
-  <Card href={props.hrefWithParams(`?tab=pot&potId=${potId}`)}>
-    <CardSection>
-      <Title>{title}</Title>
-      <Description>{description}</Description>
-    </CardSection>
-    <CardSection style={{ background: "#F6F5F3", borderTop: "1px #7B7B7B solid" }}>
-      <Title>
-        {amountNear}
-        {amountUsd && (
-          <span style={{ fontSize: "14px", fontWeight: 400, lineHeight: "24px" }}>{amountUsd}</span>
+  <Link
+    to={href({
+      params: {
+        tab: "pot",
+        potId: props.potId,
+        referralId: props.referralId,
+        env: props.env,
+      },
+    })}
+  >
+    <Card>
+      <CardSection>
+        <Title>{title}</Title>
+        <Description>{description}</Description>
+      </CardSection>
+      <CardSection
+        style={{ background: "#F6F5F3", borderTop: "1px #7B7B7B solid" }}
+      >
+        <Title>
+          {amountNear}
+          {amountUsd && (
+            <span
+              style={{ fontSize: "14px", fontWeight: 400, lineHeight: "24px" }}
+            >
+              {amountUsd}
+            </span>
+          )}
+          <span
+            style={{ color: "#7B7B7B", marginLeft: "8px", fontSize: "14px" }}
+          >
+            Matching Pool
+          </span>
+        </Title>
+        {/* Application tag */}
+        {applicationOpen && (
+          <Widget
+            src={"${config/account}/widget/Pots.Tag"}
+            props={{
+              ...props,
+              backgroundColor: "#EFFEFA",
+              borderColor: "#33DDCB",
+              textColor: "#023131",
+              text: daysUntil(application_end_ms) + " left to apply",
+              textStyle: { fontWeight: 500, marginLeft: "8px" },
+              preElements: (
+                <Widget
+                  src={"${config/account}/widget/Components.Indicator"}
+                  props={{
+                    colorOuter: "#CAFDF3",
+                    colorInner: "#33DDCB",
+                    animate: true,
+                  }}
+                />
+              ),
+            }}
+          />
         )}
-        <span style={{ color: "#7B7B7B", marginLeft: "8px", fontSize: "14px" }}>Matching Pool</span>
-      </Title>
-      {/* Application tag */}
-      {applicationOpen && (
-        <Widget
-          src={"${config/account}/widget/Pots.Tag"}
-          props={{
-            ...props,
-            backgroundColor: "#EFFEFA",
-            borderColor: "#33DDCB",
-            textColor: "#023131",
-            text: daysUntil(application_end_ms) + " left to apply",
-            textStyle: { fontWeight: 500, marginLeft: "8px" },
-            preElements: (
-              <Widget
-                src={"${config/account}/widget/Components.Indicator"}
-                props={{
-                  colorOuter: "#CAFDF3",
-                  colorInner: "#33DDCB",
-                  animate: true,
-                }}
-              />
-            ),
-          }}
-        />
-      )}
-      {/* Matching round tag */}
-      {publicRoundOpen && (
-        <Widget
-          src={"${config/account}/widget/Pots.Tag"}
-          props={{
-            ...props,
-            backgroundColor: publicRoundOpen ? "#F7FDE8" : "#EBEBEB",
-            borderColor: publicRoundOpen ? "#9ADD33" : "#DBDBDB",
-            textColor: publicRoundOpen ? "#192C07" : "#192C07",
-            text: publicRoundOpen
-              ? daysUntil(public_round_end_ms) + " left to donate"
-              : "Round closed",
-            textStyle: { fontWeight: 500, marginLeft: "8px" },
-            preElements: (
-              <Widget
-                src={"${config/account}/widget/Components.Indicator"}
-                props={{
-                  colorOuter: publicRoundOpen ? "#D7F5A1" : "#DBDBDB",
-                  colorInner: publicRoundOpen ? "#9ADD33" : "#A6A6A6",
-                  animate: publicRoundOpen,
-                }}
-              />
-            ),
-          }}
-        />
-      )}
-    </CardSection>
-  </Card>
+        {/* Matching round tag */}
+        {publicRoundOpen && (
+          <Widget
+            src={"${config/account}/widget/Pots.Tag"}
+            props={{
+              ...props,
+              backgroundColor: publicRoundOpen ? "#F7FDE8" : "#EBEBEB",
+              borderColor: publicRoundOpen ? "#9ADD33" : "#DBDBDB",
+              textColor: publicRoundOpen ? "#192C07" : "#192C07",
+              text: publicRoundOpen
+                ? daysUntil(public_round_end_ms) + " left to donate"
+                : "Round closed",
+              textStyle: { fontWeight: 500, marginLeft: "8px" },
+              preElements: (
+                <Widget
+                  src={"${config/account}/widget/Components.Indicator"}
+                  props={{
+                    colorOuter: publicRoundOpen ? "#D7F5A1" : "#DBDBDB",
+                    colorInner: publicRoundOpen ? "#9ADD33" : "#A6A6A6",
+                    animate: publicRoundOpen,
+                  }}
+                />
+              ),
+            }}
+          />
+        )}
+      </CardSection>
+    </Card>
+  </Link>
 );

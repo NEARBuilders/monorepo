@@ -118,7 +118,9 @@ return (
             if (teamMember.match(/.near/i).length > 0) {
               return (
                 <TeamMemberItem
-                  href={props.hrefWithParams(`?tab=profile&accountId=${teamMember}`)}
+                  href={href({
+                    params: { tab: "profile", accountId: teamMember },
+                  })}
                   target="_blank"
                 >
                   <Widget

@@ -27,7 +27,8 @@ const NavOption = styled.a`
   font-size: 14px;
   padding: 8px 16px;
   font-weight: ${(props) => (props.selected ? 600 : 400)};
-  color: ${(props) => (props.selected ? "#DD3345" : props.disabled ? "lightgray" : "#7B7B7B")};
+  color: ${(props) =>
+    props.selected ? "#DD3345" : props.disabled ? "lightgray" : "#7B7B7B"};
 
   &:focus,
   &:active {
@@ -61,7 +62,13 @@ return (
         <NavOption
           selected={selected}
           disabled={option.disabled}
-          href={props.hrefWithParams(`?tab=project&projectId=${props.projectId}&nav=${option.id}`)}
+          href={href({
+            params: {
+              tab: "project",
+              projectId: props.projectId,
+              nav: option.id,
+            },
+          })}
         >
           {option.label}
         </NavOption>

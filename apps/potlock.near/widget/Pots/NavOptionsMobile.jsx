@@ -1,3 +1,7 @@
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const { navOptions } = props;
 
 const getSelectedNavOption = () => {
@@ -27,7 +31,8 @@ const NavOption = styled.a`
   font-size: 14px;
   padding: 8px 16px;
   font-weight: ${(props) => (props.selected ? 600 : 400)};
-  color: ${(props) => (props.selected ? "#DD3345" : props.disabled ? "lightgray" : "#7B7B7B")};
+  color: ${(props) =>
+    props.selected ? "#DD3345" : props.disabled ? "lightgray" : "#7B7B7B"};
 
   &:focus,
   &:active {
@@ -59,7 +64,15 @@ return (
         <NavOption
           selected={selected}
           disabled={option.disabled}
-          href={props.hrefWithParams(`?tab=pot&potId=${props.potId}&nav=${option.id}`)}
+          href={href({
+            params: {
+              tab: "pot",
+              potId,
+              referralId: props.referralId,
+              env: props.env,
+              nav: option.id,
+            },
+          })}
         >
           {option.label}
         </NavOption>

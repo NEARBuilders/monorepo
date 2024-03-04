@@ -357,7 +357,7 @@ return (
           </Filter>
         </Tabs>
         <Widget
-          src={"${config/account}/widget/${options.find((option) => option.tab == currentTab).src}"}
+          src={`${config/account}/widget/${options.find((option) => option.tab == currentTab).src}`}
           props={{
             ...props,
             allDonations: allDonations,

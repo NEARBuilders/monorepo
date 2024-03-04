@@ -2,10 +2,13 @@ const { sponsors, sortedDonations, currentTab } = props;
 
 const donations = currentTab === "sponsors" ? sponsors : sortedDonations;
 
-const { nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsdWithFallback, href } = VM.require("potlock.near/widget/utils") || {
   nearToUsdWithFallback: () => "",
+  href: () => {},
 };
-const { _address } = VM.require("${config/account}/widget/Components.DonorsUtils");
+const { _address } = VM.require(
+  "${config/account}/widget/Components.DonorsUtils"
+);
 
 const Container = styled.div`
   display: flex;
@@ -90,17 +93,19 @@ const Card = ({ donor }) => {
                   "https://ipfs.near.social/ipfs/bafkreiccpup6f2kihv7bhlkfi4omttbjpawnsns667gti7jbhqvdnj4vsm",
               }}
             />
-            <a
-              href={props.hrefWithParams(`?tab=profile&accountId=${id}`)}
+            <Link
+              href={href({ params: { tab: "profile", accountId: id } })}
               className="name"
               target="_blank"
             >
               {_address(profile.name ? profile.name : id)}
-            </a>
+            </Link>
             <div className="description">
               {profile.description ? _address(profile.description, 20) : "-"}
             </div>
-            <div className="amount">{nearToUsdWithFallback(amount)} Donated</div>
+            <div className="amount">
+              {nearToUsdWithFallback(amount)} Donated
+            </div>
           </>
         )}
       </Container>

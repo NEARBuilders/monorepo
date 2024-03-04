@@ -1,6 +1,9 @@
 const { id, review_notes, status, totalAmount } = props;
-const { getTagsFromSocialProfileData } = VM.require("potlock.near/widget/utils") || {
+const { getTagsFromSocialProfileData, href } = VM.require(
+  "potlock.near/widget/utils"
+) || {
   getTagsFromSocialProfileData: () => [],
+  href: () => {},
 };
 const IPFS_BASE_URL = "https://ipfs.near.social/ipfs/";
 const cardData = Social.getr(`${id}/profile`);
@@ -172,7 +175,7 @@ const getCategory = (category) => {
   }
 };
 
-const projectUrl = props.hrefWithParams(`?tab=project&projectId=${id}`);
+const projectUrl = href({ params: { tab: "project", projectId: id } });
 
 const tags = getTagsFromSocialProfileData(cardData);
 
@@ -181,7 +184,9 @@ return (
     <Card href={projectUrl}>
       <CardImage
         src={
-          cardData && cardData?.backgroundImage && cardData?.backgroundImage?.ipfs_cid
+          cardData &&
+          cardData?.backgroundImage &&
+          cardData?.backgroundImage?.ipfs_cid
             ? `${IPFS_BASE_URL}${cardData.backgroundImage.ipfs_cid}`
             : "https://ipfs.near.social/ipfs/bafkreih4i6kftb34wpdzcuvgafozxz6tk6u4f5kcr2gwvtvxikvwriteci"
         }
@@ -210,7 +215,8 @@ return (
       </CardBody>
       <CardFooter>
         <TotalDonate>
-          ${totalAmount(donationsForProject)} <span style={{ fontWeight: 400 }}>Raised</span>
+          ${totalAmount(donationsForProject)}{" "}
+          <span style={{ fontWeight: 400 }}>Raised</span>
         </TotalDonate>
         <ButtonGroup>
           <AddToCartButton

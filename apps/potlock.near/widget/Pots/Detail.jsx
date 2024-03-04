@@ -15,6 +15,10 @@ const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
   asyncGetApplications: () => {},
 };
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const MAX_APPLICATION_MESSAGE_LENGTH = 1000;
 
 Big.PE = 100;
@@ -114,8 +118,11 @@ if (state.potDetail === null) {
   PotSDK.asyncGetConfig(potId)
     .then((potDetail) => {
       if (potDetail.sybil_wrapper_provider) {
-        const [contractId, methodName] = potDetail.sybil_wrapper_provider.split(":");
-        Near.asyncView(contractId, methodName, { account_id: context.accountId })
+        const [contractId, methodName] =
+          potDetail.sybil_wrapper_provider.split(":");
+        Near.asyncView(contractId, methodName, {
+          account_id: context.accountId,
+        })
           .then((result) => {
             State.update({ potDetail, sybilRequirementMet: result });
           })
@@ -148,49 +155,50 @@ props.navOptions = [
     id: "projects",
     disabled: false,
     source: "${config/account}/widget/Pots.Projects",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=projects`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "projects", } }),
   },
   {
     label: "Applications",
     id: "applications",
     disabled: false,
     source: "${config/account}/widget/Pots.Applications",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=applications`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "applications", } }),
   },
   {
     label: "Donations",
     id: "donations",
     disabled: false,
     source: "${config/account}/widget/Pots.Donations",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=donations`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "donations" } }),
   },
   {
     label: "Sponsors",
     id: "sponsors",
     disabled: false,
     source: "${config/account}/widget/Pots.Sponsors",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=sponsors`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "sponsors" } }),
   },
   {
     label: "Payouts",
     id: "payouts",
     disabled: !state.potDetail.payouts.length,
     source: "${config/account}/widget/Pots.Payouts",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=payouts`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "payouts" } }),
   },
   {
     label: "Settings",
     id: "settings",
     disabled: false,
     source: "${config/account}/widget/Pots.Settings",
-    href: props.hrefWithParams(`?tab=pot&potId=${potId}&nav=settings`),
+    href: href({ params: { tab: "pot", potId: potId, referrerId: props.referrerId, env: props.env, nav: "settings" } }),
   },
 ];
 
 const potDetail = state.potDetail;
 const now = Date.now();
 const applicationNotStarted = now < potDetail.application_start_ms;
-const applicationOpen = now >= potDetail.application_start_ms && now < potDetail.application_end_ms;
+const applicationOpen =
+  now >= potDetail.application_start_ms && now < potDetail.application_end_ms;
 
 const publicRoundOpen =
   now >= potDetail.public_round_start_ms && now < potDetail.public_round_end_ms;
@@ -222,7 +230,9 @@ const handleSendApplication = () => {
     message: state.applicationMessage,
   };
   let deposit = NEAR.toIndivisible("0.01");
-  const extraDeposit = Big(state.applicationMessage.length * 0.0001).mul(Big(10).pow(24));
+  const extraDeposit = Big(state.applicationMessage.length * 0.0001).mul(
+    Big(10).pow(24)
+  );
   deposit = deposit.plus(extraDeposit);
 
   const transactions = [
@@ -276,7 +286,8 @@ const handleSendApplication = () => {
     PotSDK.asyncGetApplications(potId).then((applications) => {
       const application = applications.find(
         (application) =>
-          application.project_id === (state.isDao ? state.daoAddress : context.accountId)
+          application.project_id ===
+          (state.isDao ? state.daoAddress : context.accountId)
       );
       if (application) {
         clearInterval(pollId);
@@ -308,7 +319,8 @@ useEffect(() => {
   }
 }, []);
 
-const registryRequirementMet = state.isOnRegistry || !state.potDetail.registry_provider;
+const registryRequirementMet =
+  state.isOnRegistry || !state.potDetail.registry_provider;
 
 const isError = state.applicationMessageError || state.daoAddressError;
 
@@ -320,7 +332,8 @@ return (
         props={{
           ...props,
           potDetail: state.potDetail,
-          setApplicationModalOpen: (isOpen) => State.update({ isApplicationModalOpen: isOpen }),
+          setApplicationModalOpen: (isOpen) =>
+            State.update({ isApplicationModalOpen: isOpen }),
           handleApplyToPot,
           sybilRequirementMet: state.sybilRequirementMet,
           applicationSuccess: state.applicationSuccess,
@@ -342,7 +355,9 @@ return (
           // class="col-9"
           >
             <Widget
-              src={props.navOptions.find((option) => option.id == props.nav).source}
+              src={
+                props.navOptions.find((option) => option.id == props.nav).source
+              }
               props={{
                 ...props,
                 potDetail: state.potDetail,
@@ -374,9 +389,13 @@ return (
                 },
                 placeholder: "Your application message here...",
                 value: state.applicationMessage,
-                onChange: (applicationMessage) => State.update({ applicationMessage }),
+                onChange: (applicationMessage) =>
+                  State.update({ applicationMessage }),
                 validate: () => {
-                  if (state.applicationMessage.length > MAX_APPLICATION_MESSAGE_LENGTH) {
+                  if (
+                    state.applicationMessage.length >
+                    MAX_APPLICATION_MESSAGE_LENGTH
+                  ) {
                     State.update({
                       applicationMessageError: `Application message must be less than ${MAX_APPLICATION_MESSAGE_LENGTH} characters`,
                     });
@@ -414,14 +433,17 @@ return (
                   label: "DAO address *",
                   placeholder: "E.g. mydao.sputnikdao.near",
                   value: state.daoAddress,
-                  onChange: (daoAddress) => State.update({ daoAddress, daoAddressError: "" }),
+                  onChange: (daoAddress) =>
+                    State.update({ daoAddress, daoAddressError: "" }),
                   validate: () => {
                     // **CALLED ON BLUR**
                     Near.asyncView(state.daoAddress, "get_policy", {})
                       .then((policy) => {
                         const hasPermissions = !policy
                           ? false
-                          : doesUserHaveDaoFunctionCallProposalPermissions(policy);
+                          : doesUserHaveDaoFunctionCallProposalPermissions(
+                              policy
+                            );
                         State.update({
                           daoAddressError: hasPermissions
                             ? ""
@@ -452,9 +474,15 @@ return (
                       ? "Propose to Send Application"
                       : "Send application"
                     : "Register to apply",
-                  onClick: registryRequirementMet ? handleSendApplication : null,
+                  onClick: registryRequirementMet
+                    ? handleSendApplication
+                    : null,
                   disabled: isError,
-                  href: registryRequirementMet ? null : props.hrefWithParams(`?tab=createproject`),
+                  href: registryRequirementMet
+                    ? null
+                    : href({
+                        params: { tab: "pot", nav: "projects", potId: potId, referrerId: props.referrerId, env: props.env },
+                      }),
                   target: registryRequirementMet ? "_self" : "_blank",
                 }}
               />

@@ -7,6 +7,10 @@
 // const SOURCE_CODE_LINK = "https://github.com/PotLock/core"; // for use in contract source metadata
 const POT_CODE_LINK = "https://github.com/PotLock/core/tree/main/contracts/pot"; // for directing user to view source code for Pot
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 // Big.PE = 100;
 
 const Container = styled.div`
@@ -210,7 +214,7 @@ return (
             type: "primary",
             text: "View all pots",
             style: props.style || {},
-            href: props.hrefWithParams(`?tab=pots`),
+            href: href({ params: { tab: "pots" } }),
           }}
         />
       </SuccessContainer>
@@ -219,8 +223,9 @@ return (
         <HeaderContent>
           <HeaderTitle>Deploy Pot</HeaderTitle>
           <HeaderDescription>
-            Create a profile for your impact project to receive direct donations, qualify for
-            funding rounds, join NEAR's accelerator, and get discovered across social platforms.
+            Create a profile for your impact project to receive direct
+            donations, qualify for funding rounds, join NEAR's accelerator, and
+            get discovered across social platforms.
           </HeaderDescription>
           <a href={POT_CODE_LINK} target="_blank">
             View code

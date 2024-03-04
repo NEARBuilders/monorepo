@@ -1,13 +1,17 @@
+const { href } = VM.require("buildhub.near/widget/lib.url") || {
+  href: () => {},
+};
+
 const IPFS_BASE_URL = "https://ipfs.near.social/ipfs/";
 const nearToUsd = useCache(
   () =>
-    asyncFetch("https://api.coingecko.com/api/v3/simple/price?ids=near&vs_currencies=usd").then(
-      (res) => {
-        if (res.ok) {
-          return res.body.near.usd;
-        }
+    asyncFetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=near&vs_currencies=usd"
+    ).then((res) => {
+      if (res.ok) {
+        return res.body.near.usd;
       }
-    ),
+    }),
   "nearToUsd"
 );
 
@@ -74,6 +78,9 @@ return {
 
     return `${differenceInDays} ${differenceInDays === 1 ? "day" : "days"}`;
   },
+  href: ({ gateway, params }) => {
+    return href({ gateway, widgetSrc: "${config/account}/widget/app", params });
+  },
   getTagsFromSocialProfileData: (profileData) => {
     // first try to get tags from plCategories, then category (deprecated/old format), then default to empty array
     if (!profileData) return [];
@@ -90,7 +97,11 @@ return {
     const tags = profileData.plCategories
       ? JSON.parse(profileData.plCategories)
       : profileData.category
-      ? [profileData.category.text ?? DEPRECATED_CATEGORY_MAPPINGS[profileData.category] ?? ""]
+      ? [
+          profileData.category.text ??
+            DEPRECATED_CATEGORY_MAPPINGS[profileData.category] ??
+            "",
+        ]
       : [];
     return tags;
   },
@@ -131,7 +142,8 @@ return {
     return `${IPFS_BASE_URL}${cid}`;
   },
   validateNearAddress: (address) => {
-    const NEAR_ACCOUNT_ID_REGEX = /^(?=.{2,64}$)(?!.*\.\.)(?!.*-$)(?!.*_$)[a-z\d._-]+$/i;
+    const NEAR_ACCOUNT_ID_REGEX =
+      /^(?=.{2,64}$)(?!.*\.\.)(?!.*-$)(?!.*_$)[a-z\d._-]+$/i;
     let isValid = NEAR_ACCOUNT_ID_REGEX.test(address);
     // Additional ".near" check for IDs less than 64 characters
     if (address.length < 64 && !address.endsWith(".near")) {
@@ -157,11 +169,15 @@ return {
   },
   nearToUsd,
   yoctosToNear: (amountYoctos, abbreviate) => {
-    return new Big(amountYoctos).div(1e24).toNumber().toFixed(2) + (abbreviate ? " N" : " NEAR");
+    return (
+      new Big(amountYoctos).div(1e24).toNumber().toFixed(2) +
+      (abbreviate ? " N" : " NEAR")
+    );
   },
   yoctosToUsd: (amount) => {
     return nearToUsd
-      ? "~$" + formatWithCommas(new Big(amount).mul(nearToUsd).div(1e24).toFixed(2))
+      ? "~$" +
+          formatWithCommas(new Big(amount).mul(nearToUsd).div(1e24).toFixed(2))
       : null;
   },
   nearToUsdWithFallback: (amountNear, abbreviate) => {
@@ -171,7 +187,10 @@ return {
   },
   yoctosToUsdWithFallback: (amountYoctos, abbreviate) => {
     return nearToUsd
-      ? "~$" + formatWithCommas(new Big(amountYoctos).mul(nearToUsd).div(1e24).toFixed(2))
+      ? "~$" +
+          formatWithCommas(
+            new Big(amountYoctos).mul(nearToUsd).div(1e24).toFixed(2)
+          )
       : formatWithCommas(new Big(amountYoctos).div(1e24).toFixed(2)) +
           (abbreviate ? " N" : " NEAR");
   },
@@ -193,7 +212,9 @@ return {
       if (!contributions[proj]) {
         contributions[proj] = {};
       }
-      contributions[proj][user] = Big(contributions[proj][user] || 0).plus(amount);
+      contributions[proj][user] = Big(contributions[proj][user] || 0).plus(
+        amount
+      );
     }
     console.log("contributions: ", contributions);
     // calculate the total overlapping contribution amounts between pairs of users for each project.
@@ -251,7 +272,10 @@ return {
     if (bigtot.gte(totalPot)) {
       console.log("NORMALIZING");
       for (const t of totals) {
-        t.matching_amount_str = Big(t.matching_amount_str).div(bigtot).times(totalPot).toFixed(0);
+        t.matching_amount_str = Big(t.matching_amount_str)
+          .div(bigtot)
+          .times(totalPot)
+          .toFixed(0);
       }
     }
     const payouts = totals.reduce((acc, t) => {

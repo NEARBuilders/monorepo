@@ -1,9 +1,12 @@
 const { donor } = props;
 const { id, rank, className, amount } = donor;
-const { nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsdWithFallback, href } = VM.require("potlock.near/widget/utils") || {
   nearToUsdWithFallback: () => "",
+  href: () => {}
 };
-const { _address } = VM.require("${config/account}/widget/Components.DonorsUtils");
+const { _address } = VM.require(
+  "${config/account}/widget/Components.DonorsUtils"
+);
 
 const Container = styled.div`
   display: flex;
@@ -80,13 +83,13 @@ return (
               className: "profile",
             }}
           />{" "}
-          <a
-            href={props.hrefWithParams(`?tab=profile&accountId=${id}`)}
+          <Link
+            to={href({ params: { tab: "profile", accountId: id } })}
             className="name"
             target="_blank"
           >
             {profile.name ? _address(profile.name) : id}
-          </a>
+          </Link>
           <div className="description">
             {profile.description ? _address(profile.description, 20) : "-"}
           </div>

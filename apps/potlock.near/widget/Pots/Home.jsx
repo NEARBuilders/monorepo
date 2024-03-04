@@ -12,6 +12,10 @@ const potFactoryConfig = PotFactorySDK.getConfig();
 const pots = PotFactorySDK.getPots();
 const canDeploy = PotFactorySDK.canUserDeployPot(context.accountId);
 
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const loraCss = fetch(
   "https://fonts.googleapis.com/css2?family=Lora&display=swap"
 ).body;
@@ -146,7 +150,7 @@ return (
             props={{
               type: "primary",
               text: "Deploy Pot",
-              href: props.hrefWithParams(`?tab=deploypot`),
+              href: href({ params: { tab: "deploypot", referallId: props.referralId, env: props.env }}),
             }}
           />
         )}

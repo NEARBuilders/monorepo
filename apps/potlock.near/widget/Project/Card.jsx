@@ -1,18 +1,25 @@
 const { potId, potDetail, payoutDetails } = props;
-const { nearToUsd, ipfsUrlFromCid, yoctosToNear, yoctosToUsdWithFallback } = VM.require(
-  "potlock.near/widget/utils"
+const { nearToUsd, ipfsUrlFromCid, yoctosToNear, yoctosToUsdWithFallback } =
+  VM.require("potlock.near/widget/utils") || {
+    ipfsUrlFromCid: () => "",
+    yoctosToNear: () => "",
+    yoctosToUsdWithFallback: () => "",
+    nearToUsd: 1,
+  };
+const { NADA_BOT_URL, SUPPORTED_FTS } = VM.require(
+  "potlock.near/widget/constants"
 ) || {
-  ipfsUrlFromCid: () => "",
-  yoctosToNear: () => "",
-  yoctosToUsdWithFallback: () => "",
-  nearToUsd: 1,
-};
-const { NADA_BOT_URL, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
-const { getTagsFromSocialProfileData } = VM.require("potlock.near/widget/utils") || {
+const { getTagsFromSocialProfileData } = VM.require(
+  "potlock.near/widget/utils"
+) || {
   getTagsFromSocialProfileData: () => [],
+};
+
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
 };
 
 const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
@@ -89,7 +96,12 @@ const ProfileImageContainer = styled.div`
     cursor: pointer;
 
     &:after {
-      background-color: rgba(45.9, 45.9, 45.9, 0.4); // Dark overlay with 40% opacity on hover
+      background-color: rgba(
+        45.9,
+        45.9,
+        45.9,
+        0.4
+      ); // Dark overlay with 40% opacity on hover
     }
 
     svg {
@@ -391,12 +403,12 @@ const [totalAmount, totalDonors] = useMemo(() => {
     if (!donors.includes(donation.donor_id)) {
       donors.push(donation.donor_id);
     }
-    totalDonationAmount = totalDonationAmount.plus(new Big(donation.total_amount));
+    totalDonationAmount = totalDonationAmount.plus(
+      new Big(donation.total_amount)
+    );
   }
   return [totalDonationAmount.toString(), donors.length];
 }, [donationsForProject]);
-
-const projectUrl = props.hrefWithParams(`?tab=project&projectId=${projectId}&potId=${potId}`);
 
 const getImageSrc = (image) => {
   const defaultImageUrl =
@@ -433,7 +445,15 @@ const tags = getTagsFromSocialProfileData(profile);
 
 return (
   <>
-    <Card href={projectUrl} key={projectId}>
+    <Card href={href({
+      params: {
+        page: "project",
+        projectId,
+        potId,
+        referralId,
+        env
+      },
+    })} key={projectId}>
       <HeaderContainer className="pt-0 position-relative">
         <BackgroundImageContainer>
           {profile.backgroundImage?.nft ? (
@@ -503,7 +523,9 @@ return (
       </Info>
       <DonationsInfoContainer>
         <DonationsInfoItem>
-          <Amount>{totalAmount ? yoctosToUsdWithFallback(totalAmount, true) : "-"}</Amount>
+          <Amount>
+            {totalAmount ? yoctosToUsdWithFallback(totalAmount, true) : "-"}
+          </Amount>
           <AmountDescriptor>Raised</AmountDescriptor>
         </DonationsInfoItem>
         {payoutDetails && (

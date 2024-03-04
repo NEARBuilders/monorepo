@@ -4,12 +4,14 @@ const {
   validateGithubRepoUrl,
   getTeamMembersFromSocialProfileData,
   doesUserHaveDaoFunctionCallProposalPermissions,
+  href
 } = VM.require("potlock.near/widget/utils") || {
   getTeamMembersFromSocialProfileData: () => [],
   doesUserHaveDaoFunctionCallProposalPermissions: () => "",
   validateNearAddress: () => "",
   validateEVMAddress: () => "",
   validateGithubRepoUrl: () => "",
+  href: () => {},
 };
 const HORIZON_CONTRACT_ID = "nearhorizon.near";
 const SOCIAL_CONTRACT_ID = "social.near";
@@ -922,9 +924,7 @@ return (
               type: "primary",
               text: "View your project",
               disabled: false,
-              href: props.hrefWithParams(
-                `?tab=project&projectId=${registeredProject?.id || context.accountId}`
-              ),
+              href: href({ params: { tab: "project", projectId: registeredProject?.id || context.accountId, env: props.env, nav: "donations"}})
             }}
           />
           <Widget
@@ -933,7 +933,7 @@ return (
               type: "secondary",
               text: "View all projects",
               disabled: false,
-              href: props.hrefWithParams(`?tab=projects`),
+              href: href({ params: { tab: "project", env: props.env, nav: "donations"}})
             }}
           />
         </ButtonsContainer>

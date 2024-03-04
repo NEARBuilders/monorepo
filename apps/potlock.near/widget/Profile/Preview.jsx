@@ -1,3 +1,7 @@
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const accountId = props.accountId ?? context.accountId;
 const profile = Social.getr(`${accountId}/profile`);
 
@@ -7,7 +11,9 @@ const image = profile.image;
 return (
   <div className="profile d-inline-block">
     <a
-      href={props.hrefWithParams(`?tab=profile&accountId=${accountId}`)}
+      href={href({
+        params: { tab: "profile", accountId: props.accountId, env: props.env },
+      })}
       className="text-decoration-none link-dark"
     >
       <Widget
@@ -19,7 +25,9 @@ return (
         }}
       />
       <div className="profile-info d-inline-block" style={{ maxWidth: "16em" }}>
-        <div className="profile-name text-truncate">{name || "No-name profile"}</div>
+        <div className="profile-name text-truncate">
+          {name || "No-name profile"}
+        </div>
         <div className="profile-links d-flex">
           <div className="d-inline-block profile-account text-secondary text-truncate">
             @{accountId}

@@ -1,5 +1,5 @@
 const { potId, potDetail, referrerId, sybilRequirementMet, applicationSuccess } = props;
-const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback } = VM.require(
+const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback, href } = VM.require(
   "potlock.near/widget/utils"
 ) || {
   formatDate: () => "",
@@ -622,7 +622,7 @@ return (
               type: "primary",
               text: sybilRequirementMet ? "Donate to projects" : "Verify to Donate",
               href: sybilRequirementMet
-                ? props.hrefWithParams(`?tab=pot&potId=${potId}&nav=projects`)
+                ? href({ params: { tab: "pot", nav: "projects", potId, referralId: props.referralId, env: props.env }})
                 : NADA_BOT_URL,
               target: sybilRequirementMet ? "_self" : "_blank",
               iconSrc: sybilRequirementMet ? null : NADABOT_ICON_URL,

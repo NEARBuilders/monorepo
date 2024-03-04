@@ -1,17 +1,21 @@
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
+
 const ProfileOptions = (props) => [
   {
     label: "Social Feed",
     id: "feed",
     disabled: false,
     source: "{config/account}/widget/Profile.Feed",
-    href: props.hrefWithParams(`?tab=profile&accountId=${props.accountId}&nav=feed`),
+    href: href({ params: { tab: "profile", accountId: props.accountId, env: props.env, nav: "feed"}})
   },
   {
     label: "Donations",
     id: "donations",
     disabled: false,
     source: "{config/account}/widget/Profile.DonationsTable",
-    href: props.hrefWithParams(`?tab=profile&accountId=${props.accountId}&nav=donations`),
+    href: href({ params: { tab: "profile", accountId: props.accountId, env: props.env, nav: "donations"}})
   },
   {
     label: "",

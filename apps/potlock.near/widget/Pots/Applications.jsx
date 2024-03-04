@@ -1,6 +1,9 @@
 // get applications
 const { potId, potDetail } = props;
-const { daysAgo } = VM.require("potlock.near/widget/utils") || { daysAgo: () => "" };
+const { daysAgo, href } = VM.require("potlock.near/widget/utils") || {
+  daysAgo: () => "",
+  href: () => {},
+};
 const {
   ONE_TGAS,
   SUPPORTED_FTS: { NEAR },
@@ -114,15 +117,21 @@ State.init({
 });
 
 if (applications && !state.allApplications) {
-  State.update({ filteredApplications: applications, allApplications: applications });
+  State.update({
+    filteredApplications: applications,
+    allApplications: applications,
+  });
 }
 
-if (!state.allApplications) return <div class="spinner-border text-secondary" role="status" />;
+if (!state.allApplications)
+  return <div class="spinner-border text-secondary" role="status" />;
 
 const { owner, admins, chef } = potDetail;
 
 const isChefOrGreater =
-  context.accountId === chef || admins.includes(context.accountId) || context.accountId === owner;
+  context.accountId === chef ||
+  admins.includes(context.accountId) ||
+  context.accountId === owner;
 
 const handleApproveApplication = (projectId) => {
   State.update({ isModalOpen: true, newStatus: "Approved", projectId });
@@ -133,7 +142,12 @@ const handleRejectApplication = (projectId) => {
 };
 
 const handleCancel = () => {
-  State.update({ isModalOpen: false, newStatus: "", projectId: "", reviewMessage: "" });
+  State.update({
+    isModalOpen: false,
+    newStatus: "",
+    projectId: "",
+    reviewMessage: "",
+  });
 };
 
 const handleSubmit = () => {
@@ -164,7 +178,9 @@ const searchApplications = (searchTerm) => {
   const filteredApplications = state.allApplications.filter((application) => {
     const { message, project_id, review_notes, status } = application;
     const searchFields = [message, project_id, review_notes, status];
-    return searchFields.some((field) => field.toLowerCase().includes(searchTerm.toLowerCase()));
+    return searchFields.some((field) =>
+      field.toLowerCase().includes(searchTerm.toLowerCase())
+    );
   });
   return filteredApplications;
 };
@@ -210,7 +226,8 @@ return (
       <Row>No applications to display</Row>
     ) : (
       state.filteredApplications.map((application, index) => {
-        const { project_id, message, status, submitted_at, review_notes } = application;
+        const { project_id, message, status, submitted_at, review_notes } =
+          application;
         // console.log("status: ", status);
 
         return (
@@ -218,7 +235,11 @@ return (
             key={index}
             style={{
               background:
-                status === "Approved" ? "#F7FDE8" : status === "Rejected" ? "#FEF3F2" : "white",
+                status === "Approved"
+                  ? "#F7FDE8"
+                  : status === "Rejected"
+                  ? "#FEF3F2"
+                  : "white",
             }}
           >
             <Widget
@@ -234,14 +255,23 @@ return (
             />
             <Column style={{ flex: 1 }}>
               <Row style={{ borderBottom: "none", padding: "0px" }}>
-                <ProjectLink href={props.hrefWithParams(`?tab=project&projectId=${project_id}`)}>
+                <ProjectLink
+                  href={href({
+                    params: {
+                      tab: "project",
+                      projectId: project_id,
+                      env: props.env,
+                    },
+                  })}
+                >
                   {project_id}
                 </ProjectLink>
                 <div style={{ fontSize: "12px" }}>{daysAgo(submitted_at)}</div>
               </Row>
               <div>{message}</div>
               <div style={{ fontSize: "12px", marginTop: "8px" }}>
-                Admin notes: {review_notes.length > 0 ? review_notes : "None yet"}
+                Admin notes:{" "}
+                {review_notes.length > 0 ? review_notes : "None yet"}
               </div>
               <StatusTextMobile>{status}</StatusTextMobile>
             </Column>
@@ -279,7 +309,8 @@ return (
       props={{
         ...props,
         isModalOpen: state.isModalOpen,
-        onClose: () => State.update({ isModalOpen: false, newStatus: "", projectId: "" }),
+        onClose: () =>
+          State.update({ isModalOpen: false, newStatus: "", projectId: "" }),
         contentStyle: {
           padding: "0px",
         },
@@ -307,7 +338,10 @@ return (
                   value: state.reviewMessage,
                   onChange: (reviewMessage) => State.update({ reviewMessage }),
                   validate: () => {
-                    if (state.reviewMessage.length > MAX_APPLICATION_MESSAGE_LENGTH) {
+                    if (
+                      state.reviewMessage.length >
+                      MAX_APPLICATION_MESSAGE_LENGTH
+                    ) {
                       State.update({
                         reviewMessageError: `Application message must be less than ${MAX_APPLICATION_MESSAGE_LENGTH} characters`,
                       });

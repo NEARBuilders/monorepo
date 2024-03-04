@@ -6,8 +6,12 @@ const {
   SUPPORTED_FTS: {},
   IPFS_BASE_URL: "",
 };
-const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || { yoctosToUsd: () => "" };
-const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
+const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+  yoctosToUsd: () => "",
+};
+const loraCss = fetch(
+  "https://fonts.googleapis.com/css2?family=Lora&display=swap"
+).body;
 
 const HEADER_ICON_URL =
   IPFS_BASE_URL + "bafkreiholfe7utobo5y2znjdr6ou26qmlcgf5teoxtyjo2undgfpl5kcwe";
@@ -145,7 +149,11 @@ if (props.isModalOpen && !state.successfulDonation) {
   let successfulApplication = props.successfulApplication;
   // if !successfulDonation and !successfulApplication, then we need to fetch the transaction
   // once fetched, determine whether it was a donation or an application & set on state accordingly
-  if (!successfulDonation && !successfulApplication && props.transactionHashes) {
+  if (
+    !successfulDonation &&
+    !successfulApplication &&
+    props.transactionHashes
+  ) {
     const body = JSON.stringify({
       jsonrpc: "2.0",
       id: "dontcare",
@@ -160,9 +168,12 @@ if (props.isModalOpen && !state.successfulDonation) {
       body,
     });
     if (res.ok) {
-      const methodName = res.body.result.transaction.actions[0].FunctionCall.method_name;
+      const methodName =
+        res.body.result.transaction.actions[0].FunctionCall.method_name;
       const successVal = res.body.result.status?.SuccessValue;
-      let decoded = JSON.parse(Buffer.from(successVal, "base64").toString("utf-8")); // atob not working
+      let decoded = JSON.parse(
+        Buffer.from(successVal, "base64").toString("utf-8")
+      ); // atob not working
       if (methodName === "donate") {
         // donation
         successfulDonation = decoded;
@@ -183,7 +194,8 @@ if (props.isModalOpen && !state.successfulDonation) {
       }).then((donorData) => {
         State.update({
           successfulDonation,
-          recipientProfile: recipientData[recipient_id || project_id]?.profile || {},
+          recipientProfile:
+            recipientData[recipient_id || project_id]?.profile || {},
           donorProfile: donorData[donor_id]?.profile || {},
         });
       });
@@ -200,7 +212,9 @@ const twitterIntent = useMemo(() => {
   const twitterIntentBase = "https://twitter.com/intent/tweet?text=";
   let url =
     DEFAULT_GATEWAY +
-    `${config/account}/widget/Index?tab=project&projectId=${state.successfulDonation.recipient_id}&referrerId=${context.accountId}`;
+    `${config / account}/widget/Index?tab=project&projectId=${
+      state.successfulDonation.recipient_id
+    }&referrerId=${context.accountId}`;
   let text = `I just donated to ${
     state.recipientProfile
       ? state.recipientProfile.linktree?.twitter
@@ -210,7 +224,12 @@ const twitterIntent = useMemo(() => {
   } on @${POTLOCK_TWITTER_ACCOUNT_ID}! Support public goods at `;
   text = encodeURIComponent(text);
   url = encodeURIComponent(url);
-  return twitterIntentBase + text + `&url=${url}` + `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`;
+  return (
+    twitterIntentBase +
+    text +
+    `&url=${url}` +
+    `&hashtags=${DEFAULT_SHARE_HASHTAGS.join(",")}`
+  );
 }, [state.successfulDonation, state.recipientProfile]);
 
 return (
@@ -225,7 +244,9 @@ return (
         <>
           <ModalMain>
             <H1>Thank you for applying!</H1>
-            <TextBold>Your application status: {state.successfulApplication.status}</TextBold>
+            <TextBold>
+              Your application status: {state.successfulApplication.status}
+            </TextBold>
           </ModalMain>
         </>
       ) : state.successfulDonation ? (
@@ -237,7 +258,9 @@ return (
                 <AmountNear>
                   {state.successfulDonation?.total_amount
                     ? parseFloat(
-                        NEAR.fromIndivisible(state.successfulDonation.total_amount).toString()
+                        NEAR.fromIndivisible(
+                          state.successfulDonation.total_amount
+                        ).toString()
                       )
                     : "-"}
                 </AmountNear>
@@ -251,31 +274,35 @@ return (
             </Column>
             <Row style={{ gap: "8px" }}>
               <TextBold>Has been donated to</TextBold>
-              <UserChipLink
-                href={props.hrefWithParams(
-                  `?tab=project&projectId=${
-                    state.successfulDonation.recipient_id || state.successfulDonation.project_id
-                  }`
-                )}
-                target="_blank"
+              <Link
+                to={href({
+                  params: {
+                    tab: "project",
+                    project:
+                      state.successfulDonation.recipient_id ||
+                      state.successfulDonation.project_id,
+                  },
+                })}
               >
-                {state.successfulDonation && (
-                  <Widget
-                    src={"${config/account}/widget/Project.ProfileImage"}
-                    props={{
-                      ...props,
-                      accountId:
-                        state.successfulDonation.recipient_id ||
-                        state.successfulDonation.project_id,
-                      style: {
-                        height: "17px",
-                        width: "17px",
-                      },
-                    }}
-                  />
-                )}
-                <TextBold>{state.recipientProfile?.name || "-"}</TextBold>
-              </UserChipLink>
+                <UserChipLink>
+                  {state.successfulDonation && (
+                    <Widget
+                      src={"${config/account}/widget/Project.ProfileImage"}
+                      props={{
+                        ...props,
+                        accountId:
+                          state.successfulDonation.recipient_id ||
+                          state.successfulDonation.project_id,
+                        style: {
+                          height: "17px",
+                          width: "17px",
+                        },
+                      }}
+                    />
+                  )}
+                  <TextBold>{state.recipientProfile?.name || "-"}</TextBold>
+                </UserChipLink>
+              </Link>
             </Row>
             <Widget
               src={"${config/account}/widget/Cart.BreakdownSummary"}
@@ -291,7 +318,9 @@ return (
                 headerStyle: { justifyContent: "center" },
               }}
             />
-            <Row style={{ width: "100%", justifyContent: "center", gap: "24px" }}>
+            <Row
+              style={{ width: "100%", justifyContent: "center", gap: "24px" }}
+            >
               <Widget
                 src={"${config/account}/widget/Components.Button"}
                 props={{

@@ -1,6 +1,8 @@
-const { getTagsFromSocialProfileData, getTeamMembersFromSocialProfileData } = VM.require(
-  "potlock.near/widget/utils"
-) || {
+const {
+  getTagsFromSocialProfileData,
+  getTeamMembersFromSocialProfileData,
+  href,
+} = VM.require("potlock.near/widget/utils") || {
   getTagsFromSocialProfileData: () => [],
   getTeamMembersFromSocialProfileData: () => [],
 };
@@ -125,12 +127,16 @@ const CardSkeleton = () => (
 // ListPage Content
 
 const { userIsRegistryAdmin, tab } = props;
-const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || { yoctosToUsd: () => "" };
+const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+  yoctosToUsd: () => "",
+};
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 const HERO_BACKGROUND_IMAGE_URL =
   IPFS_BASE_URL + "bafkreiewg5afxbkvo6jbn6jgv7zm4mtoys22jut65fldqtt7wagar4wbga";
 
-const loraCss = fetch("https://fonts.googleapis.com/css2?family=Lora&display=swap").body;
+const loraCss = fetch(
+  "https://fonts.googleapis.com/css2?family=Lora&display=swap"
+).body;
 
 const headerTitleFontSizePx = 88;
 
@@ -477,7 +483,10 @@ const ProjectList = styled.div`
 
   // For desktop devices (3 columns)
   @media screen and (min-width: 1024px) {
-    grid-template-columns: repeat(${!props.maxCols || props.maxCols > 2 ? "3" : "2"}, 1fr);
+    grid-template-columns: repeat(
+      ${!props.maxCols || props.maxCols > 2 ? "3" : "2"},
+      1fr
+    );
   }
 `;
 
@@ -511,7 +520,11 @@ if (!isRegistryAdmin) {
   projects = projects.filter((project) => project.status === "Approved");
 }
 
-const featuredProjectIds = ["magicbuild.near", "potlock.near", "yearofchef.near"];
+const featuredProjectIds = [
+  "magicbuild.near",
+  "potlock.near",
+  "yearofchef.near",
+];
 const featuredProjects = useMemo(
   () => projects.filter((project) => featuredProjectIds.includes(project.id)),
   projects
@@ -559,7 +572,8 @@ const containerStyleHeader = {
   top: 0,
   left: 0,
   marginBottom: "24px",
-  background: "radial-gradient(80% 80% at 40.82% 50%, white 25%, rgba(255, 255, 255, 0) 100%)",
+  background:
+    "radial-gradient(80% 80% at 40.82% 50%, white 25%, rgba(255, 255, 255, 0) 100%)",
 };
 
 const SORT_FILTERS = {
@@ -737,7 +751,8 @@ return (
           </HeaderTitle>
           <HeaderTitle>Funding for Public Goods</HeaderTitle>
           <HeaderDescription>
-            Discover impact projects, donate directly, & participate in funding rounds.
+            Discover impact projects, donate directly, & participate in funding
+            rounds.
           </HeaderDescription>
         </HeaderContent>
 
@@ -792,7 +807,9 @@ return (
               style: { padding: "16px 24px" },
             }}
           /> */}
-          <ButtonRegisterProject href={"?tab=createproject"}>
+          <ButtonRegisterProject
+            href={href({ params: { tab: "createproject" } })}
+          >
             Register Your Project
           </ButtonRegisterProject>
         </ButtonsContainer>
@@ -877,7 +894,7 @@ return (
                 loading={<CardSkeleton />}
                 props={{
                   ...props,
-                  potId, 
+                  potId,
                   projectId: project.id,
                   allowDonate: true,
                   // allowDonate:

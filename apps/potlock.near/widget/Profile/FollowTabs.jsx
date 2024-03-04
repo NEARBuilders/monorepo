@@ -1,4 +1,7 @@
 const { accountId, projectId, nav } = props;
+const { href } = VM.require("potlock.near/widget/utils") || {
+  href: () => {},
+};
 
 const Container = styled.div`
   display: flex;
@@ -33,29 +36,41 @@ const Nav = styled.div`
   margin: 0 -12px;
 `;
 
-const profileLink = props.hrefWithParams(`?tab=profile&accountId=${accountId}`);
-
 return (
   <Container>
     <Nav>
       <ul className="nav nav-pills nav-fill" role="tablist">
         <li className="nav-item" role="presentation">
-          <a
-            href={`${profileLink}&nav=followers`}
+          <Link
+            href={href({
+              params: {
+                tab: "profile",
+                accountId: accountId,
+                env: props.env,
+                nav: "followers",
+              },
+            })}
             className={`btn nav-link ${nav === "followers" ? "active" : ""}`}
             role="tab"
           >
             Followers
-          </a>
+          </Link>
         </li>
         <li className="nav-item" role="presentation">
-          <a
-            href={`${profileLink}&nav=following`}
+          <Link
+            href={href({
+              params: {
+                tab: "profile",
+                accountId: accountId,
+                env: props.env,
+                nav: "following",
+              },
+            })}
             className={`btn nav-link ${nav === "following" ? "active" : ""}`}
             role="tab"
           >
             Following
-          </a>
+          </Link>
         </li>
       </ul>
     </Nav>
