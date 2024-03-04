@@ -206,20 +206,21 @@ const {
   // potId,
   // potDetail,
   onClose,
-  NADABOT_CONTRACT_ID,
   POT,
 } = props;
-const { DONATION_CONTRACT_ID, NADABOT_HUMAN_METHOD, NADA_BOT_URL, SUPPORTED_FTS } =
-  VM.require("potlock.near/widget/constants") || {
-    DONATION_CONTRACT_ID: "",
-    NADABOT_HUMAN_METHOD: "",
-    NADA_BOT_URL: "",
-    SUPPORTED_FTS: {},
-  };
+const {
+  DONATION_CONTRACT_ID,
+  NADA_BOT_URL,
+  SUPPORTED_FTS,
+} = VM.require("${config/account}/widget/constants") || {
+  DONATION_CONTRACT_ID: "",
+  NADA_BOT_URL: "",
+  SUPPORTED_FTS: {},
+};
 // console.log("props in donation modal: ", props);
 
 let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
+  VM.require("${config/account}/widget/SDK.registry") ||
   (() => ({
     getProjects: () => {},
   }));
@@ -228,7 +229,7 @@ RegistrySDK = RegistrySDK({ env: props.env });
 const projects = RegistrySDK.getProjects() || [];
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
+  VM.require("${config/account}/widget/SDK.donate") ||
   (() => ({
     getConfig: () => {},
     asyncGetDonationsForDonor: () => {},
@@ -236,14 +237,14 @@ let DonateSDK =
 DonateSDK = DonateSDK({ env: props.env });
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getPots: () => {},
   }));
 PotFactorySDK = PotFactorySDK({ env: props.env });
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   getConfig: () => {},
   asyncGetConfig: () => {},
   getApprovedApplications: () => {},
@@ -251,7 +252,14 @@ const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
   asyncGetDonationsForDonor: () => {},
 };
 
-const { nearToUsd } = VM.require("potlock.near/widget/utils") || {
+const NadaBotSDK = VM.require("${config/account}/widget/SDK.nadabot") || {
+  isHuman: () => {},
+};
+
+NadaBotSDK = NadaBotSDK({ env: props.env });
+const isUserHumanVerified = NadaBotSDK.isHuman(context.accountId);
+
+const { nearToUsd } = VM.require("${config/account}/widget/utils") || {
   nearToUsd: 1,
 };
 
@@ -270,7 +278,8 @@ const approvedProjectIds = useMemo(
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 const CLOSE_ICON_URL =
   IPFS_BASE_URL + "bafkreifyg2vvmdjpbhkylnhye5es3vgpsivhigkjvtv2o4pzsae2z4vi5i";
-const EDIT_ICON_URL = IPFS_BASE_URL + "bafkreigc2laqrwu6g4ihm5n2qfxwl3g5phujtrwybone2ouxaz5ittjzee";
+const EDIT_ICON_URL =
+  IPFS_BASE_URL + "bafkreigc2laqrwu6g4ihm5n2qfxwl3g5phujtrwybone2ouxaz5ittjzee";
 const NADABOT_ICON_URL =
   IPFS_BASE_URL + "bafkreib2iag425b6dktehxlrshchyp2pccg5r6ea2blrnzppqia77kzdbe";
 const ALERT_ICON_URL =
@@ -301,7 +310,6 @@ State.init({
   approvedProjectsForPots: {},
   activeRoundsForProject: null, // mapping of potId to { potDetail }
   intervalId: null,
-  isUserHumanVerified: null,
 });
 
 useEffect(() => {
@@ -379,13 +387,7 @@ const handleModalClose = () => {
 
 console.log("state in donation modal: ", state);
 
-if (state.isUserHumanVerified === null) {
-  Near.asyncView(NADABOT_CONTRACT_ID, NADABOT_HUMAN_METHOD, {
-    account_id: context.accountId,
-  }).then((isUserHumanVerified) => {
-    State.update({ isUserHumanVerified });
-  });
-}
+
 
 const activeRound = useMemo(() => {
   if (!state.activeRoundsForProject) return;
@@ -396,7 +398,9 @@ console.log("activeRound: ", activeRound);
 
 const potDetail = state.detailForPots[activeRound];
 
-const protocolConfigContractId = potDetail ? potDetail.protocol_config_provider.split(":")[0] : "";
+const protocolConfigContractId = potDetail
+  ? potDetail.protocol_config_provider.split(":")[0]
+  : "";
 const protocolConfigViewMethodName = potDetail
   ? potDetail.protocol_config_provider.split(":")[1]
   : "";
@@ -407,7 +411,11 @@ const protocolConfig =
 
 const donationContractConfig = !potDetail ? DonateSDK.getConfig() || {} : null;
 
-const [protocolFeeRecipientAccount, protocolFeeBasisPoints, referralFeeBasisPoints] = useMemo(
+const [
+  protocolFeeRecipientAccount,
+  protocolFeeBasisPoints,
+  referralFeeBasisPoints,
+] = useMemo(
   // if this is a pot donation, use pot config, else use donation contract config
   () => {
     if (protocolConfig) {
@@ -458,10 +466,14 @@ const handleAddToCart = () => {
 };
 
 const amountNear =
-  state.denomination === "NEAR" ? state.amount : (state.amount / nearToUsd).toFixed(2);
+  state.denomination === "NEAR"
+    ? state.amount
+    : (state.amount / nearToUsd).toFixed(2);
 
 const handleDonate = () => {
-  const amountIndivisible = SUPPORTED_FTS.NEAR.toIndivisible(parseFloat(amountNear));
+  const amountIndivisible = SUPPORTED_FTS.NEAR.toIndivisible(
+    parseFloat(amountNear)
+  );
   // TODO: get projectId for random donation
   let projectId = recipientId;
   if (!projectId) {
@@ -477,8 +489,8 @@ const handleDonate = () => {
   if (state.bypassChefFee) {
     args.custom_chef_fee_basis_points = 0;
   }
-  const potId = activeRound || null;
-  const isPotDonation = potId && state.isUserHumanVerified === true;
+  const potId = props.potId || activeRound || null;
+  const isPotDonation = potId && isUserHumanVerified === true;
   if (isPotDonation) {
     args.project_id = projectId;
     if (state.bypassChefFee) {
@@ -511,9 +523,11 @@ const handleDonate = () => {
       .asyncGetDonationsForDonor(context.accountId)
       .then((donations) => {
         for (const donation of donations) {
-          const { recipient_id, project_id, donated_at_ms, donated_at } = donation; // donation contract uses recipient_id, pot contract uses project_id; donation contract uses donated_at_ms, pot contract uses donated_at
+          const { recipient_id, project_id, donated_at_ms, donated_at } =
+            donation; // donation contract uses recipient_id, pot contract uses project_id; donation contract uses donated_at_ms, pot contract uses donated_at
           if (
-            ((recipient_id === projectId || project_id === projectId) && donated_at_ms > now) ||
+            ((recipient_id === projectId || project_id === projectId) &&
+              donated_at_ms > now) ||
             donated_at > now
           ) {
             // display success message & clear cart
@@ -542,7 +556,9 @@ return (
         <>
           <ModalHeader>
             <div></div>
-            <ModalHeaderText>Donate {recipientId ? "to project" : "Randomly"}</ModalHeaderText>
+            <ModalHeaderText>
+              Donate {recipientId ? "to project" : "Randomly"}
+            </ModalHeaderText>
             <PointerIcon src={CLOSE_ICON_URL} onClick={onClose} />
           </ModalHeader>
           {/* {userShouldVerify && (
@@ -578,7 +594,10 @@ return (
                     </TitleText>
                     <SubtitleText>
                       {profile?.description?.length > MAX_DESCRIPTION_LENGTH
-                        ? profile?.description?.slice(0, MAX_DESCRIPTION_LENGTH) + "..."
+                        ? profile?.description?.slice(
+                            0,
+                            MAX_DESCRIPTION_LENGTH
+                          ) + "..."
                         : profile?.description}
                     </SubtitleText>
                   </Column>
@@ -586,8 +605,8 @@ return (
               )
             ) : (
               <SubtitleText>
-                Randomly donate to an approved project on our public good registry and discover who
-                you supported afterwards!
+                Randomly donate to an approved project on our public good
+                registry and discover who you supported afterwards!
               </SubtitleText>
             )}
             <Column style={{ width: "100%" }}>
@@ -613,7 +632,10 @@ return (
                         noLabel: true,
                         placeholder: "",
                         options: DENOMINATION_OPTIONS,
-                        value: { text: state.denomination, value: state.denomination },
+                        value: {
+                          text: state.denomination,
+                          value: state.denomination,
+                        },
                         onChange: ({ text, value }) => {
                           State.update({ denomination: value });
                         },
@@ -627,7 +649,8 @@ return (
                           borderRadius: "4px 0px 0px 4px",
                           width: "auto",
                           padding: "12px 16px",
-                          boxShadow: "0px -2px 0px rgba(93, 93, 93, 0.24) inset",
+                          boxShadow:
+                            "0px -2px 0px rgba(93, 93, 93, 0.24) inset",
                         },
                         iconLeft:
                           state.denomination == "NEAR" ? (
@@ -640,12 +663,24 @@ return (
                   ),
                 }}
               />
-              <Row style={{ justifyContent: "space-between", width: "100%", padding: "0px" }}>
+              <Row
+                style={{
+                  justifyContent: "space-between",
+                  width: "100%",
+                  padding: "0px",
+                }}
+              >
                 <HintText>1 NEAR = ~${nearToUsd} USD</HintText>
                 <div style={{ display: "flex" }}>
-                  <HintText style={{ marginRight: "6px" }}>Account balance: </HintText>
+                  <HintText style={{ marginRight: "6px" }}>
+                    Account balance:{" "}
+                  </HintText>
                   <Icon
-                    style={{ width: "14px", height: "14px", marginRight: "2px" }}
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      marginRight: "2px",
+                    }}
                     src={SUPPORTED_FTS.NEAR.iconUrl}
                   />
                   <HintText>-- Max</HintText>
@@ -683,7 +718,8 @@ return (
                     }}
                   />
                   <TextBold>
-                    {protocolFeeRecipientProfile?.name || protocolFeeRecipientAccount}
+                    {protocolFeeRecipientProfile?.name ||
+                      protocolFeeRecipientAccount}
                   </TextBold>
                 </UserChipLink>
               </Label>
@@ -701,7 +737,8 @@ return (
                   }}
                 />
                 <Label htmlFor="bypassChefFeeSelector">
-                  Bypass {potDetail?.chef_fee_basis_points / 100 || "-"}% chef fee to{" "}
+                  Bypass {potDetail?.chef_fee_basis_points / 100 || "-"}% chef
+                  fee to{" "}
                   <UserChipLink
                     href={`https://near.social/mob.near/widget/ProfilePage?accountId=${potDetail?.chef}`}
                     target="_blank"
@@ -761,16 +798,19 @@ return (
                   src={EDIT_ICON_URL}
                   style={{ width: "18px", height: "18px", marginRight: "8px" }}
                 />
-                <AddNote onClick={() => State.update({ addNote: true })}>Add Note</AddNote>
+                <AddNote onClick={() => State.update({ addNote: true })}>
+                  Add Note
+                </AddNote>
               </Row>
             )}
-            {activeRound && state.isUserHumanVerified === false && (
+            {activeRound && isUserHumanVerified === false && (
               <InfoSection>
                 <Icon src={ALERT_ICON_URL} />
                 <Column>
                   <TitleText>Increase your impact!</TitleText>
                   <SubtitleText>
-                    Verify that you are a human on nadabot to multiply the impact of your donation!
+                    Verify that you are a human on nadabot to multiply the
+                    impact of your donation!
                   </SubtitleText>
                   <VerifyLink href={NADA_BOT_URL} target="_blank">
                     Verify Now{" "}
@@ -808,7 +848,9 @@ return (
               src={"${config/account}/widget/Components.Button"}
               props={{
                 type: "primary",
-                text: userShouldVerify ? "Nah, I want to have less impact" : "Donate",
+                text: userShouldVerify
+                  ? "Nah, I want to have less impact"
+                  : "Donate",
                 // disabled: !state.reviewMessage || !!state.reviewMessageError,
                 onClick: handleDonate,
                 // href: userShouldVerify ? props.NADA_BOT_URL : null,
