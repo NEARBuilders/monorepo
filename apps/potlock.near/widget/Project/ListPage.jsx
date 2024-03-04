@@ -877,7 +877,7 @@ return (
                 loading={<CardSkeleton />}
                 props={{
                   ...props,
-                  potId,
+                  potId, 
                   projectId: project.id,
                   allowDonate: true,
                   // allowDonate:

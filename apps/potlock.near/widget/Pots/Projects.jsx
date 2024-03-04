@@ -148,7 +148,7 @@ return (
       props={{
         ...props,
       }}
-    />
+    />    
     <Widget
       src={"${config/account}/widget/Project.ListSection"}
       props={{
@@ -162,7 +162,6 @@ return (
               loading={<CardSkeleton />}
               props={{
                 ...props,
-                potId,
                 projectId: project.project_id,
                 allowDonate:
                   sybilRequirementMet &&

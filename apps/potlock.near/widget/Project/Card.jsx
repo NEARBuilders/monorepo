@@ -396,7 +396,7 @@ const [totalAmount, totalDonors] = useMemo(() => {
   return [totalDonationAmount.toString(), donors.length];
 }, [donationsForProject]);
 
-const projectUrl = props.hrefWithParams(`?tab=project&projectId=${projectId}`);
+const projectUrl = props.hrefWithParams(`?tab=project&projectId=${projectId}&potId=${potId}`);
 
 const getImageSrc = (image) => {
   const defaultImageUrl =
