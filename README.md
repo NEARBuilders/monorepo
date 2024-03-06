@@ -20,6 +20,13 @@ and install dependencies:
 pnpm install
 ```
 
+**Note:** In order to run everything on M1 processors, the following steps are also needed:
+- Make sure Xcode Command Line Tools are installed: `xcode-select --install`;
+- Make sure you have a supported Python version (works with 3.11, but not with 3.12);
+- Make sure you are using Node version 18.
+
+Reference: [node-gyp on macOS](https://github.com/nodejs/node-gyp?tab=readme-ov-file#on-macos)
+
 ## get started
 
 To modify existing widgets in the /apps directory,
