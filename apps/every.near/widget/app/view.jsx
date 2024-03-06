@@ -48,6 +48,8 @@ const { Layout } = VM.require(config.layout?.src ?? "devs.near/widget/Layout") |
 };
 
 // While something like Theme should be in the parent...
+
+// Store global classnames here. This is where you would integrate with CSS libraries as well.
 const CSS = styled.div`
   .container {
     border: 1px solid red;
