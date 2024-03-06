@@ -20,20 +20,23 @@ and install dependencies:
 pnpm install
 ```
 
-// Merge this to main
-
 ## get started
 
 To modify existing widgets in the /apps directory,
 
 ```cmd
-pnpm run init 
-pnpm install
-
 pnpm run dev
 ```
 
-This will install packages, then start a local gateway hooked up to the VM, and a default gateway serving your local widgets.
+![bos-workspace](./assets/bos-workspace.png)
+
+This will serve the widgets in ./apps to a basic gateway. To view your local widgets, use one of the below methods:
+
+- *Beginner* ~ use the default bos-workspace gateway with default VM, http://localhost:8080
+- *Intermediate* ~ set flags on existing gateways like [near.org](https://near.org/flags) or [everything.dev](https://everything.dev/flags)
+- *Advanced* ~ set flags on the local gateway hooked up to this monorepo's VM
+
+### importing an existing project
 
 To extend the monorepo, you can either:
 
@@ -48,12 +51,18 @@ cd ../..
 
 Then change "appAccount" to "account"
 
-2. use create-bos-app to initialize a new workspace
+2. or use create-bos-app to initialize a new workspace:
 
 ```cmd
 pnpm add -g @archetype-org/create-bos-app
+
+cd apps
+create-bos-app
 ```
 
+then figure out some way to wrangle it into the /apps directory.
+
+(create-bos-app needs to be combined with bos-workspace)
 
 ## deploy to web4
 
@@ -133,26 +142,9 @@ everything
     packages/bos-workspace
 ```
 
-## Getting Started
+## Using local VM
 
-To run locally:
-
-1. From this root (/near), run:
-```cmd
-pnpm install
-pnpm run dev
-```
-
-This will serve your local widget code (/apps/urbit/*) to port 8080.
-
-![bos-workspace](./assets/bos-workspace.png)
-
-and start a react app at port 4000.
-
-2. Configure flags on gateway to work with local widgets. Go to `http://localhost:3000/flags` and paste in: `http://127.0.0.1:8080/api/loader`. Components should be loading successfully if localhost:3000 shows a dashboard rather than a white screen.
-
-
-3. Verify VM is connected
+You can verify the VM is connected via [https://localhost:8080/urbit.near/widget/app]
 
 ![vm-configured](./assets/vm-configured.png)
 
