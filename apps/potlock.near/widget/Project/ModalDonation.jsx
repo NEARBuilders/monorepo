@@ -230,13 +230,12 @@ let DonateSDK =
     asyncGetDonationsForDonor: () => {},
   };
 
-let PotFactorySDK =
+let {getPots } =
   VM.require("${config/account}/widget/SDK.potfactory") ??
-  (() => ({
-    getPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const pots = PotFactorySDK.getPots();
+  {
+    getPots: () => [],
+  };
+const pots = getPots();
 
 const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   getConfig: () => {},
@@ -493,7 +492,7 @@ const handleDonate = () => {
 
   const transactions = [
     {
-      contractName: isPotDonation ? potId : DONATION_CONTRACT_ID,
+      contractName: isPotDonation ? potId : "${alias/donateContractId}",
       methodName: "donate",
       args,
       deposit: amountIndivisible.toString(),

@@ -1,12 +1,10 @@
 const { projectId } = props;
 
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const pots = PotFactorySDK.getPots();
+let { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
+
+const pots = getPots();
 
 const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetApprovedApplications: () => {},
@@ -20,7 +18,9 @@ const getApprovedApplications = (potId) =>
       if (applications.some((app) => app.project_id === projectId))
         setPotIds([...(potIds || []), potId]);
     })
-    .catch((err) => console.log(`Error fetching approved applications for ${potId}`));
+    .catch((err) =>
+      console.log(`Error fetching approved applications for ${potId}`)
+    );
 
 if (pots && !potIds) {
   pots.forEach((pot) => {

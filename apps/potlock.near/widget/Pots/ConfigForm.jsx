@@ -12,16 +12,14 @@ const {
   SUPPORTED_FTS: {},
 };
 
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getContractId: () => {},
+const { getProtocolConfig, asyncGetPots }=
+  VM.require("${config/account}/widget/SDK.potfactory") ?? {
     getProtocolConfig: () => {},
-    asyncGetPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const potFactoryContractId = PotFactorySDK.getContractId();
-const protocolConfig = PotFactorySDK.getProtocolConfig();
+    asyncGetPots: () => [],
+  };
+
+  const potFactoryContractId = "${alias/potFactoryContractId}";
+const protocolConfig = getProtocolConfig();
 // console.log("props in config form: ", props);
 
 
@@ -344,7 +342,7 @@ const handleDeploy = () => {
     const pollIntervalMs = 1000;
     // const totalPollTimeMs = 60000; // consider adding in to make sure interval doesn't run indefinitely
     const pollId = setInterval(() => {
-      PotFactorySDK.asyncGetPots.then((pots) => {
+      asyncGetPots.then((pots) => {
         // console.log("pots: ", pots);
         const pot = pots.find(
           (pot) => pot.deployed_by === context.accountId && pot.deployed_at_ms > now

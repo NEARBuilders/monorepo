@@ -1,16 +1,14 @@
-let PotFactorySDK =
+const { getConfig, getPots, canUserDeployPot } =
   VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
-    getContractId: () => {},
     getConfig: () => {},
     getPots: () => {},
     canUserDeployPot: () => {},
   }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const potFactoryContractId = PotFactorySDK.getContractId();
-const potFactoryConfig = PotFactorySDK.getConfig();
-const pots = PotFactorySDK.getPots();
-const canDeploy = PotFactorySDK.canUserDeployPot(context.accountId);
+const potFactoryContractId = "${alias/potFactoryContractId}";
+const potFactoryConfig = getConfig();
+const pots = getPots();
+const canDeploy = canUserDeployPot(context.accountId);
 
 const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},

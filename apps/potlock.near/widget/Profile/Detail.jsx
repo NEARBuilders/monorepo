@@ -1,25 +1,17 @@
 const {
   SUPPORTED_FTS: { NEAR },
 } = props;
-const { DONATION_CONTRACT_ID } = VM.require(
-  "${config/account}/widget/constants"
-) || {
-  DONATION_CONTRACT_ID: "",
-};
 
-let DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
+let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
   asyncGetDonationsForDonor: () => {},
 };
 
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const pots = PotFactorySDK.getPots();
+const { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
+const pots = getPots();
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   asyncGetConfig: () => {},
   asyncGetDonationsForDonor: () => {},
 };

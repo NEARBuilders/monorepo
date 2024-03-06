@@ -1,30 +1,20 @@
 const { projectId, tab } = props;
 
-const { DONATION_CONTRACT_ID } = VM.require(
-  "${config/account}/widget/constants"
-) || {
-  DONATION_CONTRACT_ID: "",
-};
 const { ProjectOptions } = VM.require(
   "${config/account}/widget/Project.Options"
 );
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    asyncGetDonationsForRecipient: () => {},
-  };
+let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
+  asyncGetDonationsForRecipient: () => {},
+};
 
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
+let { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
 
-const pots = PotFactorySDK.getPots();
+const pots = getPots();
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   asyncGetConfig: () => {},
   asyncGetDonationsForProject: () => {},
   asyncGetDonationsForRecipient: () => {},
@@ -32,7 +22,7 @@ const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
 
 const { getProjectById } = VM.require(
   "${config/account}/widget/SDK.registry"
-) || {
+) ?? {
   getProjectById: () => "",
 };
 

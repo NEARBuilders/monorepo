@@ -1,8 +1,6 @@
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getPots: () => {},
-  }));
+let { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
 
 return {
   getConfig: (potId) => {
@@ -28,22 +26,34 @@ return {
     return Near.view(potId, "get_donations_for_donor", { donor_id: accountId });
   },
   asyncGetDonationsForDonor: (potId, accountId) => {
-    return Near.asyncView(potId, "get_donations_for_donor", { donor_id: accountId });
+    return Near.asyncView(potId, "get_donations_for_donor", {
+      donor_id: accountId,
+    });
   },
   getDonationsForProject: (potId, projectId) => {
-    return Near.view(potId, "get_donations_for_project", { project_id: projectId });
+    return Near.view(potId, "get_donations_for_project", {
+      project_id: projectId,
+    });
   },
   asyncGetDonationsForProject: (potId, projectId) => {
-    return Near.asyncView(potId, "get_donations_for_project", { project_id: projectId });
+    return Near.asyncView(potId, "get_donations_for_project", {
+      project_id: projectId,
+    });
   },
   getDonationsForRecipient: (potId, recipientId) => {
-    return Near.view(potId, "get_donations_for_recipient", { recipient_id: recipientId });
+    return Near.view(potId, "get_donations_for_recipient", {
+      recipient_id: recipientId,
+    });
   },
   asyncGetDonationsForRecipient: (potId, recipientId) => {
-    return Near.asyncView(potId, "get_donations_for_recipient", { recipient_id: recipientId });
+    return Near.asyncView(potId, "get_donations_for_recipient", {
+      recipient_id: recipientId,
+    });
   },
   getApplicationByProjectId: (potId, projectId) => {
-    return Near.view(potId, "get_application_by_project_id", { project_id: projectId });
+    return Near.view(potId, "get_application_by_project_id", {
+      project_id: projectId,
+    });
   },
   getApprovedApplications: (potId) => {
     return Near.view(potId, "get_approved_applications", {});
@@ -58,13 +68,10 @@ return {
     return Near.asyncView(potId, "get_applications", {});
   },
   asyncGetActiveRoundsForProject: (projectId, env) => {
-    PotFactorySDK = PotFactorySDK({ env });
-    console.log("PotFactorySDK: ", PotFactorySDK);
-    const pots = PotFactorySDK.getPots();
-    console.log("pots line 64: ", pots);
+    const pots = getPots();
+    
     const activeRounds = Object.entries(pots).filter(
       ([_id, { approvedProjects, detail }]) => {
-        console.log("approvedProjects: ", approvedProjects);
         const { public_round_start_ms, public_round_end_ms } = detail;
         const now = Date.now();
         const approved = approvedProjects.filter((proj) => {

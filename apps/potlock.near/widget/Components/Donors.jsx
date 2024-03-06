@@ -1,27 +1,22 @@
 const { calcNetDonationAmount, filterByDate } = VM.require(
   "${config/account}/widget/Components.DonorsUtils"
-) || {
+) ?? {
   calcNetDonationAmount: () => "",
-  filterByDate: () => []
+  filterByDate: () => [],
 };
 
-let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
-  (() => ({
-    getPots: () => {},
-  }));
-PotFactorySDK = PotFactorySDK({ env: props.env });
-const pots = PotFactorySDK.getPots();
+const { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
+const pots = getPots();
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   asyncGetMatchingPoolDonations: () => {},
 };
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    asyncGetDonations: () => {},
-  };
+let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
+  asyncGetDonations: () => {},
+};
 
 const Container = styled.div`
   display: flex;
@@ -152,7 +147,10 @@ const getSponsorshipDonations = (potId) => {
 
 if (pots && !sponsorsByPage[pots[pots.length - 1].id]) {
   const cachedSponsors = Storage.get("sponsorsByPage");
-  if (cachedSponsors && cachedSponsors.ts > Date.now() - cachedDonationsValidityPeriod) {
+  if (
+    cachedSponsors &&
+    cachedSponsors.ts > Date.now() - cachedDonationsValidityPeriod
+  ) {
     console.log("using cached sponsors");
     setSponsorsByPage(cachedSponsors.val);
   } else if (cachedSponsors !== null) {
@@ -183,7 +181,10 @@ if (!allDonationsFetched && !donationsByPage[index]) {
   // first, try to get from cache
   const cacheKey = `donationsByPage-${index}-${limit}`;
   const cachedDonations = Storage.get(cacheKey);
-  if (cachedDonations && cachedDonations.ts > Date.now() - cachedDonationsValidityPeriod) {
+  if (
+    cachedDonations &&
+    cachedDonations.ts > Date.now() - cachedDonationsValidityPeriod
+  ) {
     console.log("using cached donations for page ", index);
     setDonationsByPage({ ...donationsByPage, [index]: cachedDonations.val });
     if (cachedDonations.val.length === limit) {
@@ -198,7 +199,13 @@ if (!allDonationsFetched && !donationsByPage[index]) {
     DonateSDK.asyncGetDonations(limit * index, limit)
       .then((donationsPart) => {
         const endTime = Date.now();
-        console.log("fetched donations for index", index, "in", endTime - startTime, "ms");
+        console.log(
+          "fetched donations for index",
+          index,
+          "in",
+          endTime - startTime,
+          "ms"
+        );
         // cache the result
         Storage.set(cacheKey, { val: donationsPart, ts: Date.now() });
         setDonationsByPage({ ...donationsByPage, [index]: donationsPart });
@@ -227,7 +234,9 @@ const [allDonations, totalsByDonor, sortedDonations] = useMemo(() => {
     };
     return accumulator;
   }, {});
-  const sortedDonations = Object.values(totalsByDonor).sort((a, b) => b.amount - a.amount);
+  const sortedDonations = Object.values(totalsByDonor).sort(
+    (a, b) => b.amount - a.amount
+  );
   return [donations, totalsByDonor, sortedDonations];
 }, [donationsByPage, allDonationsFetched, filter]);
 
@@ -356,7 +365,9 @@ return (
           </Filter>
         </Tabs>
         <Widget
-          src={`${config/account}/widget/${options.find((option) => option.tab == currentTab).src}`}
+          src={`${config / account}/widget/${
+            options.find((option) => option.tab == currentTab).src
+          }`}
           props={{
             ...props,
             allDonations: allDonations,
