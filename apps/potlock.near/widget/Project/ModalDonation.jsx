@@ -210,14 +210,14 @@ const {
 } = props;
 const { DONATION_CONTRACT_ID, NADA_BOT_URL, SUPPORTED_FTS } = VM.require(
   "${config/account}/widget/constants"
-) || {
+) ?? {
   DONATION_CONTRACT_ID: "",
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
 // console.log("props in donation modal: ", props);
 
-const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
+const { getProjects } = VM.require("${config/account}/widget/SDK.registry") ?? {
   getProjects: () => [],
 };
 

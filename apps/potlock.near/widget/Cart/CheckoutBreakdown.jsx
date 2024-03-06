@@ -1,15 +1,15 @@
-const { yoctosToNear } = VM.require("${config/account}/widget/utils") || {
+const { yoctosToNear } = VM.require("${config/account}/widget/utils") ?? {
   yoctosToNear: () => "",
 };
-const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") ?? {
   SUPPORTED_FTS: {},
 };
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   asyncGetDonationsForDonor: () => {},
 };
 
-const DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
+const DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
   asyncGetDonationsForDonor: () => {},
 };
 

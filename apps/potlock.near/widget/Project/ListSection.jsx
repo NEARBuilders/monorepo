@@ -1,19 +1,14 @@
-const { tab, shouldShuffle } = props;
+const { items, shouldShuffle } = props;
 
-const { Feed } = VM.require("devs.near/widget/Feed") || {
+const { Feed } = VM.require("devs.near/widget/Feed") ?? {
   Feed: () => <></>,
 };
 
-const items = props.items;
 if (shouldShuffle) {
   items = [...items].sort(() => Math.random() - 0.5);
 }
 
 const PAGE_SIZE = 9;
-console.log("items", items);
-if (items.length < 1) {
-  return <p>Loading...</p>
-}
 
 const Container = styled.div`
   display: flex;
