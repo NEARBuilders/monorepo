@@ -115,6 +115,8 @@ const config = {
 
 const Root = styled.div`
   position: relative;
+  min-height: 100vh;
+
   * {
     font-family: "Mona-Sans";
     font-style: normal;
@@ -154,7 +156,7 @@ const Root = styled.div`
 
   a {
     text-decoration: none;
-    
+
     &:hover: {
       text-decoration: none;
     }

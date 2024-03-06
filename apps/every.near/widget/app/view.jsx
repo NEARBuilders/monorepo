@@ -7,6 +7,12 @@ const { config, ...passProps } = props;
 if (!config) {
   // TODO: get from settings (or default)
   config = {
+    layout: {
+      src: "devs.near/widget/Layout",
+      props: {
+        variant: "standard",
+      },
+    },
     router: {
       param: "page",
       routes: {
@@ -43,7 +49,9 @@ if (!config) {
   );
 }
 
-const { Layout } = VM.require(config.layout?.src ?? "devs.near/widget/Layout") || {
+const { Layout } = VM.require(
+  config.layout?.src ?? "devs.near/widget/Layout"
+) || {
   Layout: () => <></>,
 };
 
@@ -91,9 +99,12 @@ const Content = styled.div`
 return (
   <CSS style={config.theme}>
     <Container>
-      <Layout {...config.layout?.props ?? { variant: "standard"}} blocks={config.blocks}>
+      <Layout
+        {...(config.layout?.props ?? { variant: "standard" })}
+        blocks={config.blocks}
+      >
         <Content>
-          <Router config={config.router} {...passProps} />
+          <Router config={config.router} {...passProps} blocks={config.blocks}/>
         </Content>
       </Layout>
     </Container>

@@ -1,4 +1,4 @@
-const Feed = ({ index, typeWhitelist, Item, Layout, showCompose }) => {
+const Feed = ({ index, items, typeWhitelist, Item, Layout, showCompose }) => {
   Item = Item || ((props) => <div>{JSON.stringify(props)}</div>);
   Layout = Layout || (({ children }) => children);
 
@@ -8,12 +8,7 @@ const Feed = ({ index, typeWhitelist, Item, Layout, showCompose }) => {
     }
     return (
       <div key={JSON.stringify(a)}>
-        <Item
-          accountId={a.accountId}
-          path={a.value.path}
-          blockHeight={a.blockHeight}
-          type={a.value.type}
-        />
+        <Item {...a} />
       </div>
     );
   };
@@ -54,6 +49,20 @@ const Feed = ({ index, typeWhitelist, Item, Layout, showCompose }) => {
 
     return v;
   };
+
+  if (items) {
+    return (
+      <Widget
+        src="devs.near/widget/PR.ItemFeed"
+        props={{
+          items,
+          renderItem,
+          perPage: props.perPage,
+          Layout: ({ children }) => <Layout>{children}</Layout>,
+        }}
+      />
+    );
+  }
 
   return (
     <>
