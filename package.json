@@ -6,7 +6,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-		"init": "git submodule update --init --recursive && pnpm install && pnpm run build --workspace pacakges/bos-workspace",
+		"init": "git submodule update --init --recursive && pnpm install && pnpm run build --workspace packages/bos-workspace",
     "dev": "concurrently \"pnpm run dev:gateway\" \"pnpm run bw workspace dev\"",
     "dev:gateway": "npx nx run-many --target=dev --projects=viewer",
     "bw": "./node_modules/bos-workspace/bin/bw.js",
