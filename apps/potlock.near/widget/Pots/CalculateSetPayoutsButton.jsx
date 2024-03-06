@@ -1,7 +1,7 @@
 // * QF/CLR logic taken from https://github.com/gitcoinco/quadratic-funding/blob/master/quadratic-funding/clr.py *
 
 const { potId, potDetail } = props;
-const { ONE_TGAS } = VM.require("potlock.near/widget/constants") || {
+const { ONE_TGAS } = VM.require("${config/account}/widget/constants") || {
   ONE_TGAS: 0,
 };
 const convertDonationsToProjectContributions = (donations) => {

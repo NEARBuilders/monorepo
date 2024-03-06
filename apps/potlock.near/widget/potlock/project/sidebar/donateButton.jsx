@@ -1,4 +1,4 @@
-const accountId = props.accountId ?? context.accountId ?? "potlock.near";
+const accountId = props.accountId ?? context.accountId ?? "${config/account}";
 
 if (!accountId) {
   return "Please connect your NEAR wallet :)";

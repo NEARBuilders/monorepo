@@ -1,33 +1,34 @@
 const {
   SUPPORTED_FTS: { NEAR },
 } = props;
-const { DONATION_CONTRACT_ID } = VM.require("potlock.near/widget/constants") || {
+const { DONATION_CONTRACT_ID } = VM.require(
+  "${config/account}/widget/constants"
+) || {
   DONATION_CONTRACT_ID: "",
 };
 
-let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
-    asyncGetDonationsForDonor: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+let DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
+  asyncGetDonationsForDonor: () => {},
+};
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getPots: () => {},
   }));
 PotFactorySDK = PotFactorySDK({ env: props.env });
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetConfig: () => {},
   asyncGetDonationsForDonor: () => {},
 };
 
 const accountId = props.accountId ?? context.accountId;
 
-const { ProfileOptions } = VM.require("${config/account}/widget/Profile.Options");
+const { ProfileOptions } = VM.require(
+  "${config/account}/widget/Profile.Options"
+);
 
 if (!accountId) {
   return "No account ID";
@@ -41,7 +42,9 @@ const [potDonations, setPotDonations] = useState([]);
 const getSponsorshipDonations = (potId, potDetail) => {
   return PotSDK.asyncGetDonationsForDonor(potId, accountId)
     .then((donations) => {
-      donations = donations.filter((donations) => donations.donor_id === accountId);
+      donations = donations.filter(
+        (donations) => donations.donor_id === accountId
+      );
       const updatedDonations = donations.map((donation) => ({
         ...donation,
         base_currency: potDetail.base_currency,
@@ -83,7 +86,10 @@ if (pots && !sponsorshipDonations[pots[pots.length - 1].id]) {
 
 const allDonations = useMemo(() => {
   const sponsorshipDonationsValue = Object.values(sponsorshipDonations).flat();
-  const allDonations = [...(directDonations || []), ...sponsorshipDonationsValue];
+  const allDonations = [
+    ...(directDonations || []),
+    ...sponsorshipDonationsValue,
+  ];
   allDonations.sort((a, b) => b.donated_at - a.donated_at);
   return allDonations;
 }, [sponsorshipDonations, directDonations]);

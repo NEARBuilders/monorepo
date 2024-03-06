@@ -1,7 +1,7 @@
 const { sponsors, sortedDonations, filter, currentTab } = props;
 const donations = currentTab === "sponsors" ? sponsors : sortedDonations;
 
-const { nearToUsd, href } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsd, href } = VM.require("${config/account}/widget/utils") || {
   nearToUsd: 1,
   href: () => {},
 };

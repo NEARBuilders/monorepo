@@ -4,14 +4,13 @@ const [isModalDonationSucessOpen, setIsModalDonationSucessOpen] =
 
 const { projectId } = props;
 
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    isProjectApproved: () => {},
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
+const { isProjectApproved } =
+  VM.require("${config/account}/widget/SDK.registry") ||
+  {
+    isProjectApproved: () => false,
+  };
 
-const projectIsApproved = RegistrySDK.isProjectApproved(projectId);
+const projectIsApproved = isProjectApproved(projectId);
 
 const Container = styled.div`
   display: flex;

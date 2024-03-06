@@ -30,7 +30,7 @@ const PAGE_SIZE = 9;
 
 const featuredProjectIds = [
   "magicbuild.near",
-  "potlock.near",
+  "${config/account}",
   "yearofchef.near",
 ];
 const featuredProjects = useMemo(
@@ -161,6 +161,7 @@ const OnBottom = styled.div`
   justify-content: center;
   padding: 20px 0;
 `;
+
 
 return (
   <Container style={{ paddingBottom: "32px" }}>

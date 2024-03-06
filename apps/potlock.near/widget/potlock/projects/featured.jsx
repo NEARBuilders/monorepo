@@ -1,5 +1,5 @@
 const featuredProjects = [
-  "potlock.near",
+  "${config/account}",
   "nearefi.near",
   "near-africa.near",
   "keypom.near",
@@ -27,7 +27,7 @@ return (
 
       {featuredProjects.map((accountId) => (
         <Widget
-          src={`potlock.near/widget/potlock.projects.projectCard`}
+          src={`${config/account}/widget/potlock.projects.projectCard`}
           props={{
             accountId,
           }}

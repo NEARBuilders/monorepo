@@ -1,6 +1,6 @@
 const { id, review_notes, status, totalAmount } = props;
 const { getTagsFromSocialProfileData, href } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || {
   getTagsFromSocialProfileData: () => [],
   href: () => {},
@@ -9,11 +9,10 @@ const IPFS_BASE_URL = "https://ipfs.near.social/ipfs/";
 const cardData = Social.getr(`${id}/profile`);
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     getDonationsForRecipient: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 const donationsForProject = DonateSDK.getDonationsForRecipient(id);
 

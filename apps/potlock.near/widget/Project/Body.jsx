@@ -5,7 +5,7 @@ const {
   getTagsFromSocialProfileData,
 } = props;
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 
@@ -132,7 +132,7 @@ const ShareIcon = (
   </ShareIconContainer>
 );
 
-const projectLink = `https://near.social/potlock.near/widget/Index?tab=project&projectId=${
+const projectLink = `https://near.social/${config/account}/widget/Index?tab=project&projectId=${
   props.projectId
 }${context.accountId && `&referrerId=${context.accountId}`}`;
 

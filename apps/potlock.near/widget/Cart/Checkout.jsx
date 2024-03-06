@@ -1,4 +1,4 @@
-const donationContractId = "donate.potlock.near";
+const donationContractId = "donate.${config/account}";
 
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 const TRASH_ICON_URL =
@@ -18,18 +18,15 @@ const [projectId, setProjectId] = useState("");
 //   }
 // `;
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    getProjects: () => {},
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
+const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
+  getProjects: () => [],
+};
 
-const registeredProjects = RegistrySDK.getProjects();
+const registeredProjects = getProjects();
 
 const Container = styled.div`
   background: #fafafa;

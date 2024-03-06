@@ -1,6 +1,6 @@
 return ({ env }) => {
   const contractId =
-    env === "staging" ? "potfactory.staging.potlock.near" : "v1.potfactory.potlock.near";
+    env === "staging" ? "potfactory.staging.${config/account}" : "v1.potfactory.${config/account}";
 
   const PotFactorySDK = {
     getContractId: () => contractId,

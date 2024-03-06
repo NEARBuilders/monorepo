@@ -1,13 +1,13 @@
-// const potFactoryContractId = "potfactory1.tests.potlock.near"; // TODO: update to production address when contract is deployed to prod
+// const potFactoryContractId = "potfactory1.tests.${config/account}"; // TODO: update to production address when contract is deployed to prod
 
-// const DEFAULT_REGISTRY_PROVIDER = "registry.potlock.near";
-// const DEFAULT_SYBIL_WRAPPER_PROVIDER = "sybil.potlock.near";
+// const DEFAULT_REGISTRY_PROVIDER = "registry.${config/account}";
+// const DEFAULT_SYBIL_WRAPPER_PROVIDER = "sybil.${config/account}";
 // const DEFAULT_PROTOCOL_CONFIG_PROVIDER = potFactoryContractId;
 // const CURRENT_SOURCE_CODE_VERSION = "0.1.0";
 // const SOURCE_CODE_LINK = "https://github.com/PotLock/core"; // for use in contract source metadata
 const POT_CODE_LINK = "https://github.com/PotLock/core/tree/main/contracts/pot"; // for directing user to view source code for Pot
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 

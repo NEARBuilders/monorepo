@@ -2,11 +2,11 @@ const { onClose } = props;
 const {
   SUPPORTED_FTS: { NEAR },
   IPFS_BASE_URL,
-} = VM.require("potlock.near/widget/constants") || {
+} = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
   IPFS_BASE_URL: "",
 };
-const { yoctosToUsd, href } = VM.require("potlock.near/widget/utils") || {
+const { yoctosToUsd, href } = VM.require("${config/account}/widget/utils") || {
   yoctosToUsd: () => "",
   href: () => {},
 };

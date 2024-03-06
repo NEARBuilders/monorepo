@@ -1,5 +1,5 @@
 const { name, description, plPublicGoodReason } = props.profile;
-const { getTeamMembersFromSocialProfileData } = VM.require("potlock.near/widget/utils") || {
+const { getTeamMembersFromSocialProfileData } = VM.require("${config/account}/widget/utils") || {
   getTeamMembersFromSocialProfileData: () => [],
 };
 const Container = styled.div`

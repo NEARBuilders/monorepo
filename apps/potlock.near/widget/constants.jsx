@@ -1,7 +1,7 @@
 return {
   ownerId: "${config/account}",
   PROJECT_STATUSES: ["Pending", "Approved", "Rejected", "Graylisted", "Blacklisted"],
-  DONATION_CONTRACT_ID: "donate.potlock.near",
+  DONATION_CONTRACT_ID: "donate.${config/account}",
   IPFS_BASE_URL: "https://ipfs.near.social/ipfs/",
   ONE_TGAS: Big(1_000_000_000_000),
   MAX_DONATION_MESSAGE_LENGTH: 100,

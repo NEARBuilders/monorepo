@@ -1,12 +1,12 @@
 const { projectId } = props;
 const { getTagsFromSocialProfileData } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || {
   getTagsFromSocialProfileData: () => [],
 };
 const {
   SUPPORTED_FTS: { NEAR },
-} = VM.require("potlock.near/widget/constants") || {
+} = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 const accountId = props.accountId ?? context.accountId;
@@ -17,15 +17,17 @@ const [statusReview, setStatusReview] = useState({
   newStatus: "",
 });
 
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") || (() => ({}));
-RegistrySDK = RegistrySDK({ env: props.env });
-const userIsRegistryAdmin = RegistrySDK.isUserRegistryAdmin(context.accountId);
+const { isUserRegistryAdmin } = VM.require(
+  "${config/account}/widget/SDK.registry"
+) || {
+  isUserRegistryAdmin: () => false,
+};
+const userIsRegistryAdmin = isUserRegistryAdmin(context.accountId);
 
 const handleUpdateStatus = () => {
   Near.call([
     {
-      contractName: registry.getContractId(),
+      contractName: "${alias/registryContractId}",
       methodName: "admin_set_project_status",
       args: {
         project_id: projectId,
@@ -97,7 +99,9 @@ const Row = styled.div`
   flex-direction: row;
   align-items: center;
 `;
-const { PROJECT_STATUSES } = VM.require("potlock.near/widget/constants") || {
+const { PROJECT_STATUSES } = VM.require(
+  "${config/account}/widget/constants"
+) || {
   PROJECT_STATUSES: [],
 };
 

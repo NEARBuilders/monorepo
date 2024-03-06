@@ -1,5 +1,5 @@
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getContractId: () => {},
     getConfig: () => {},
@@ -12,7 +12,7 @@ const potFactoryConfig = PotFactorySDK.getConfig();
 const pots = PotFactorySDK.getPots();
 const canDeploy = PotFactorySDK.canUserDeployPot(context.accountId);
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 

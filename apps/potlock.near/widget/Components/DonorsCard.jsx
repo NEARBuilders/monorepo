@@ -1,6 +1,6 @@
 const { donor } = props;
 const { id, rank, className, amount } = donor;
-const { nearToUsdWithFallback, href } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsdWithFallback, href } = VM.require("${config/account}/widget/utils") || {
   nearToUsdWithFallback: () => "",
   href: () => {}
 };

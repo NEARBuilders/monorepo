@@ -1,8 +1,8 @@
 const { projectId, donations } = props;
-const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
 };
-const { nearToUsd, href } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsd, href } = VM.require("${config/account}/widget/utils") || {
   nearToUsd: 1,
   href: () => {},
 };
@@ -388,7 +388,7 @@ return (
           );
           return (
             <TrRow>
-              <a href={`/potlock.near/widget/app${url})`} className="address" target="_blank">
+              <a href={`/${config/account}/widget/app${url})`} className="address" target="_blank">
                 {type === "SPONSORSHIP" ? (
                   <img
                     className="profile-image"

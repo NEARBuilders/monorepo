@@ -1,19 +1,17 @@
-const { yoctosToNear } = VM.require("potlock.near/widget/utils") || { yoctosToNear: () => "" };
-const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { yoctosToNear } = VM.require("${config/account}/widget/utils") || {
+  yoctosToNear: () => "",
+};
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetDonationsForDonor: () => {},
 };
 
-let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
-    asyncGetDonationsForDonor: () => {},
-  }));
-
-DonateSDK = DonateSDK({ env: props.env });
+let DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
+  asyncGetDonationsForDonor: () => {},
+};
 
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 Big.PE = 100;
@@ -131,9 +129,13 @@ const [amountsByFt, totalAmount, donationTooSmall] = useMemo(() => {
   Object.entries(props.cart || {}).forEach(([projectId, { ft, amount }]) => {
     if (!amountsByFt[ft]) amountsByFt[ft] = 0;
     amountsByFt[ft] += parseFloat(amount || 0);
-    if (amountsByFt[ft] < MIN_REQUIRED_DONATION_AMOUNT_PER_PROJECT) donationTooSmall = true;
+    if (amountsByFt[ft] < MIN_REQUIRED_DONATION_AMOUNT_PER_PROJECT)
+      donationTooSmall = true;
   });
-  const totalAmount = Object.values(amountsByFt).reduce((acc, amount) => acc + amount, 0);
+  const totalAmount = Object.values(amountsByFt).reduce(
+    (acc, amount) => acc + amount,
+    0
+  );
   return [amountsByFt, totalAmount, donationTooSmall];
 }, [props]);
 
@@ -141,33 +143,37 @@ const handleDonate = () => {
   const transactions = [];
   let potIdContained;
 
-  Object.entries(props.cart).forEach(([projectId, { ft, amount, referrerId, note, potId }]) => {
-    const amountFloat = 0;
-    if (ft == "NEAR") {
-      amountFloat = parseFloat(amount || 0);
-    } else {
-      amountFloat = parseFloat((amount / props.cart[props.projectId]?.price).toFixed(2) || 0);
+  Object.entries(props.cart).forEach(
+    ([projectId, { ft, amount, referrerId, note, potId }]) => {
+      const amountFloat = 0;
+      if (ft == "NEAR") {
+        amountFloat = parseFloat(amount || 0);
+      } else {
+        amountFloat = parseFloat(
+          (amount / props.cart[props.projectId]?.price).toFixed(2) || 0
+        );
+      }
+      const amountIndivisible = SUPPORTED_FTS[ft].toIndivisible(amountFloat);
+      const donateContractArgs = {};
+      const potContractArgs = {};
+      if (potId) {
+        potContractArgs.project_id = projectId;
+        potContractArgs.referrer_id = referrerId;
+        potIdContained = potId;
+      } else {
+        donateContractArgs.recipient_id = projectId;
+        donateContractArgs.referrer_id = referrerId;
+        donateContractArgs.message = note;
+      }
+      transactions.push({
+        contractName: potId ?? DONATION_CONTRACT_ID,
+        methodName: "donate",
+        args: potId ? potContractArgs : donateContractArgs,
+        deposit: amountIndivisible.toString(),
+        gas: "300000000000000",
+      });
     }
-    const amountIndivisible = SUPPORTED_FTS[ft].toIndivisible(amountFloat);
-    const donateContractArgs = {};
-    const potContractArgs = {};
-    if (potId) {
-      potContractArgs.project_id = projectId;
-      potContractArgs.referrer_id = referrerId;
-      potIdContained = potId;
-    } else {
-      donateContractArgs.recipient_id = projectId;
-      donateContractArgs.referrer_id = referrerId;
-      donateContractArgs.message = note;
-    }
-    transactions.push({
-      contractName: potId ?? DONATION_CONTRACT_ID,
-      methodName: "donate",
-      args: potId ? potContractArgs : donateContractArgs,
-      deposit: amountIndivisible.toString(),
-      gas: "300000000000000",
-    });
-  });
+  );
 
   const now = Date.now();
   Near.call(transactions);
@@ -188,7 +194,13 @@ const handleDonate = () => {
       // go through donations, add to foundDonations list
       console.log("donations: ", donations);
       for (const donation of donations) {
-        const { recipient_id, project_id, donated_at_ms, donated_at, total_amount } = donation;
+        const {
+          recipient_id,
+          project_id,
+          donated_at_ms,
+          donated_at,
+          total_amount,
+        } = donation;
         const matchingCartItem = props.cart[project_id || recipient_id];
         if (matchingCartItem && (donated_at_ms > now || donated_at > now)) {
           foundDonations.push(donation);
@@ -199,7 +211,9 @@ const handleDonate = () => {
         // donations found
         // display success message & clear cart
         clearInterval(pollId);
-        props.updateSuccessfulDonationRecipientId(foundDonations[0].recipient_id);
+        props.updateSuccessfulDonationRecipientId(
+          foundDonations[0].recipient_id
+        );
         props.setCheckoutSuccess(true);
         props.clearCart();
       }
@@ -243,7 +257,10 @@ return (
       props={{
         type: "primary",
         text: `Donate ${`${totalAmount.toFixed(2)} N`}`,
-        disabled: !Object.keys(props.cart).length || donationTooSmall || !context.accountId,
+        disabled:
+          !Object.keys(props.cart).length ||
+          donationTooSmall ||
+          !context.accountId,
         onClick: handleDonate,
         style: {
           width: "100%",
@@ -252,7 +269,8 @@ return (
     />
     {donationTooSmall && (
       <ErrorText>
-        Minimum required donation per project is {MIN_REQUIRED_DONATION_AMOUNT_PER_PROJECT} N
+        Minimum required donation per project is{" "}
+        {MIN_REQUIRED_DONATION_AMOUNT_PER_PROJECT} N
       </ErrorText>
     )}
     {!context.accountId && <ErrorText>Please sign in to donate</ErrorText>}

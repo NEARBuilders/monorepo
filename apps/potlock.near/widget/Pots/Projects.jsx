@@ -1,4 +1,4 @@
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   getApprovedApplications: () => {},
   getPublicRoundDonations: () => {},
 };
@@ -122,7 +122,7 @@ const CardSkeleton = () => (
 
 // get projects
 const { potId, potDetail, sybilRequirementMet } = props;
-const { calculatePayouts } = VM.require("potlock.near/widget/utils") || {
+const { calculatePayouts } = VM.require("${config/account}/widget/utils") || {
   calculatePayouts: () => {},
 };
 const projects = PotSDK.getApprovedApplications(potId);

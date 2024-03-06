@@ -280,8 +280,8 @@ return (
       </LogoLinks>
     </Container>
 
-    <Widget src="potlock.near/widget/potlock.home.stats" />
-    <Widget src="potlock.near/widget/potlock.projects.featured" />
-    <Widget src="potlock.near/widget/potlock.footer.main" />
+    <Widget src="${config/account}/widget/potlock.home.stats" />
+    <Widget src="${config/account}/widget/potlock.projects.featured" />
+    <Widget src="${config/account}/widget/potlock.footer.main" />
   </Wrapper>
 );

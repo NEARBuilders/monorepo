@@ -1,14 +1,14 @@
 const { projectId } = props;
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getPots: () => {},
   }));
 PotFactorySDK = PotFactorySDK({ env: props.env });
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetApprovedApplications: () => {},
 };
 

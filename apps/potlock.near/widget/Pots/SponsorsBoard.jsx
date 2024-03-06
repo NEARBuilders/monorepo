@@ -1,5 +1,5 @@
 const { donations, base_currency } = props;
-const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 

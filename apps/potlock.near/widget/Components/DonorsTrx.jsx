@@ -12,7 +12,7 @@ const nearLogo =
 const { getTimePassed, _address, calcNetDonationAmount, reverseArr } =
   VM.require("${config/account}/widget/Components.DonorsUtils");
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 

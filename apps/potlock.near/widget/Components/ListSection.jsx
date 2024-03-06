@@ -21,7 +21,7 @@ const sortList = [
   "Least to Most Donations",
 ];
 
-const donationContractId = "donate.potlock.near";
+const donationContractId = "donate.${config/account}";
 const [totalProjects, setTotalProjects] = useState(props.items);
 const [displayProject, setDisplayProject] = useState([]);
 const [lastNumberOfProject, setLastNumberOfProject] = useState(0);
@@ -36,7 +36,7 @@ const [featuredProjects, setFeaturedProjects] = useState([
     review_notes: null,
   },
   {
-    id: "potlock.near",
+    id: "${config/account}",
     status: "Approved",
     submitted_ms: 1698437495305,
     updated_ms: 1698437495305,

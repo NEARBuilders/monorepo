@@ -1,5 +1,5 @@
 const { accountId, projectId, nav } = props;
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 

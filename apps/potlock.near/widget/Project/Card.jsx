@@ -1,34 +1,33 @@
 const { potId, potDetail, payoutDetails } = props;
 const { nearToUsd, ipfsUrlFromCid, yoctosToNear, yoctosToUsdWithFallback } =
-  VM.require("potlock.near/widget/utils") || {
+  VM.require("${config/account}/widget/utils") || {
     ipfsUrlFromCid: () => "",
     yoctosToNear: () => "",
     yoctosToUsdWithFallback: () => "",
     nearToUsd: 1,
   };
 const { NADA_BOT_URL, SUPPORTED_FTS } = VM.require(
-  "potlock.near/widget/constants"
+  "${config/account}/widget/constants"
 ) || {
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
 const { getTagsFromSocialProfileData, href } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || {
   getTagsFromSocialProfileData: () => [],
   href: () => {},
 };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   getDonationsForProject: () => {},
 };
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     getDonationsForRecipient: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 // console.log("props in Card: ", props);
 

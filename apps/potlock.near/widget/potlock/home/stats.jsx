@@ -66,7 +66,7 @@ return (
         }}
       />
       <Widget
-        src={`potlock.near/widget/potlock.home.stats.link`}
+        src={`${config/account}/widget/potlock.home.stats.link`}
         className="link"
       />
     </Stats>

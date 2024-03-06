@@ -2,7 +2,7 @@ State.init({
   copiedShareUrl: false,
 });
 
-const accountId = props.accountId ?? "potlock.near";
+const accountId = props.accountId ?? "${config/account}";
 const profile =
   props.profile || Social.get(`${accountId}/profile/**`, "final") || {};
 
@@ -338,7 +338,7 @@ return (
       <Actions>
         <FollowButtonWrapper>
           <Widget
-            src="potlock.near/widget/potlock.project.sidebar.donateButton"
+            src="${config/account}/widget/potlock.project.sidebar.donateButton"
             props={{
               accountId: accountId,
               amount: state.amount, // add a way to enter ammount

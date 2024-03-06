@@ -1,11 +1,11 @@
 // get donations
 const { potId, potDetail } = props;
 
-const { SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
   SUPPORTED_FTS: {},
 };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetMatchingPoolDonations: () => {},
 };
 

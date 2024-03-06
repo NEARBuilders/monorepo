@@ -1,19 +1,22 @@
 const { projectId, tab } = props;
 
-const { DONATION_CONTRACT_ID } = VM.require("potlock.near/widget/constants") || {
+const { DONATION_CONTRACT_ID } = VM.require(
+  "${config/account}/widget/constants"
+) || {
   DONATION_CONTRACT_ID: "",
 };
-const { ProjectOptions } = VM.require("${config/account}/widget/Project.Options");
+const { ProjectOptions } = VM.require(
+  "${config/account}/widget/Project.Options"
+);
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     asyncGetDonationsForRecipient: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getPots: () => {},
   }));
@@ -21,20 +24,19 @@ PotFactorySDK = PotFactorySDK({ env: props.env });
 
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetConfig: () => {},
   asyncGetDonationsForProject: () => {},
   asyncGetDonationsForRecipient: () => {},
 };
 
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    getProjectById: () => "",
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
+const { getProjectById } = VM.require(
+  "${config/account}/widget/SDK.registry"
+) || {
+  getProjectById: () => "",
+};
 
-const project = RegistrySDK.getProjectById(projectId);
+const project = getProjectById(projectId);
 
 if (!project || project == null) {
   return "Loading";
@@ -94,7 +96,8 @@ const allDonations = useMemo(() => {
   const RoundDonationsValue = Object.values(matchingRoundDonations).flat();
   const allDonations = [...(directDonations || []), ...RoundDonationsValue];
   allDonations.sort(
-    (a, b) => (b.donated_at_ms || b.donated_at) - (a.donated_at_ms || a.donated_at)
+    (a, b) =>
+      (b.donated_at_ms || b.donated_at) - (a.donated_at_ms || a.donated_at)
   );
   return allDonations;
 }, [matchingRoundDonations, directDonations]);
@@ -111,7 +114,10 @@ const Wrapper = styled.div`
 return (
   <Wrapper>
     {project.status !== "Approved" && (
-      <Widget src={"${config/account}/widget/Project.ProjectBanner"} props={{ ...props, project }} />
+      <Widget
+        src={"${config/account}/widget/Project.ProjectBanner"}
+        props={{ ...props, project }}
+      />
     )}
     <Widget
       src={"${config/account}/widget/Profile.Body"}

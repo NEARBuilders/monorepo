@@ -1,14 +1,13 @@
-const { nearToUsd, nearToUsdWithFallback } = VM.require("potlock.near/widget/utils") || {
+const { nearToUsd, nearToUsdWithFallback } = VM.require("${config/account}/widget/utils") || {
   nearToUsd: 1,
   nearToUsdWithFallback: () => "",
 };
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     getDonationsForRecipient: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 const loraCss = fetch("https://fonts.cdnfonts.com/css/lora").body;
 

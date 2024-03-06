@@ -208,33 +208,27 @@ const {
   onClose,
   POT,
 } = props;
-const {
-  DONATION_CONTRACT_ID,
-  NADA_BOT_URL,
-  SUPPORTED_FTS,
-} = VM.require("${config/account}/widget/constants") || {
+const { DONATION_CONTRACT_ID, NADA_BOT_URL, SUPPORTED_FTS } = VM.require(
+  "${config/account}/widget/constants"
+) || {
   DONATION_CONTRACT_ID: "",
   NADA_BOT_URL: "",
   SUPPORTED_FTS: {},
 };
 // console.log("props in donation modal: ", props);
 
-let RegistrySDK =
-  VM.require("${config/account}/widget/SDK.registry") ||
-  (() => ({
-    getProjects: () => {},
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
+const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
+  getProjects: () => [],
+};
 
-const projects = RegistrySDK.getProjects() || [];
+const projects = getProjects();
 
 let DonateSDK =
   VM.require("${config/account}/widget/SDK.donate") ||
-  (() => ({
+  {
     getConfig: () => {},
     asyncGetDonationsForDonor: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 let PotFactorySDK =
   VM.require("${config/account}/widget/SDK.potfactory") ||
@@ -386,8 +380,6 @@ const handleModalClose = () => {
 };
 
 console.log("state in donation modal: ", state);
-
-
 
 const activeRound = useMemo(() => {
   if (!state.activeRoundsForProject) return;

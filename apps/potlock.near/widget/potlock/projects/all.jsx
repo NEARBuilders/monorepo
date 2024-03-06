@@ -1,7 +1,7 @@
 // filter registry contract for overlap // redocard so not included
 return (
   <Widget
-    src={`potlock.near/widget/potlock.projects.listPage`}
+    src={`${config/account}/widget/potlock.projects.listPage`}
     props={{
       descriptor: "projects",
       urlProps: props.urlProps,
@@ -17,7 +17,7 @@ return (
       ],
       renderItem: (accountId) => (
         <Widget
-          src={`potlock.near/widget/potlock.projects.projectCard`}
+          src={`${config/account}/widget/potlock.projects.projectCard`}
           props={{
             accountId,
           }}

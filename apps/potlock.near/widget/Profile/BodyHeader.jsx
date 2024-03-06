@@ -1,6 +1,6 @@
 const { profile, accountId, projectId } = props;
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 
@@ -100,10 +100,10 @@ const isOwner = projectId === context.accountId;
 const isPermissionedMember = isDao && userHasPermissions;
 const canEdit = isOwner || isPermissionedMember;
 
-const projectLink = `https://near.social/potlock.near/widget/Index?tab=project&projectId=${projectId}${
+const projectLink = `https://near.social/${config/account}/widget/Index?tab=project&projectId=${projectId}${
   context.accountId && `&referrerId=${context.accountId}`
 }`;
-const profileLink = `https://near.social/potlock.near/widget/Index?tab=profile&accountId=${accountId}`;
+const profileLink = `https://near.social/${config/account}/widget/Index?tab=profile&accountId=${accountId}`;
 
 return (
   <Header>

@@ -6,23 +6,22 @@ const { calcNetDonationAmount, filterByDate } = VM.require(
 };
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getPots: () => {},
   }));
 PotFactorySDK = PotFactorySDK({ env: props.env });
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetMatchingPoolDonations: () => {},
 };
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     asyncGetDonations: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 const Container = styled.div`
   display: flex;

@@ -1,11 +1,8 @@
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    getProjects: () => {},
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
+const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
+  getProjects: () => [],
+};
 
-const projects = RegistrySDK.getProjects() || [];
+const projects = getProjects();
 
 const projectIds = projects
   .filter((project) => project.status === "Approved")
@@ -21,6 +18,10 @@ const Container = styled.div`
 
 return (
   <Container>
-    <Widget key="feed" src={"${config/account}/widget/Profile.Feed"} props={{ accounts: projectIds }} />
+    <Widget
+      key="feed"
+      src={"${config/account}/widget/Profile.Feed"}
+      props={{ accounts: projectIds }}
+    />
   </Container>
 );

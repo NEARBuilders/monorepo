@@ -1,5 +1,5 @@
 const { setAmount, setProjectId, setNote, setReferrerId, setCurrency } = props;
-const donationContractId = "donate.potlock.near";
+const donationContractId = "donate.${config/account}";
 const [amount, setAmounts] = useState("1");
 const [isBreakDown, setIsBreakDown] = useState(true);
 const [msg, setMsg] = useState("");
@@ -622,7 +622,7 @@ return (
         </FormAmountHeader>
         <FormInputAmount>
           <Widget
-            src={`potlock.near/widget/Inputs.Select`}
+            src={`${config/account}/widget/Inputs.Select`}
             props={{
               noLabel: true,
               placeholder: "",

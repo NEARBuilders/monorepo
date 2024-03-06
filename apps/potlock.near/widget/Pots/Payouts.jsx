@@ -1,8 +1,8 @@
 // get donations
 const { potId, potDetail } = props;
-const { formatDate } = VM.require("potlock.near/widget/utils") || { formatDate: () => "" };
+const { formatDate } = VM.require("${config/account}/widget/utils") || { formatDate: () => "" };
 
-const { ToDo, SUPPORTED_FTS } = VM.require("potlock.near/widget/constants") || {
+const { ToDo, SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
   ToDo: "",
   SUPPORTED_FTS: {},
 };

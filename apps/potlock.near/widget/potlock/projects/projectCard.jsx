@@ -1,4 +1,4 @@
-const accountId = props.accountId ?? "potlock.near";
+const accountId = props.accountId ?? "${config/account}";
 const large = props.large ?? true;
 // add balance and amount in large view instead of requests and members
 State.init({
@@ -184,7 +184,7 @@ const Footer = styled.a`
 
 const footer = (
   <Footer
-    href={`#/potlock.near/widget/potlock.project.profile?accountId=${accountId}`}
+    href={`#/${config/account}/widget/potlock.project.profile?accountId=${accountId}`}
     target="_blank"
     onClick={() =>
       props.update({

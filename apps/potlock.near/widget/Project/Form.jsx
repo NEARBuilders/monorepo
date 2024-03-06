@@ -210,7 +210,7 @@ return (
         props={{
           label: "Your project's NEAR Account *",
           placeholder:
-            "Enter the NEAR account ID of your project (wallet address like potlock.near)",
+            "Enter the NEAR account ID of your project (wallet address like ${config/account})",
           value: state.accountId,
           onChange: (accountId) => State.update({ accountId }),
           addInfo: (addInfo) => State.update({ addInfo }),

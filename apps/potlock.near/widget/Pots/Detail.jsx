@@ -1,21 +1,21 @@
 const { potId } = props;
 const { doesUserHaveDaoFunctionCallProposalPermissions } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || { doesUserHaveDaoFunctionCallProposalPermissions: () => "" };
 const {
   ONE_TGAS,
   SUPPORTED_FTS: { NEAR },
-} = VM.require("potlock.near/widget/constants") || {
+} = VM.require("${config/account}/widget/constants") || {
   ONE_TGAS: 0,
   SUPPORTED_FTS: {},
 };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetConfig: () => {},
   asyncGetApplications: () => {},
 };
 
-const { href } = VM.require("potlock.near/widget/utils") || {
+const { href } = VM.require("${config/account}/widget/utils") || {
   href: () => {},
 };
 

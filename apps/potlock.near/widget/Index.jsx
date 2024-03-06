@@ -1,7 +1,7 @@
-const ownerId = "potlock.near";
-const donationContractId = "donate.potlock.near";
+const ownerId = "${config/account}";
+const donationContractId = "donate.${config/account}";
 // const potFactoryContractId =
-//   props.env === "staging" ? "potfactory.staging.potlock.near" : "v1.potfactory.potlock.near";
+//   props.env === "staging" ? "potfactory.staging.${config/account}" : "v1.potfactory.${config/account}";
 const nadabotContractId = props.env === "staging" ? "v1.staging.nadabot.near" : "v1.nadabot.near";
 
 const CREATE_PROJECT_TAB = "createproject";
@@ -123,7 +123,7 @@ const DEFAULT_CART = {};
 const props = {
   ...props,
   ...state,
-  ownerId: "potlock.near",
+  ownerId: "${config/account}",
   NADABOT_CONTRACT_ID: nadabotContractId,
   referrerId: props.referrerId,
   setCurrency: (cur) => {

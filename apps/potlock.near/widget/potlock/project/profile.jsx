@@ -3,7 +3,7 @@ State.init({
 });
 // add join page to sidebar and put donate button taking from donate tab // need to fork sidebar
 
-const accountId = props.accountId ?? context.accountId ?? "potlock.near";
+const accountId = props.accountId ?? context.accountId ?? "${config/account}";
 
 if (props.tab && props.tab !== state.selectedTab) {
   State.update({
@@ -12,7 +12,7 @@ if (props.tab && props.tab !== state.selectedTab) {
 }
 
 const profile = props.profile ?? Social.getr(`${accountId}/profile`);
-const accountUrl = `#/potlock.near/widget/potlock.project.profile?accountId=${accountId}`; // need to fork own profile page
+const accountUrl = `#/${config/account}/widget/potlock.project.profile?accountId=${accountId}`; // need to fork own profile page
 
 const Wrapper = styled.div`
   padding-bottom: 48px;
@@ -167,7 +167,7 @@ return (
     <Main>
       <SidebarWrapper>
         <Widget
-          src="potlock.near/widget/potlock.project.sidebar.main"
+          src="${config/account}/widget/potlock.project.sidebar.main"
           props={{
             accountId,
             profile,
@@ -242,7 +242,7 @@ return (
         )}
         {state.selectedTab === "funding" && (
           <Widget
-            src={`potlock.near/widget/potlock.project.funding.main`}
+            src={`${config/account}/widget/potlock.project.funding.main`}
             props={{ accountId: props.accountId, isAdmin: false }}
           />
         )}

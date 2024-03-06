@@ -1,6 +1,6 @@
 const { potId } = props;
 const { daysUntil, yoctosToNear, yoctosToUsd, href } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || {
   daysUntil: () => "",
   yoctosToNear: () => "",
@@ -8,7 +8,7 @@ const { daysUntil, yoctosToNear, yoctosToUsd, href } = VM.require(
   href: () => {},
 };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   getConfig: () => {},
 };
 const potConfig = PotSDK.getConfig(potId);

@@ -2,7 +2,7 @@ const {
   getTagsFromSocialProfileData,
   getTeamMembersFromSocialProfileData,
   href,
-} = VM.require("potlock.near/widget/utils") || {
+} = VM.require("${config/account}/widget/utils") || {
   getTagsFromSocialProfileData: () => [],
   getTeamMembersFromSocialProfileData: () => [],
   href: () => {},
@@ -128,7 +128,7 @@ const CardSkeleton = () => (
 // ListPage Content
 
 const { userIsRegistryAdmin, tab } = props;
-const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+const { yoctosToUsd } = VM.require("${config/account}/widget/utils") || {
   yoctosToUsd: () => "",
 };
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
@@ -496,24 +496,20 @@ State.init({
   successfulDonation: null,
 });
 
-let RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    getProjects: () => {},
-    isRegistryAdmin: () => {},
-  }));
-RegistrySDK = RegistrySDK({ env: props.env });
-
-const isRegistryAdmin = isRegistryAdmin;
+const { getProjects, isRegistryAdmin } = VM.require(
+  "${config/account}/widget/SDK.registry"
+) || {
+  getProjects: () => [],
+  isRegistryAdmin: () => false,
+};
 
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     asyncGetConfig: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
-const projects = RegistrySDK.getProjects() || [];
+const projects = getProjects();
 
 // console.log("projects: ", projects);
 
@@ -536,15 +532,7 @@ const [filteredProjects, setFilteredProjects] = useState(projects);
 const [searchTerm, setSearchTerm] = useState("");
 const [sort, setSort] = useState("Sort");
 
-useEffect(() => {
-  if (filteredProjects.length < 1) {
-    setFilteredProjects(projects);
-  }
-}, [projects]);
-
 // console.log("filter", filteredProjects);
-
-console.log("DonateSDK: ", DonateSDK);
 
 if (DonateSDK.asyncGetConfig().then) {
   // TODO: fix this hack
@@ -814,7 +802,7 @@ return (
             Register Your Project
           </ButtonRegisterProject>
         </ButtonsContainer>
-        <Widget src="potlock.near/widget/Project.DonationStats" />
+        <Widget src="${config/account}/widget/Project.DonationStats" />
       </HeaderContainer>
     </HeroContainer>
     {props.tab != "pots" && props.tab != "pot" && (

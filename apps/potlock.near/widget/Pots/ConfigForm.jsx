@@ -1,19 +1,19 @@
 const { potDetail, potId, NADABOT_CONTRACT_ID } = props;
-const { validateNearAddress } = VM.require("potlock.near/widget/utils") || {
+const { validateNearAddress } = VM.require("${config/account}/widget/utils") || {
   validateNearAddress: () => "",
 };
 const {
   NADABOT_HUMAN_METHOD,
   ONE_TGAS,
   SUPPORTED_FTS: { NEAR },
-} = VM.require("potlock.near/widget/constants") || {
+} = VM.require("${config/account}/widget/constants") || {
   NADABOT_HUMAN_METHOD: "",
   ONE_TGAS: 0,
   SUPPORTED_FTS: {},
 };
 
 let PotFactorySDK =
-  VM.require("potlock.near/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ||
   (() => ({
     getContractId: () => {},
     getProtocolConfig: () => {},
@@ -24,10 +24,8 @@ const potFactoryContractId = PotFactorySDK.getContractId();
 const protocolConfig = PotFactorySDK.getProtocolConfig();
 // console.log("props in config form: ", props);
 
-let RegistrySDK = VM.require("potlock.near/widget/SDK.registry") || (() => ({}));
-RegistrySDK = RegistrySDK({ env: props.env });
 
-const DEFAULT_REGISTRY_PROVIDER = `${RegistrySDK.getContractId()}:is_registered`;
+const DEFAULT_REGISTRY_PROVIDER = `${alias/registryContractId}:is_registered`;
 const DEFAULT_SYBIL_WRAPPER_PROVIDER = `${NADABOT_CONTRACT_ID}:${NADABOT_HUMAN_METHOD}`;
 const CURRENT_SOURCE_CODE_VERSION = "0.1.0";
 const SOURCE_CODE_LINK = "https://github.com/PotLock/core"; // for use in contract source metadata

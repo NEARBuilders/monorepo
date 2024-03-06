@@ -1,6 +1,6 @@
 const { potId, potDetail, referrerId, sybilRequirementMet, applicationSuccess } = props;
 const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback, href } = VM.require(
-  "potlock.near/widget/utils"
+  "${config/account}/widget/utils"
 ) || {
   formatDate: () => "",
   daysUntil: () => "",
@@ -10,7 +10,7 @@ const { formatDate, daysUntil, yoctosToNear, yoctosToUsdWithFallback, href } = V
 };
 
 const { NADA_BOT_URL, ToDo, MAX_DONATION_MESSAGE_LENGTH, SUPPORTED_FTS, ONE_TGAS } =
-  VM.require("potlock.near/widget/constants") || {
+  VM.require("${config/account}/widget/constants") || {
     ONE_TGAS: 0,
     NADA_BOT_URL: "",
     ToDo: "",
@@ -18,7 +18,7 @@ const { NADA_BOT_URL, ToDo, MAX_DONATION_MESSAGE_LENGTH, SUPPORTED_FTS, ONE_TGAS
     SUPPORTED_FTS: {},
   };
 
-const PotSDK = VM.require("potlock.near/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   getApplicationByProjectId: () => {},
   getPublicRoundDonations: () => {},
 };

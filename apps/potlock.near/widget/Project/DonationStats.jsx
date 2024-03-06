@@ -36,15 +36,14 @@ const StatsSubTitle = styled.div`
   }
 `;
 
-const { yoctosToUsd } = VM.require("potlock.near/widget/utils") || {
+const { yoctosToUsd } = VM.require("${config/account}/widget/utils") || {
   yoctosToUsd: (amount) => amount,
 };
 let DonateSDK =
-  VM.require("potlock.near/widget/SDK.donate") ||
-  (() => ({
+  VM.require("${config/account}/widget/SDK.donate") ||
+  {
     getConfig: () => {},
-  }));
-DonateSDK = DonateSDK({ env: props.env });
+  };
 
 const data = DonateSDK.getConfig() || {
   net_donations_amount: 0,

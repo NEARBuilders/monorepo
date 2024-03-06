@@ -1,5 +1,5 @@
 const { isModalOpen, onClose } = props;
-const { NADA_BOT_URL } = VM.require("potlock.near/widget/constants") || {
+const { NADA_BOT_URL } = VM.require("${config/account}/widget/constants") || {
   NADA_BOT_URL: "",
 };
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";

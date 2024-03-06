@@ -5,7 +5,7 @@ const {
   getTeamMembersFromSocialProfileData,
   doesUserHaveDaoFunctionCallProposalPermissions,
   href
-} = VM.require("potlock.near/widget/utils") || {
+} = VM.require("${config/account}/widget/utils") || {
   getTeamMembersFromSocialProfileData: () => [],
   doesUserHaveDaoFunctionCallProposalPermissions: () => "",
   validateNearAddress: () => "",
@@ -46,16 +46,13 @@ const existingHorizonProject = Near.view(HORIZON_CONTRACT_ID, "get_project", {
   account_id: context.accountId,
 });
 
-const RegistrySDK =
-  VM.require("potlock.near/widget/SDK.registry") ||
-  (() => ({
-    getProjects: () => {},
+const { getProjects, getProjectById, asyncGetProjectById } = VM.require("${config/account}/widget/SDK.registry") ||
+  {
+    getProjects: () => [],
     getProjectById: () => {},
     asyncGetProjectById: () => {},
-  }));
-const registry = RegistrySDK({ env: props.env });
-
-const projects = registry.getProjects() || [];
+  };
+const projects = getProjects();
 
 const imageHeightPx = 120;
 const profileImageTranslateYPx = 220;
@@ -710,7 +707,7 @@ const handleCreateOrUpdateProject = (e) => {
       transactions.push(
         // register project on potlock
         {
-          contractName: registry.getContractId(),
+          contractName: "${alias/registryContractId}",
           methodName: "register",
           deposit: Big(0.05).mul(Big(10).pow(24)),
           args: potlockRegistryArgs,
@@ -768,7 +765,7 @@ const handleCreateOrUpdateProject = (e) => {
     // const totalPollTimeMs = 60000; // consider adding in to make sure interval doesn't run indefinitely
     const pollId = setInterval(() => {
       // This is an async request, not converting to SDK yet
-      RegistrySDK.asyncGetProjectById(context.accountId).then((_project) => {
+      asyncGetProjectById(context.accountId).then((_project) => {
         // won't get here unless project exists
         clearInterval(pollId);
         State.update({ registrationSuccess: true });
@@ -790,10 +787,9 @@ if (props.projectId) {
 }
 
 const registeredProject = useMemo(() => {
-  return registry.getProjectById(state.isDao ? state.daoAddress : context.accountId);
+  return getProjectById(state.isDao ? state.daoAddress : context.accountId);
 }, [state.isDao, state.daoAddress]);
 
-console.log("registeredProject: ", registeredProject);
 
 const proposals = Near.view(state.daoAddress, "get_proposals", {
   from_index: 0,
@@ -805,7 +801,7 @@ const proposalInProgress = useMemo(() => {
   return proposals?.find((proposal) => {
     return (
       proposal.status == "InProgress" &&
-      proposal.kind.FunctionCall?.receiver_id == registry.getContractId() &&
+      proposal.kind.FunctionCall?.receiver_id == "${alias/registryContractId}" &&
       proposal.kind.FunctionCall?.actions[0]?.method_name == "register"
     );
   });
