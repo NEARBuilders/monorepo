@@ -6,11 +6,13 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "init": "git submodule update --init --recursive",
-    "dev": "concurrently \"pnpm run dev:gateway\" \"pnpm run bw workspace dev\"",
+    "init": "git submodule update --init --recursive && pnpm install && pnpm run build:bw",
+    "dev": "pnpm run bw workspace dev",
     "dev:gateway": "npx nx run-many --target=dev --projects=viewer",
     "bw": "./node_modules/bos-workspace/bin/bw.js",
-    "build": "concurrently \"pnpm run -r build\" \"pnpm run bw build\""
+    "build": "pnpm run bw workspace build",
+    "build:vm": "pnpm --filter ./VM run build",
+    "build:bw": "pnpm --filter ./packages/bos-workspace run build"
   },
   "devDependencies": {
     "bos-workspace": "workspace:*",
