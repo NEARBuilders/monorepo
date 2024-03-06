@@ -1,7 +1,7 @@
 const { joinBtnChildren, connectedChildren, showActivity, className, href } =
   props;
 
-const { Bullet, Button } = VM.require("buildhub.near/widget/components") || {
+const { Bullet, Button } = VM.require("${config/account}/widget/components") || {
   Bullet: () => <></>,
   Button: () => <></>,
 };
@@ -122,7 +122,7 @@ const Container = styled.div`
   }
 `;
 
-const { href: linkHref } = VM.require("buildhub.near/widget/lib.url") || {
+const { href: linkHref } = VM.require("${config/account}/widget/lib.url") || {
   href: () => {},
 };
 
@@ -147,7 +147,7 @@ const Component = () => {
           <Link
             style={{ color: "#df9731", fontWeight: 600 }}
             to={linkHref({
-              widgetSrc: "buildhub.near/widget/app",
+              widgetSrc: "${config/account}/widget/app",
               params: {
                 page: "feed",
               },

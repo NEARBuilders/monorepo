@@ -1,10 +1,10 @@
-const { User, Hashtag } = VM.require("buildhub.near/widget/components") || {
+const { User, Hashtag } = VM.require("${config/account}/widget/components") || {
   User: () => <></>,
   Hashtag: () => <></>,
 };
 
 const { getProjectMeta } = VM.require(
-  "buildhub.near/widget/lib.project-data"
+  "${config/account}/widget/lib.project-data"
 ) || {
   getProjectMeta: () => {},
 };

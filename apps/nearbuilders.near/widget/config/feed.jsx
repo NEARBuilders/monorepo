@@ -1,4 +1,4 @@
-const { Post } = VM.require("buildhub.near/widget/components") || {
+const { Post } = VM.require("${config/account}/widget/components") || {
   Post: () => <></>,
 };
 
@@ -14,7 +14,7 @@ return {
   type: "app", // every.near/type/app
   routes: {
     all: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "All", // maybe these should be moved to navbar specific
@@ -23,7 +23,7 @@ return {
       },
     },
     resolutions: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Resolutions", // maybe these should be moved to navbar specific
@@ -47,7 +47,7 @@ return {
       },
     },
     updates: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Updates",
@@ -71,7 +71,7 @@ return {
       },
     },
     documentation: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Documentation",
@@ -95,7 +95,7 @@ return {
       },
     },
     question: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Question",
@@ -110,7 +110,7 @@ return {
       },
     },
     answer: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Answer",
@@ -128,7 +128,7 @@ return {
       },
     },
     opportunity: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Opportunity",
@@ -144,7 +144,7 @@ return {
       },
     },
     idea: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Idea",
@@ -162,7 +162,7 @@ return {
       },
     },
     task: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Task",
@@ -180,7 +180,7 @@ return {
       },
     },
     feedback: {
-      path: "buildhub.near/widget/Feed",
+      path: "${config/account}/widget/Feed",
       blockHeight: "final",
       init: {
         name: "Feedback",
@@ -189,7 +189,7 @@ return {
       },
     },
     events: {
-      path: "buildhub.near/widget/events.Calendar",
+      path: "${config/account}/widget/events.Calendar",
       blockHeight: "final",
       init: {
         name: "Events",
@@ -199,7 +199,7 @@ return {
       },
     },
     bookmarks: {
-      path: "buildhub.near/widget/OrderedGraphFeed",
+      path: "${config/account}/widget/OrderedGraphFeed",
       blockHeight: "final",
       init: {
         name: "Bookmarks",

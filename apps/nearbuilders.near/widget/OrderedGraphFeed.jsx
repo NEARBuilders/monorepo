@@ -1,4 +1,4 @@
-const { Header } = VM.require("buildhub.near/widget/components.Header") || {
+const { Header } = VM.require("${config/account}/widget/components.Header") || {
   Header: () => <></>,
 };
 

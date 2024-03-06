@@ -125,7 +125,7 @@ return (
       <div className="px-3">
         <Widget
           key="post-preview"
-          src="buildhub.near/widget/Comment.Comment"
+          src="${config/account}/widget/Comment.Comment"
           props={{
             item,
             accountId: context.accountId,

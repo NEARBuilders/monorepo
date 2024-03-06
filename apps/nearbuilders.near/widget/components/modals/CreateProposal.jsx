@@ -1,4 +1,4 @@
-const { daos } = VM.require("buildhub.near/widget/fetch.daos") || { daos: [] };
+const { daos } = VM.require("${config/account}/widget/fetch.daos") || { daos: [] };
 
 if (!daos) {
   return "";
@@ -6,7 +6,7 @@ if (!daos) {
 const options = daos.map((dao) => dao.contract_id);
 
 const { Modal, Button, User } = VM.require(
-  "buildhub.near/widget/components",
+  "${config/account}/widget/components",
 ) || {
   Modal: () => <></>,
   Button: () => <></>,
@@ -126,7 +126,7 @@ return (
       {selectedOption === "text" && (
         <>
           <Widget
-            src="buildhub.near/widget/components.modals.propose.Text"
+            src="${config/account}/widget/components.modals.propose.Text"
             props={{
               selectedDAO: selectedDAO,
               item: props.item,
@@ -139,7 +139,7 @@ return (
       {selectedOption === "transfer" && (
         <>
           <Widget
-            src="buildhub.near/widget/components.modals.propose.Transfer"
+            src="${config/account}/widget/components.modals.propose.Transfer"
             props={{
               selectedDAO: selectedDAO,
               item: props.item,
@@ -152,7 +152,7 @@ return (
       {selectedOption === "functionCall" && (
         <>
           <Widget
-            src="buildhub.near/widget/components.modals.propose.FunctionCall"
+            src="${config/account}/widget/components.modals.propose.FunctionCall"
             props={{
               selectedDAO: selectedDAO,
               item: props.item,
@@ -165,7 +165,7 @@ return (
       {selectedOption === "addMember" && (
         <>
           <Widget
-            src="buildhub.near/widget/components.modals.propose.AddMember"
+            src="${config/account}/widget/components.modals.propose.AddMember"
             props={{
               roles: roles,
               selectedDAO: selectedDAO,
@@ -179,7 +179,7 @@ return (
       {selectedOption === "removeMember" && (
         <>
           <Widget
-            src="buildhub.near/widget/components.modals.propose.RemoveMember"
+            src="${config/account}/widget/components.modals.propose.RemoveMember"
             props={{
               roles: roles,
               selectedDAO: selectedDAO,

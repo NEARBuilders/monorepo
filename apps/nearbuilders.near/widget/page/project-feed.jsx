@@ -5,12 +5,12 @@ const { fetchProjects, extractValidNearAddresses } = VM.require(
   extractValidNearAddresses: () => {},
 };
 
-const { Button } = VM.require("buildhub.near/widget/components") || {
+const { Button } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
 };
 
 const { ProjectCard } = VM.require(
-  "buildhub.near/widget/components.project.Card"
+  "${config/account}/widget/components.project.Card"
 ) || {
   ProjectCard: () => <></>,
 };
@@ -165,7 +165,7 @@ return (
     data-bs-theme="dark"
   >
     <Widget
-      src="buildhub.near/widget/components.modals.FilterProjects"
+      src="${config/account}/widget/components.modals.FilterProjects"
       loading=""
       props={{
         showModal: showModal,

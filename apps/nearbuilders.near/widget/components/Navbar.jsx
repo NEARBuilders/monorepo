@@ -1,8 +1,8 @@
-const { Button } = VM.require("buildhub.near/widget/components") || {
+const { Button } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
 };
 
-const { href } = VM.require("buildhub.near/widget/lib.url") || {
+const { href } = VM.require("${config/account}/widget/lib.url") || {
   href: () => {},
 };
 
@@ -216,7 +216,7 @@ function Navbar(props) {
         <Left>
           <Link
             to={href({
-              widgetSrc: "buildhub.near/widget/app",
+              widgetSrc: "${config/account}/widget/app",
               params: {
                 page: "home",
               },
@@ -239,7 +239,7 @@ function Navbar(props) {
                     key={`desktop=${k}`}
                     style={{ textDecoration: "none" }}
                     to={href({
-                      widgetSrc: "buildhub.near/widget/app",
+                      widgetSrc: "${config/account}/widget/app",
                       params: {
                         page: k,
                       },
@@ -279,7 +279,7 @@ function Navbar(props) {
                   <Link
                     style={{ textDecoration: "none" }}
                     href={href({
-                      widgetSrc: "buildhub.near/widget/app",
+                      widgetSrc: "${config/account}/widget/app",
                       params: {
                         page: "inspect",
                         widgetPath: routes[page].path,
@@ -310,7 +310,7 @@ function Navbar(props) {
           </div>
           {context.accountId ? (
             <Widget
-              src="buildhub.near/widget/components.buttons.UserDropdown"
+              src="${config/account}/widget/components.buttons.UserDropdown"
               loading=""
               props={props}
             />
@@ -332,7 +332,7 @@ function Navbar(props) {
         <MobileNavigation>
           <Link
             to={href({
-              widgetSrc: "buildhub.near/widget/app",
+              widgetSrc: "${config/account}/widget/app",
               params: {
                 page: "home",
               },
@@ -361,7 +361,7 @@ function Navbar(props) {
           <MobileNavigation>
             <Link
               to={href({
-                widgetSrc: "buildhub.near/widget/app",
+                widgetSrc: "${config/account}/widget/app",
                 params: {
                   page: "home",
                 },
@@ -395,7 +395,7 @@ function Navbar(props) {
                       key={`mobile=${k}`}
                       style={{ textDecoration: "none" }}
                       to={href({
-                        widgetSrc: "buildhub.near/widget/app",
+                        widgetSrc: "${config/account}/widget/app",
                         params: {
                           page: k,
                         },
@@ -417,7 +417,7 @@ function Navbar(props) {
               <div className="d-flex w-100 gap-2 justify-content-center">
                 <Button
                   href={href({
-                    widgetSrc: "buildhub.near/widget/app",
+                    widgetSrc: "${config/account}/widget/app",
                     params: {
                       page: "inspect",
                       widgetPath: routes[page].path,
@@ -431,7 +431,7 @@ function Navbar(props) {
               {context.accountId ? (
                 <div className="mx-auto d-flex align-items-stretch ">
                   <Widget
-                    src="buildhub.near/widget/components.buttons.UserDropdown"
+                    src="${config/account}/widget/components.buttons.UserDropdown"
                     loading=""
                     props={props}
                   />

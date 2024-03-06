@@ -28,42 +28,43 @@ const config = {
     param: "page",
     routes: {
       home: {
-        path: "${config/account}}/widget/page.home",
+        path: "${config/account}/widget/page.home",
         blockHeight: "final",
         init: {
           name: "Home",
         },
+        default: true,
       },
       feed: {
-        path: "${config/account}}/widget/page.feed",
+        path: "${config/account}/widget/page.feed",
         blockHeight: "final",
         init: {
           name: "Feed",
         },
       },
       proposal: {
-        path: "${config/account}}/widget/page.projects",
+        path: "${config/account}/widget/page.projects",
         blockHeight: "final",
         init: {
           name: "Projects",
         },
       },
       resources: {
-        path: "${config/account}}/widget/page.resources",
+        path: "${config/account}/widget/page.resources",
         blockHeight: "final",
         init: {
           name: "Resources",
         },
       },
       library: {
-        path: "${config/account}}/widget/page.library",
+        path: "${config/account}/widget/page.library",
         blockHeight: "final",
         init: {
           name: "Library",
         },
       },
       profile: {
-        path: "${config/account}}/widget/page.profile",
+        path: "${config/account}/widget/page.profile",
         blockHeight: "final",
         init: {
           name: "Profile",
@@ -71,7 +72,7 @@ const config = {
         hide: true,
       },
       inspect: {
-        path: "${config/account}}/widget/page.inspect",
+        path: "${config/account}/widget/page.inspect",
         blockHeight: "final",
         init: {
           name: "Inspect",
@@ -79,7 +80,7 @@ const config = {
         hide: true,
       },
       projects: {
-        path: "${config/account}}/widget/page.project-feed",
+        path: "${config/account}/widget/page.project-feed",
         blockHeight: "final",
         init: {
           name: "Project Feed",
@@ -87,7 +88,7 @@ const config = {
         hide: true,
       },
       project: {
-        path: "${config/account}}/widget/page.project",
+        path: "${config/account}/widget/page.project",
         blockHeight: "final",
         init: {
           name: "Project Page",
@@ -128,6 +129,9 @@ const Root = styled.div`
   --button-primary-hover-bg: #e49b48;
   --button-outline-hover-bg: rgba(255, 255, 255, 0.2);
   --button-default-hover-bg: #17181c;
+
+  background-color: var(--bg-1, #000000);
+  min-height: 100vh;
 
   // /* Poppins Font */
   // @font-face {

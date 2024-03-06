@@ -1,4 +1,4 @@
-const { Button, Hashtag } = VM.require("buildhub.near/widget/components") || {
+const { Button, Hashtag } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
   Hashtag: () => <></>,
 };

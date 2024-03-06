@@ -1,4 +1,4 @@
-const { Button } = VM.require("buildhub.near/widget/components") || {
+const { Button } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
 };
 
@@ -260,7 +260,7 @@ const contentWidget = (
           style={{ minHeight: "100px" }}
         />
       }
-      src="buildhub.near/widget/components.post.Content"
+      src="${config/account}/widget/components.post.Content"
       props={{
         content,
         raw,
@@ -305,7 +305,7 @@ return (
         <div className={`post ${props.reposted ? "reposted" : ""}`}>
           <div className="right d-flex flex-column gap-3">
             <Widget
-              src="buildhub.near/widget/components.post.Header"
+              src="${config/account}/widget/components.post.Header"
               loading=""
               props={{
                 accountId: accountId,
@@ -368,7 +368,7 @@ return (
                 />
                 <Widget
                   loading=""
-                  src="buildhub.near/widget/components.post.BookmarkButton"
+                  src="${config/account}/widget/components.post.BookmarkButton"
                   props={{
                     item,
                   }}
@@ -388,7 +388,7 @@ return (
           <div className="my-3">
             <Widget
               loading=""
-              src="buildhub.near/widget/Comment.Compose"
+              src="${config/account}/widget/Comment.Compose"
               props={{
                 notifyAccountId,
                 item,
@@ -414,7 +414,7 @@ return (
                 <Widget
                   key="comments"
                   loading={""}
-                  src="buildhub.near/widget/Comment.Feed"
+                  src="${config/account}/widget/Comment.Feed"
                   props={{
                     item,
                     highlightComment: props.highlightComment,

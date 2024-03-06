@@ -2,7 +2,7 @@ return {
   type: "app",
   routes: {
     guide: {
-      path: "buildhub.near/widget/Resources",
+      path: "${config/account}/widget/Resources",
       blockHeight: "final",
       init: {
         name: "Guide",
@@ -12,7 +12,7 @@ return {
       },
     },
     library: {
-      path: "buildhub.near/widget/Resources",
+      path: "${config/account}/widget/Resources",
       blockHeight: "final",
       init: {
         name: "Library",

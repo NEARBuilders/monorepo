@@ -1,17 +1,17 @@
 const { Avatar, Hashtag, Button } = VM.require(
-  "buildhub.near/widget/components"
+  "${config/account}/widget/components"
 ) || {
   Hashtag: () => <></>,
   Avatar: () => <></>,
   Button: () => <></>,
 };
 
-const { href } = VM.require("buildhub.near/widget/lib.url") || {
+const { href } = VM.require("${config/account}/widget/lib.url") || {
   href: () => {},
 };
 
 const { ProfileImages } = VM.require(
-  "buildhub.near/widget/components.ProfileImages"
+  "${config/account}/widget/components.ProfileImages"
 ) || {
   ProfileImages: () => <></>,
 };
@@ -94,9 +94,9 @@ const ProjectCard = ({ project, type, app }) => {
       <div className="w-100">
         <Button
           href={
-            // `/buildhub.near/widget/app?page=project&id=${accountId}/${app}/${type}/${title}`
+            // `/${config/account}/widget/app?page=project&id=${accountId}/${app}/${type}/${title}`
             href({
-              widgetSrc: `buildhub.near/widget/app`,
+              widgetSrc: `${config/account}/widget/app`,
               params: {
                 page: "project",
                 id: `${accountId}/${app}/${type}/${title}`,

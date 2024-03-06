@@ -1,11 +1,11 @@
 const { Feed } = VM.require("devs.near/widget/Feed") || {
   Feed: () => <></>,
 };
-const { Post, Button } = VM.require("buildhub.near/widget/components") || {
+const { Post, Button } = VM.require("${config/account}/widget/components") || {
   Post: () => <></>,
   Button: () => <></>,
 };
-const { Header } = VM.require("buildhub.near/widget/components.Header") || {
+const { Header } = VM.require("${config/account}/widget/components.Header") || {
   Header: () => <></>,
 };
 
@@ -54,7 +54,7 @@ return (
   <div key={feedName}>
     <Header>{feedName} Feed</Header>
     <Widget
-      src="buildhub.near/widget/components.modals.CreateProposal"
+      src="${config/account}/widget/components.modals.CreateProposal"
       loading=""
       props={{
         showModal: showProposeModal,
@@ -80,7 +80,7 @@ return (
             style={{ height: 400 }}
           ></div>
         }
-        src="buildhub.near/widget/Compose"
+        src="${config/account}/widget/Compose"
         props={{
           draftKey: feedName,
           template: template,
@@ -108,7 +108,7 @@ return (
           accountId={p.accountId}
           blockHeight={p.blockHeight}
           noBorder={true}
-          currentPath={`/buildhub.near/widget/app?page=feed`}
+          currentPath={`/${config/account}/widget/app?page=feed`}
           customActions={customActions}
           modalToggles={modalToggles}
           setItem={setItem}

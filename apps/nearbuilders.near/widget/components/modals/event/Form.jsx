@@ -1,4 +1,4 @@
-const { Button } = VM.require("buildhub.near/widget/components") || {
+const { Button } = VM.require("${config/account}/widget/components") || {
   Button: () => <></>,
 };
 
@@ -233,7 +233,7 @@ const onSubmit = () => {
               description,
               image: state.image,
               backgroundImage: state.image,
-              type: "buildhub.near/type/event",
+              type: "${config/account}/type/event",
             },
           },
         },
@@ -395,7 +395,7 @@ return (
       <div className="form-group mb-3">
         <label htmlFor="cover-image">Cover Image</label>
         <Widget
-          src="buildhub.near/widget/components.ImageUploader"
+          src="${config/account}/widget/components.ImageUploader"
           loading=""
           props={{ image: state.image, onChange: onCoverChange }}
         />

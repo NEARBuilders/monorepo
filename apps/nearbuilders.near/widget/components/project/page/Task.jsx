@@ -1,5 +1,5 @@
 const { Modal, Button, ProgressState } = VM.require(
-  "buildhub.near/widget/components"
+  "${config/account}/widget/components"
 ) || {
   Modal: () => <></>,
   Button: () => <></>,

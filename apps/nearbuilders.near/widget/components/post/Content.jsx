@@ -53,7 +53,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const currentPath = props.currentPath ?? "/buildhub.near/widget/app?page=feed";
+const currentPath = props.currentPath ?? "/${config/account}/widget/app?page=feed";
 
 const [onHashtag] = useState(() => (hashtag) => (
   <span
@@ -89,7 +89,7 @@ const onLink = useCallback((props) => {
     // EMBED
     return (
       <Widget
-        src="buildhub.near/widget/components.post.Embed"
+        src="${config/account}/widget/components.post.Embed"
         loading=""
         props={props}
       />

@@ -1,4 +1,4 @@
-const { Button, Modal } = VM.require("buildhub.near/widget/components") || {
+const { Button, Modal } = VM.require("${config/account}/widget/components") || {
   Button: <></>,
   Modal: <></>,
 };
@@ -153,7 +153,7 @@ const handleVote = ({ action, proposalId, proposer, showNotification }) => {
                 proposalId: proposalId,
               },
               type: "custom",
-              widget: "buildhub.near/widget/Proposals",
+              widget: "${config/account}/widget/Proposals",
             },
           },
         ]),
@@ -279,7 +279,7 @@ const proposalsComponent = useMemo(() => {
 
           return (
             <Widget
-              src="buildhub.near/widget/components.ProposalCard"
+              src="${config/account}/widget/components.ProposalCard"
               props={{
                 proposalData: {
                   ...item,
@@ -314,14 +314,14 @@ return (
   <ThemeContainer>
     <Container className="d-flex flex-column gap-4">
       <Widget
-        src="buildhub.near/widget/components.modals.CreateProposal"
+        src="${config/account}/widget/components.modals.CreateProposal"
         props={{
           showModal: showProposalModal,
           toggleModal: () => setShowModal(!showProposalModal),
         }}
       />
       <Widget
-        src="buildhub.near/widget/components.modals.ProposalsFilters"
+        src="${config/account}/widget/components.modals.ProposalsFilters"
         props={{
           parentSelectedTypes: selectedTypes,
           parentSelectedStatus: selectedStatus,
@@ -354,7 +354,7 @@ return (
       {!proposalId && (
         <div className="d-flex justify-content-center my-4">
           <Widget
-            src={"buildhub.near/widget/components.Pagination"}
+            src={"${config/account}/widget/components.Pagination"}
             props={{
               maxVisiblePages: 5,
               totalPages:
