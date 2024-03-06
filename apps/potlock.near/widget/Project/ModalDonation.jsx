@@ -224,21 +224,21 @@ const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
 const projects = getProjects();
 
 let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
+  VM.require("${config/account}/widget/SDK.donate") ??
   {
     getConfig: () => {},
     asyncGetDonationsForDonor: () => {},
   };
 
 let PotFactorySDK =
-  VM.require("${config/account}/widget/SDK.potfactory") ||
+  VM.require("${config/account}/widget/SDK.potfactory") ??
   (() => ({
     getPots: () => {},
   }));
 PotFactorySDK = PotFactorySDK({ env: props.env });
 const pots = PotFactorySDK.getPots();
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
+const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   getConfig: () => {},
   asyncGetConfig: () => {},
   getApprovedApplications: () => {},
@@ -246,14 +246,13 @@ const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetDonationsForDonor: () => {},
 };
 
-const NadaBotSDK = VM.require("${config/account}/widget/SDK.nadabot") || {
-  isHuman: () => {},
+const { isHuman } = VM.require("${config/account}/widget/SDK.nadabot") ?? {
+  isHuman: () => false,
 };
 
-NadaBotSDK = NadaBotSDK({ env: props.env });
-const isUserHumanVerified = NadaBotSDK.isHuman(context.accountId);
+const isUserHumanVerified = isHuman(context.accountId);
 
-const { nearToUsd } = VM.require("${config/account}/widget/utils") || {
+const { nearToUsd } = VM.require("${config/account}/widget/utils") ?? {
   nearToUsd: 1,
 };
 
