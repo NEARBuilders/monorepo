@@ -14,8 +14,8 @@ const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {
   asyncGetMatchingPoolDonations: () => {},
 };
 
-let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
-  asyncGetDonations: () => {},
+const {asyncGetDonations } = VM.require("${config/account}/widget/SDK.donate") ?? {
+  asyncGetDonations: () => [],
 };
 
 const Container = styled.div`
@@ -196,7 +196,7 @@ if (!allDonationsFetched && !donationsByPage[index]) {
     // null means it's loading (async)
     console.log("fetching donations for page", index);
     const startTime = Date.now();
-    DonateSDK.asyncGetDonations(limit * index, limit)
+    asyncGetDonations(limit * index, limit)
       .then((donationsPart) => {
         const endTime = Date.now();
         console.log(

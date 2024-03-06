@@ -223,18 +223,14 @@ const { getProjects } = VM.require("${config/account}/widget/SDK.registry") || {
 
 const projects = getProjects();
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ??
-  {
-    getConfig: () => {},
-    asyncGetDonationsForDonor: () => {},
-  };
+const DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
+  getConfig: () => {},
+  asyncGetDonationsForDonor: () => {},
+};
 
-let {getPots } =
-  VM.require("${config/account}/widget/SDK.potfactory") ??
-  {
-    getPots: () => [],
-  };
+let { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+  getPots: () => [],
+};
 const pots = getPots();
 
 const PotSDK = VM.require("${config/account}/widget/SDK.pot") ?? {

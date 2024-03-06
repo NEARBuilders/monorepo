@@ -8,13 +8,13 @@ const { getTagsFromSocialProfileData, href } = VM.require(
 const IPFS_BASE_URL = "https://ipfs.near.social/ipfs/";
 const cardData = Social.getr(`${id}/profile`);
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    getDonationsForRecipient: () => {},
-  };
+const { getDonationsForRecipient } = VM.require(
+  "${config/account}/widget/SDK.donate"
+) || {
+  getDonationsForRecipient: () => [],
+};
 
-const donationsForProject = DonateSDK.getDonationsForRecipient(id);
+const donationsForProject = getDonationsForRecipient(id);
 
 const Card = styled.a`
   display: flex;

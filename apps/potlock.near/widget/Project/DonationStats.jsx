@@ -39,13 +39,11 @@ const StatsSubTitle = styled.div`
 const { yoctosToUsd } = VM.require("${config/account}/widget/utils") || {
   yoctosToUsd: (amount) => amount,
 };
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    getConfig: () => {},
-  };
+const { getConfig } = VM.require("${config/account}/widget/SDK.donate") || {
+  getConfig: () => {},
+};
 
-const data = DonateSDK.getConfig() || {
+const data = getConfig() || {
   net_donations_amount: 0,
   total_donations_count: 0,
 };

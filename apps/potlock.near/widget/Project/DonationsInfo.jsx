@@ -1,13 +1,13 @@
-const { nearToUsd, nearToUsdWithFallback } = VM.require("${config/account}/widget/utils") || {
+const { nearToUsd, nearToUsdWithFallback } = VM.require(
+  "${config/account}/widget/utils"
+) || {
   nearToUsd: 1,
   nearToUsdWithFallback: () => "",
 };
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    getDonationsForRecipient: () => {},
-  };
+const { getDonationsForRecipient } = VM.require("${config/account}/widget/SDK.donate") || {
+  getDonationsForRecipient: () => [],
+};
 
 const loraCss = fetch("https://fonts.cdnfonts.com/css/lora").body;
 
@@ -26,7 +26,7 @@ const Container = styled.div`
   }
 `;
 
-const donationsForProject = DonateSDK.getDonationsForRecipient(props.projectId);
+const donationsForProject = getDonationsForRecipient(props.projectId);
 
 const [totalDonations, totalDonors, totalReferralFees] = useMemo(() => {
   if (!donationsForProject) {
@@ -68,7 +68,9 @@ return (
     <Widget
       src={"${config/account}/widget/Components.InfoCard"}
       props={{
-        infoTextPrimary: totalReferralFees ? nearToUsdWithFallback(totalReferralFees) : "-",
+        infoTextPrimary: totalReferralFees
+          ? nearToUsdWithFallback(totalReferralFees)
+          : "-",
         infoTextSecondary: "Referral Fees",
       }}
     />

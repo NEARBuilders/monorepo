@@ -4,11 +4,11 @@ const { ProjectOptions } = VM.require(
   "${config/account}/widget/Project.Options"
 );
 
-let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
+const DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
   asyncGetDonationsForRecipient: () => {},
 };
 
-let { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
+const { getPots } = VM.require("${config/account}/widget/SDK.potfactory") ?? {
   getPots: () => [],
 };
 

@@ -498,20 +498,23 @@ State.init({
 
 const { getProjects, isRegistryAdmin } = VM.require(
   "${config/account}/widget/SDK.registry"
-) || {
+) ?? {
   getProjects: () => [],
   isRegistryAdmin: () => false,
 };
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    asyncGetConfig: () => {},
-  };
+const { getConfig } = VM.require("${config/account}/widget/SDK.donate") ?? {
+  getConfig: () => {},
+};
 
-const projects = getProjects();
+const projects = getProjects() ?? [];
+const donateConfig = getConfig() ?? {};
 
-// console.log("projects: ", projects);
+let lastDonationAmount = 0;
+
+if (donateConfig) {
+  lastDonationAmount = yoctosToUsd(donateConfig.net_donations_amount);
+}
 
 if (!isRegistryAdmin) {
   projects = projects.filter((project) => project.status === "Approved");
@@ -526,22 +529,13 @@ const featuredProjects = useMemo(
   () => projects.filter((project) => featuredProjectIds.includes(project.id)),
   projects
 );
-const [totalDonation, setTotalDonation] = useState(0);
-const [totalDonated, setTotalDonated] = useState(0);
+const [totalDonation, setTotalDonation] = useState(
+  donateConfig.total_donations_count ?? 0
+);
+const [totalDonated, setTotalDonated] = useState(lastDonationAmount);
 const [filteredProjects, setFilteredProjects] = useState(projects);
 const [searchTerm, setSearchTerm] = useState("");
 const [sort, setSort] = useState("Sort");
-
-// console.log("filter", filteredProjects);
-
-if (DonateSDK.asyncGetConfig().then) {
-  // TODO: fix this hack
-  DonateSDK.asyncGetConfig().then((result) => {
-    const lastDonationAmount = yoctosToUsd(result.net_donations_amount);
-    setTotalDonated(lastDonationAmount);
-    setTotalDonation(result.total_donations_count);
-  });
-}
 
 const donateRandomly = () => {
   State.update({

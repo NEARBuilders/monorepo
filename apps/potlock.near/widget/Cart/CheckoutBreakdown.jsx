@@ -9,7 +9,7 @@ const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
   asyncGetDonationsForDonor: () => {},
 };
 
-let DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
+const DonateSDK = VM.require("${config/account}/widget/SDK.donate") || {
   asyncGetDonationsForDonor: () => {},
 };
 

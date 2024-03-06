@@ -2,7 +2,7 @@ const {
   SUPPORTED_FTS: { NEAR },
 } = props;
 
-let DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
+const DonateSDK = VM.require("${config/account}/widget/SDK.donate") ?? {
   asyncGetDonationsForDonor: () => {},
 };
 

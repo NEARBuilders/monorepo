@@ -31,4 +31,4 @@ const RegistrySDK = {
   },
 }
 
-return RegistrySDK;
+return RegistrySDK ?? {};

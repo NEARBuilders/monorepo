@@ -1,18 +1,18 @@
-const { basisPointsToPercent, href } = VM.require("${config/account}/widget/utils") || {
+const { basisPointsToPercent, href } = VM.require(
+  "${config/account}/widget/utils"
+) ?? {
   basisPointsToPercent: () => 0,
   href: () => {},
 };
-const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") || {
+const { SUPPORTED_FTS } = VM.require("${config/account}/widget/constants") ?? {
   SUPPORTED_FTS: {},
 };
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    getConfig: () => {},
-  };
+const { getConfig } = VM.require("${config/account}/widget/SDK.donate") ?? {
+  getConfig: () => {},
+};
 
-const donationContractConfig = DonateSDK.getConfig();
+const donationContractConfig = getConfig() ?? {};
 
 const IPFS_BASE_URL = "https://nftstorage.link/ipfs/";
 const CHEVRON_DOWN_URL =

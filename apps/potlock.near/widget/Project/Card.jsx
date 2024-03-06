@@ -19,15 +19,17 @@ const { getTagsFromSocialProfileData, href } = VM.require(
   href: () => {},
 };
 
-const PotSDK = VM.require("${config/account}/widget/SDK.pot") || {
-  getDonationsForProject: () => {},
+const { getDonationsForProject } = VM.require(
+  "${config/account}/widget/SDK.pot"
+) || {
+  getDonationsForProject: () => [],
 };
 
-let DonateSDK =
-  VM.require("${config/account}/widget/SDK.donate") ||
-  {
-    getDonationsForRecipient: () => {},
-  };
+const { getDonationsForRecipient } = VM.require(
+  "${config/account}/widget/SDK.donate"
+) || {
+  getDonationsForRecipient: () => [],
+};
 
 // console.log("props in Card: ", props);
 
@@ -385,8 +387,8 @@ const { name, description, plCategories } = profile;
 // const category = profile?.category || "No category";
 
 const donationsForProject = potId
-  ? PotSDK.getDonationsForProject(potId, projectId)
-  : DonateSDK.getDonationsForRecipient(projectId);
+  ? getDonationsForProject(potId, projectId)
+  : getDonationsForRecipient(projectId);
 
 // console.log(donationsForProject);
 if (!donationsForProject) return <CardSkeleton />;
@@ -441,15 +443,18 @@ const tags = getTagsFromSocialProfileData(profile);
 
 return (
   <>
-    <Card href={href({
-      params: {
-        tab: "project",
-        projectId,
-        potId,
-        referralId,
-        env
-      },
-    })} key={projectId}>
+    <Card
+      href={href({
+        params: {
+          tab: "project",
+          projectId,
+          potId,
+          referralId,
+          env,
+        },
+      })}
+      key={projectId}
+    >
       <HeaderContainer className="pt-0 position-relative">
         <BackgroundImageContainer>
           {profile.backgroundImage?.nft ? (
