@@ -132,7 +132,7 @@ const plugins = [
   {
     id: "openai",
     interface: {
-      src: "everycanvas.near/widget/magic",
+      src: "near/widget/AI.Nexus",
       props: {
         shapes: JSON.stringify(selectedShapes),
         getSelectionAsText: getSelectionAsText,
