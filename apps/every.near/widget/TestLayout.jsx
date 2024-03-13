@@ -14,9 +14,7 @@ const Footer = () => (
   </div>
 );
 
-const asideContent = () => (
-  <div className="border-end border-2">aside content</div>
-);
+const Sidebar = () => <div className="border-end border-2">aside content</div>;
 
 const [selectedLayout, setSelectedLayout] = useState("standard");
 
@@ -35,11 +33,7 @@ return (
       <option value="split">Split</option>
     </select>
     <hr className="mb-3" />
-    <Layout
-      blocks={{ Header, Footer }}
-      asideChildren={<asideContent />}
-      variant={selectedLayout}
-    >
+    <Layout blocks={{ Header, Footer, Sidebar }} variant={selectedLayout}>
       Main Content
     </Layout>
   </div>

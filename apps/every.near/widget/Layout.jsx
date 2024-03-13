@@ -25,11 +25,12 @@ const SplitLayout = styled.div`
   }
 `;
 
-const Layout = ({ variant, blocks, children, asideChildren }) => {
-  const { Header, Footer } = blocks;
+const Layout = ({ variant, blocks, children }) => {
+  const { Header, Footer, Sidebar } = blocks;
 
   Header = Header ? Header : () => <></>;
   Footer = Footer ? Footer : () => <></>;
+  Sidebar = Sidebar ? Sidebar : () => <></>;
 
   if (!variant) {
     variant = "standard";
@@ -55,7 +56,9 @@ const Layout = ({ variant, blocks, children, asideChildren }) => {
         <StandardLayout>
           <Header />
           <SidebarLayout>
-            <div className="aside">{asideChildren}</div>
+            <div className="aside">
+              <Sidebar />
+            </div>
             <div className="main">{children}</div>
           </SidebarLayout>
           <Footer />
@@ -66,7 +69,9 @@ const Layout = ({ variant, blocks, children, asideChildren }) => {
         <StandardLayout>
           <Header />
           <SplitLayout>
-            <div className="children">{asideChildren}</div>
+            <div className="children">
+              <Sidebar />
+            </div>
             <div className="children">{children}</div>
           </SplitLayout>
           <Footer />
