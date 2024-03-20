@@ -38,9 +38,14 @@ const LightTheme = `
 
       .dropdown-item, a {
         color: #000 !important;
+        transition: all 300ms;
         &:hover {
           color: #000 !important;
         }
+      }
+
+      .dropdown-item:hover {
+        background-color: rgba(0, 0, 0, 0.2);
       }
     }
   }
@@ -87,9 +92,14 @@ const DarkTheme = `
 
       .dropdown-item, a {
         color: #fff !important;
+        transition: all 300ms;
         &:hover {
-          color: #000 !important;
+          color: #fff !important;          
         }
+      }
+
+      .dropdown-item:hover {
+        background-color: rgba(255, 255, 255, 0.2);
       }
     }
   }
