@@ -50,28 +50,33 @@ const TabsContainer = styled.div`
   }
 `;
 
+const TabButton = ({ item }) => {
+  return (
+    <Button
+      style={
+        (selectedTab.label === item.label && {
+          borderBottom: "1px solid var(--active-color)",
+          borderRadius: "8px 8px 0 0",
+        }) ||
+        {}
+      }
+      onClick={() => setSelectedTab(item)}
+      variant="transparent"
+    >
+      <span
+        className={`children ${selectedTab.label === item.label ? "selected" : null}`}
+      >
+        {item.label}
+      </span>
+    </Button>
+  );
+};
+
 return (
   <ProfileTabs>
     <TabsContainer>
       {items.map((item) => (
-        <Button
-          style={
-            selectedTab.label === item.label
-              ? {
-                  borderBottom: "1px solid var(--active-color)",
-                  borderRadius: 0,
-                }
-              : {}
-          }
-          onClick={() => setSelectedTab(item)}
-          variant="transparent"
-        >
-          <span
-            className={`children ${selectedTab.label === item.label ? "selected" : null}`}
-          >
-            {item.label}
-          </span>
-        </Button>
+        <TabButton item={item} key={item.label} />
       ))}
     </TabsContainer>
     <div className="container-xl">

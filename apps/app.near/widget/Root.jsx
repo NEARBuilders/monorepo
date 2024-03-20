@@ -37,7 +37,7 @@ const DarkTheme = `
   --button-outline-bg: #000;
   --button-outline-stroke: #EDEDED;
   --button-outline-color: #FFFFFF;
-  --button-outline-hover-bg: rgba(255, 255, 255, 0.02);
+  --button-outline-hover-bg: rgba(255, 255, 255, 0.2);
 
   --button-primary-bg: #FFFFFF;
   --button-primary-stroke: #FFFFFF;

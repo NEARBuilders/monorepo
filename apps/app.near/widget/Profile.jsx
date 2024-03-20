@@ -159,8 +159,14 @@ return (
         <LinkTree linkTree={profile.linktree} theme={theme} />
         <FollowStats accountId={accountId} />
         <div className="d-flex justify-content-center align-items-center gap-3">
-          <Button variant="primary">Follow</Button>
-          <Button>Poke 👉</Button>
+          {context.accountId === accountId ? (
+            <Button>Edit Profile</Button>
+          ) : (
+            <>
+              <Button variant="primary">Follow</Button>
+              <Button>Poke 👉</Button>
+            </>
+          )}
         </div>
         <div className="d-flex justify-content-center mt-2">
           <div className="d-flex align-items-center flex-wrap gap-2">
