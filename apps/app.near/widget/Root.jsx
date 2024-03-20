@@ -21,7 +21,10 @@ const LightTheme = `
   --hashtag-stroke: #F9E68C;
   --hashtag-bg: #FFFCE8;
   --hashtag-color: #946800;
+  
   --bg: #fff;
+  --bg-hover: rgba(0, 0, 0, 0.2);
+  --bg-1: #151515;
 
   --post-stroke: rgba(0, 37, 73, 0.05);
   --post-bg: rgba(255, 255, 255, 0.25);
@@ -96,6 +99,7 @@ const DarkTheme = `
   --hashtag-color: #F0C000;
 
   --bg: #000;
+  --bg-hover: rgba(255, 255, 255, 0.2);
   --bg-1: #151515;
 
   --post-stroke: rgba(255, 255, 255, 0.2);
@@ -169,6 +173,8 @@ const Theme = styled.div`
     src: url("https://rsms.me/inter/font-files/InterVariable-Italic.woff2?v=4.0")
       format("woff2");
   }
+
+  font-family: "InterVariable", sans-serif;
 `;
 
 function Root({ children, theme }) {

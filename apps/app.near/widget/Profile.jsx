@@ -29,7 +29,7 @@ if (!accountId) {
 const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags) || [];
 
-const theme = profile.profile_theme ?? "dark";
+const theme = profile.profile_theme ?? "light";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
