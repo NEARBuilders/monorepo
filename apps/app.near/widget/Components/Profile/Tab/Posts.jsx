@@ -4,7 +4,7 @@ const profile = Social.getr(`${accountId}/profile`);
 const { description } = profile;
 
 return (
-  <div className="container-xl d-flex flex-column gap-3">
+  <div className="d-flex flex-column gap-3">
     {description && (
       <Widget
         key="desc"

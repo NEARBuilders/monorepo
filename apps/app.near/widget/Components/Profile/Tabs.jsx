@@ -3,20 +3,31 @@ const { Button } = VM.require("app.near/widget/Components.Button") || {
 };
 
 const items = [
-  { label: "Posts", widgetSrc: "app.near/widget/Components.Profile.Tab.Posts" },
+  {
+    label: "Posts",
+    widgetSrc: "app.near/widget/Components.Profile.Tab.Posts",
+    icon: "bi bi-newspaper",
+  },
   {
     label: "Videos",
     widgetSrc: "app.near/widget/Components.Profile.Tab.Videos",
+    icon: "bi bi-camera-video",
   },
   {
     label: "Photos",
     widgetSrc: "app.near/widget/Components.Profile.Tab.Photos",
+    icon: "bi bi-image",
   },
   {
     label: "Widgets",
     widgetSrc: "app.near/widget/Components.Profile.Tab.Widgets",
+    icon: "bi bi-code-slash",
   },
-  { label: "NFTs", widgetSrc: "app.near/widget/Components.Profile.Tab.NFTs" },
+  {
+    label: "NFTs",
+    widgetSrc: "app.near/widget/Components.Profile.Tab.NFTs",
+    icon: "bi bi-wallet2",
+  },
 ];
 
 const [selectedTab, setSelectedTab] = useState(items[0]);
@@ -47,6 +58,10 @@ const TabsContainer = styled.div`
   @media screen and (max-width: 768px) {
     gap: 16px;
     flex-wrap: wrap;
+    justify-content: space-between;
+    i {
+      font-size: 24px !important;
+    }
   }
 `;
 
@@ -66,7 +81,10 @@ const TabButton = ({ item }) => {
       <span
         className={`children ${selectedTab.label === item.label ? "selected" : null}`}
       >
-        {item.label}
+        <span className="d-none d-md-block">{item.label}</span>
+        <span className="d-md-none">
+          <i className={item.icon}></i>
+        </span>
       </span>
     </Button>
   );
