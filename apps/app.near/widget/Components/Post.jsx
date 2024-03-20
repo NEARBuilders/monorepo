@@ -97,7 +97,7 @@ const Wrapper = styled.div`
       div {
         border-radius: 1rem;
         margin: 1rem;
-        background-color: #151515 !important;
+        background-color: var(--bg-1) !important;
         border: 1px solid var(--stroke);
       }
     }
@@ -126,6 +126,7 @@ const Wrapper = styled.div`
     bottom: 0;
     width: 2px;
     background-color: var(--stroke);
+    z-index: 1;
   }
 
   .post:not(:first-child):after {
@@ -134,8 +135,9 @@ const Wrapper = styled.div`
     left: 42px;
     top: 0;
     width: 2px;
-    height: 8px;
+    height: 12px;
     background-color: var(--stroke);
+    z-index: 1;
   }
 
   .left {
@@ -272,10 +274,10 @@ return (
       </div>
     </div>
     {state.showReply && (
-      <div className="border-top">
+      <div>
         <Widget
           loading=""
-          src="mob.near/widget/MainPage.N.Comment.Compose"
+          src="app.near/widget/Components.Comment.Compose"
           props={{
             notifyAccountId,
             item,
@@ -290,7 +292,7 @@ return (
           <Widget
             key="comments"
             loading={false}
-            src="mob.near/widget/MainPage.N.Comment.Feed"
+            src="app.near/widget/Components.Comment.Feed"
             props={{
               item,
               highlightComment: props.highlightComment,

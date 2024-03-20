@@ -111,17 +111,13 @@ return (
           </div>
           {!pinned && (
             <div
-              className="text-nowrap flex-shrink-0"
+              className="text-nowrap flex-shrink-0 ps-1"
               style={{ color: "var(--color-muted)" }}
             >
               {blockHeight === "now" ? (
                 "now"
               ) : (
-                <a
-                  href={link}
-                  className="ps-1"
-                  style={{ color: "var(--color-muted)" }}
-                >
+                <a href={link} style={{ color: "var(--color-muted)" }}>
                   <Widget
                     loading=""
                     src="mob.near/widget/TimeAgo"

@@ -96,6 +96,7 @@ const DarkTheme = `
   --hashtag-color: #F0C000;
 
   --bg: #000;
+  --bg-1: #151515;
 
   --post-stroke: rgba(255, 255, 255, 0.2);
   --post-bg: rgba(255, 255, 255, 0.08);
@@ -124,7 +125,7 @@ const DarkTheme = `
     
     .dropdown-menu {
       border-radius: 12px;
-      border: 1px solid var(--White-A-Over-11, rgba(255, 255, 255, 0.59));
+      border: 1px solid var(--White-A-Over-11, rgba(255, 255, 255, 0.2));
       background: var(--White-A-Over-10, rgba(255, 255, 255, 0.08));
       backdrop-filter: blur(25px);
       box-shadow: 0px 4px 8px -2px rgba(0, 0, 0, 0.10);
