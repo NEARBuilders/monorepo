@@ -80,7 +80,10 @@ return (
       ))}
     </TabsContainer>
     <div className="container-xl">
-      <Widget src={selectedTab.widgetSrc} />
+      <Widget
+        src={selectedTab.widgetSrc}
+        props={{ accountId: props.accountId }}
+      />
     </div>
   </ProfileTabs>
 );

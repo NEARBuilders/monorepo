@@ -22,6 +22,28 @@ const LightTheme = `
   --hashtag-bg: #FFFCE8;
   --hashtag-color: #946800;
   --bg: #fff;
+
+  --post-stroke: rgba(0, 37, 73, 0.05);
+  --post-bg: rgba(255, 255, 255, 0.25);
+  --post-shadow: rgba(22, 22, 22, 0.15);
+
+  .post {
+    .dropdown-menu {
+      border-radius: 12px;
+      border: 1px solid var(--Slate-Light-Alpha-3, rgba(0, 37, 73, 0.05));
+      background: var(--White-A-Over-9, rgba(255, 255, 255, 0.39));
+      background-blend-mode: overlay;
+      box-shadow: 0px 4px 8px -2px rgba(0, 0, 0, 0.10);
+      backdrop-filter: blur(25px);
+
+      .dropdown-item, a {
+        color: #000 !important;
+        &:hover {
+          color: #000 !important;
+        }
+      }
+    }
+  }
 `;
 
 const DarkTheme = `
@@ -49,6 +71,28 @@ const DarkTheme = `
   --hashtag-color: #F0C000;
 
   --bg: #000;
+
+  --post-stroke: rgba(255, 255, 255, 0.2);
+  --post-bg: rgba(255, 255, 255, 0.08);
+  --post-shadow: rgba(0, 0, 0, 0.10);
+
+  .post {
+    .dropdown-menu {
+      border-radius: 12px;
+      border: 1px solid var(--White-A-Over-11, rgba(255, 255, 255, 0.59));
+      background: var(--White-A-Over-10, rgba(255, 255, 255, 0.08));
+      backdrop-filter: blur(25px);
+      box-shadow: 0px 4px 8px -2px rgba(0, 0, 0, 0.10);
+      background-blend-mode: overlay;
+
+      .dropdown-item, a {
+        color: #fff !important;
+        &:hover {
+          color: #000 !important;
+        }
+      }
+    }
+  }
 `;
 
 const Theme = styled.div`
