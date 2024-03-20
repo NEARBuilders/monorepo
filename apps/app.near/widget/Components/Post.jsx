@@ -93,6 +93,15 @@ const Wrapper = styled.div`
       padding: 0.3rem;
     }
 
+    pre {
+      div {
+        border-radius: 1rem;
+        margin: 1rem;
+        background-color: #151515 !important;
+        border: 1px solid var(--stroke);
+      }
+    }
+
     &:hover {
       background-color: rgba(0, 0, 0, 0.03);
       .expand-post {

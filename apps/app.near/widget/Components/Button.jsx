@@ -68,7 +68,7 @@ const StyledButton = styled.div`
   }
 `;
 
-function Button({ children, className, style, onClick, variant }) {
+function Button({ children, className, style, onClick, ariaLabel, variant }) {
   return (
     <StyledButton
       onClick={onClick}

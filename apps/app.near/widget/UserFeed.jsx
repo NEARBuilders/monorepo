@@ -118,7 +118,7 @@ const renderRepost = (a) => {
   return (
     <div key={JSON.stringify(a)} className="mb-3">
       <div
-        className="mt-3 mb-2"
+        className="mt-2 mb-1"
         style={{
           fontSize: "13px",
           fontWeight: 700,

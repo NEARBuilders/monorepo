@@ -128,9 +128,20 @@ return (
     </ProfileImagesContainer>
     <div className="container-xl">
       <div className="d-flex justify-content-end p-md-3 pt-3">
-        <Button>
-          Share <LinkIcon theme={theme} />
-        </Button>
+        <OverlayTrigger
+          placement="auto"
+          overlay={<Tooltip>{"Copy to clipboard"}</Tooltip>}
+        >
+          <Button
+            onClick={() =>
+              clipboard.writeText(
+                `app.near/widget/Profile?accountId=${accountId}`
+              )
+            }
+          >
+            Share <LinkIcon theme={theme} />
+          </Button>
+        </OverlayTrigger>
       </div>
       <div className="d-flex flex-column align-items-center gap-3 mb-5">
         <div className="d-flex flex-column align-items-center">
@@ -163,8 +174,20 @@ return (
             <Button>Edit Profile</Button>
           ) : (
             <>
-              <Button variant="primary">Follow</Button>
-              <Button>Poke 👉</Button>
+              <Widget
+                src={"app.near/widget/Components.Profile.FollowButton"}
+                loading=""
+                props={{
+                  accountId: accountId,
+                }}
+              />
+              <Widget
+                src={"app.near/widget/Components.Profile.PokeButton"}
+                loading=""
+                props={{
+                  accountId: accountId,
+                }}
+              />
             </>
           )}
         </div>

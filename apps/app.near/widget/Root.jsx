@@ -28,6 +28,26 @@ const LightTheme = `
   --post-shadow: rgba(22, 22, 22, 0.15);
 
   .post {
+    transition: background-color 300ms;
+    .expand-post {
+      background-image: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0),
+        rgba(0, 0, 0, 1) 25%
+      );
+    }
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      .expand-post {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0),
+          rgba(0, 0, 0, 1) 25%
+        );
+      }
+    }
+
     .dropdown-menu {
       border-radius: 12px;
       border: 1px solid var(--Slate-Light-Alpha-3, rgba(0, 37, 73, 0.05));
@@ -82,6 +102,26 @@ const DarkTheme = `
   --post-shadow: rgba(0, 0, 0, 0.10);
 
   .post {
+    transition: background-color 300ms;
+    .expand-post {
+      background-image: linear-gradient(
+        to bottom,
+        rgba(16, 16, 16, 0),
+        rgba(16, 16, 16, 1) 25%
+      ) !important;
+    }
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      .expand-post {
+        background-image: linear-gradient(
+          to bottom,
+          rgba(12, 12, 12, 0),
+        rgba(12, 12, 12, 1) 25%
+        ) !important;
+      }
+    }
+    
     .dropdown-menu {
       border-radius: 12px;
       border: 1px solid var(--White-A-Over-11, rgba(255, 255, 255, 0.59));
