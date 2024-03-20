@@ -118,7 +118,7 @@ const renderRepost = (a) => {
   return (
     <div key={JSON.stringify(a)} className="mb-3">
       <div
-        className="text-muted"
+        className="mt-3 mb-2"
         style={{
           fontSize: "13px",
           fontWeight: 700,
@@ -127,6 +127,7 @@ const renderRepost = (a) => {
           paddingTop: "4px",
           position: "relative",
           zIndex: 1,
+          color: "var(--color)",
         }}
       >
         {repostSvg}{" "}
@@ -146,7 +147,7 @@ const renderRepost = (a) => {
       </div>
       <Widget
         loading={<div className="w-100" style={{ height: "200px" }} />}
-        src="mob.near/widget/MainPage.N.Post"
+        src="app.near/widget/Components.Post"
         props={{
           accountId: post.accountId,
           blockHeight: post.blockHeight,
