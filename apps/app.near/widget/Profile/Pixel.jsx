@@ -32,7 +32,8 @@ if (!accountId) {
 const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags || []);
 
-const theme = profile.profileTheme ?? "light";
+// const theme = profile.profileTheme ?? "dark";
+const theme = "dark";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -154,7 +155,7 @@ const AccountName = styled.div`
 `;
 
 return (
-  <Root theme="light">
+  <Root theme={theme}>
     <ProfileImagesContainer>
       <BackgroundImage>
         <Widget
@@ -197,7 +198,7 @@ return (
                   src="mob.near/widget/N.Common.OverlayTrigger"
                   props={{
                     popup: <div>Copy AccountId</div>,
-                    children: <CopyIcon2 />,
+                    children: <CopyIcon2 theme={theme} />,
                   }}
                 />
               </span>
@@ -208,7 +209,7 @@ return (
         <div className="d-flex align-items- flex-wrap gap-2">
           {context.accountId === accountId ? (
             <Button>
-              <EditIcon2 />
+              <EditIcon2 theme={theme} />
               Edit Profile
             </Button>
           ) : (
@@ -237,7 +238,7 @@ return (
                 )
               }
             >
-              <LinkIcon2 />
+              <LinkIcon2 theme={theme} />
             </Button>
           </OverlayTrigger>
         </div>
@@ -245,7 +246,7 @@ return (
           {profileTags.length > 0 &&
             profileTags.map((tag) => <Hashtag key={tag}>{tag}</Hashtag>)}
         </div>
-        <LinkTree linkTree={profile.linktree} theme="light" />
+        <LinkTree linkTree={profile.linktree} theme={theme} />
         <div>
           <h4
             className="mb-3"
