@@ -92,6 +92,7 @@ const ProfileInfoContainer = styled.div`
 
   @media (max-width: 768px) {
     grid-column: span 1 / span 1;
+    gap: 20px;
   }
 `;
 
@@ -109,6 +110,10 @@ const ProfileName = styled.h2`
   svg {
     scale: 1.25;
     margin-bottom: 6px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 32px;
   }
 `;
 

@@ -48,7 +48,7 @@ const TabsContainer = styled.div`
 
   @media (max-width: 768px) {
     gap: 16px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     width: 100%;
     i {
