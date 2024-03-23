@@ -6,7 +6,10 @@ const accountId = props.accountId;
 const profile = Social.getr(`${accountId}/profile`);
 
 const [theme, setTheme] = useState(
-  profile.profileTheme === "dark" ?? props.theme,
+  profile.profileTheme === "dark" ?? props.theme
+);
+const [profileLayout, setProfileLayout] = useState(
+  props.profileLayout === "pixel"
 );
 
 const ModalRoot = styled.div`
@@ -77,7 +80,7 @@ return (
   <ModalRoot>
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button>Edit Profile</Button>
+        {props.trigger ?? <Button>Edit Profile</Button>}
       </Dialog.Trigger>
       <Dialog.Overlay className="DialogOverlay" />
       <Dialog.Content className="DialogContent">
@@ -100,6 +103,21 @@ return (
                 Dark Theme
               </label>
             </div>
+            <div
+              className="form-check form-switch mb-3"
+              data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+            >
+              <input
+                class="form-check-input"
+                checked={profileLayout}
+                onChange={(e) => setProfileLayout(e.target.checked)}
+                type="checkbox"
+                id="darktheme"
+              />
+              <label class="form-check-label" for="darktheme">
+                Pixel Layout
+              </label>
+            </div>
           </div>
         </Dialog.Description>
         <Dialog.Close asChild>
@@ -109,10 +127,12 @@ return (
         </Dialog.Close>
 
         <Button
+          varaint="primary"
           onClick={() => {
             Social.set({
               profile: {
                 profileTheme: theme ? "dark" : "light",
+                profileLayout: profileLayout ? "pixel" : "modern",
               },
             });
           }}

@@ -177,7 +177,11 @@ return (
           {context.accountId === accountId ? (
             <Widget
               src="app.near/widget/Components.EditModal"
-              props={{ accountId: accountId, theme: theme }}
+              props={{
+                accountId: accountId,
+                theme: theme,
+                profileLayout: "modern",
+              }}
             />
           ) : (
             <>

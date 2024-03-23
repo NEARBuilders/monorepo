@@ -32,8 +32,7 @@ if (!accountId) {
 const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags || []);
 
-// const theme = profile.profileTheme ?? "dark";
-const theme = "dark";
+const theme = profile.profileTheme ?? "dark";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -208,10 +207,21 @@ return (
         </div>
         <div className="d-flex align-items- flex-wrap gap-2">
           {context.accountId === accountId ? (
-            <Button>
-              <EditIcon2 theme={theme} />
-              Edit Profile
-            </Button>
+            <Widget
+              src="app.near/widget/Components.EditModal"
+              loading=""
+              props={{
+                theme: theme,
+                accountId: accountId,
+                profileLayout: "pixel",
+                trigger: (
+                  <Button>
+                    <EditIcon2 theme={theme} />
+                    Edit Profile
+                  </Button>
+                ),
+              }}
+            />
           ) : (
             <>
               <Widget
