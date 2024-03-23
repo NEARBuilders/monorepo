@@ -5,15 +5,58 @@ const LightTheme = `
 
   --profile-stroke: #E6EDFE;
   --bg1: rgba(255, 255, 255, 0.45);
+  --bg2: #D9E2FC;
   --bg1-hover: rgba(225, 225, 225, 0.45);
   --stroke: rgba(2, 60, 235, 0.15);
   --shadow: rgba(0, 0, 0, 0.1);
+
+  --pre: rgba(0, 0, 0, 0.9);
 
   --hashtag-stroke: #F9E68C;
   --hashtag-bg: #FFFCE8;
   --hashtag-color: #946800;
 
   --active-color: #D31E66;
+
+  --btn-primary-bg: #3E63DD;
+  --btn-primary-color: #fff;
+
+  --post-stroke: rgba(2, 60, 235, 0.15);
+  --post-bg: rgba(255, 255, 255, 0.45);
+  --post-shadow: rgba(0, 0, 0, 0.10);
+
+  .post-header-name {
+    font-family: "Pixelify Sans", InterVariable, sans-serif;
+  }
+
+  .post {
+    transition: background-color 300ms;
+    border-radius: 16px;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdown-menu {
+      border-radius: 12px;
+      border: 1px solid var(--Indigo-Light-Alpha-5, rgba(2, 60, 235, 0.15));
+      background: var(--Indigo-Light-4, #E6EDFE);
+      box-shadow: 0px 4px 8px -2px rgba(0, 0, 0, 0.10);
+      backdrop-filter: blur(25px);
+
+      .dropdown-item, a {
+        color: #101D46 !important;
+        transition: all 300ms;
+        &:hover {
+          color: #101D46 !important;
+        }
+      }
+
+      .dropdown-item:hover {
+        background-color: #d8e0f1;
+      }
+    }
+  }
 `;
 
 const DarkTheme = `

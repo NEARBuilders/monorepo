@@ -3,7 +3,7 @@ const { Root } = VM.require("app.near/widget/Profile.Pixel.Root") || {
 };
 
 const { FollowStats, Button, Hashtag, LinkTree } = VM.require(
-  "app.near/widget/Components.Pixel",
+  "app.near/widget/Components.Pixel"
 ) || {
   FollowStats: () => <></>,
   Button: () => <></>,
@@ -12,7 +12,7 @@ const { FollowStats, Button, Hashtag, LinkTree } = VM.require(
 };
 
 const { CopyIcon2, EditIcon2, LinkIcon2 } = VM.require(
-  "app.near/widget/Icons",
+  "app.near/widget/Icons"
 ) || {
   CopyIcon2: () => <></>,
   EditIcon2: () => <></>,
@@ -44,7 +44,7 @@ const BackgroundImage = styled.div`
     height: 240px;
     object-fit: cover;
 
-    @media screen and (max-width: 768px) {
+    @media (max-width: 768px) {
       height: 80px;
     }
   }
@@ -64,7 +64,7 @@ const ProfileImage = styled.div`
     border: 4px solid var(--profile-stroke);
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     img {
       width: 80px;
       height: 80px;
@@ -76,19 +76,23 @@ const ProfileImage = styled.div`
 `;
 
 const ProfileInfoContainer = styled.div`
+  grid-column: span 3 / span 3;
   display: flex;
   padding: 24px;
   flex-direction: column;
   align-items: flex-start;
   gap: 40px;
   flex-shrink: 0;
-  width: 436px;
 
   border-radius: 16px;
   border: 1px solid var(--stroke);
   background: var(--bg1);
 
   box-shadow: 0px 4px 8px -2px var(--shadow);
+
+  @media (max-width: 768px) {
+    grid-column: span 1 / span 1;
+  }
 `;
 
 const ProfileName = styled.h2`
@@ -110,6 +114,21 @@ const ProfileName = styled.h2`
 
 const ContentContainer = styled.div`
   margin-top: 64px;
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 24px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+`;
+
+const TabsContainer = styled.div`
+  grid-column: span 6 / span 6;
+
+  @media (max-width: 768px) {
+    grid-column: span 1 / span 1;
+  }
 `;
 
 const AccountName = styled.div`
@@ -181,11 +200,26 @@ return (
           </div>
           <FollowStats accountId={accountId} />
         </div>
-        <div className="d-flex align-items-center gap-2">
-          <Button>
-            <EditIcon2 />
-            Edit Profile
-          </Button>
+        <div className="d-flex align-items- flex-wrap gap-2">
+          {context.accountId === accountId ? (
+            <Button>
+              <EditIcon2 />
+              Edit Profile
+            </Button>
+          ) : (
+            <>
+              <Widget
+                src="app.near/widget/Components.Pixel.FollowButton"
+                loading=""
+                props={{ accountId }}
+              />
+              <Widget
+                src="app.near/widget/Components.Pixel.PokeButton"
+                loading=""
+                props={{ accountId }}
+              />
+            </>
+          )}
           <OverlayTrigger
             placement="auto"
             overlay={<Tooltip>{"Copy to clipboard"}</Tooltip>}
@@ -194,7 +228,7 @@ return (
               style={{ padding: "12px 14px" }}
               onClick={() =>
                 clipboard.writeText(
-                  `app.near/widget/Profile?accountId=${accountId}`,
+                  `app.near/widget/Profile?accountId=${accountId}`
                 )
               }
             >
@@ -207,7 +241,29 @@ return (
             profileTags.map((tag) => <Hashtag key={tag}>{tag}</Hashtag>)}
         </div>
         <LinkTree linkTree={profile.linktree} theme="light" />
+        <div>
+          <h4
+            className="mb-3"
+            style={{ fontFamily: "Pixelify Sans", color: "var(--color-muted)" }}
+          >
+            Applications
+          </h4>
+          <Widget
+            src="app.near/widget/StarredApplications"
+            loading=""
+            props={{
+              accountId: accountId,
+            }}
+          />
+        </div>
       </ProfileInfoContainer>
+      <TabsContainer>
+        <Widget
+          src="app.near/widget/Components.Pixel.Tabs"
+          loaidng=""
+          props={{ accountId }}
+        />
+      </TabsContainer>
     </ContentContainer>
   </Root>
 );

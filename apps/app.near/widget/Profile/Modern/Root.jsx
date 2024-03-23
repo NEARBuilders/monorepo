@@ -25,6 +25,7 @@ const LightTheme = `
   --bg: #fff;
   --bg-hover: rgba(0, 0, 0, 0.2);
   --bg-1: #151515;
+  --pre: rgba(0, 0, 0, 0.9);
 
   --post-stroke: rgba(0, 37, 73, 0.05);
   --post-bg: rgba(255, 255, 255, 0.25);

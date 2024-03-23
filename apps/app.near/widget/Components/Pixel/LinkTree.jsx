@@ -9,6 +9,7 @@ const StyledLink = styled.a`
 
   i {
     color: var(--color);
+    font-size: 20px;
   }
 
   &:hover {

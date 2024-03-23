@@ -97,7 +97,7 @@ const Wrapper = styled.div`
       div {
         border-radius: 1rem;
         margin: 1rem;
-        background-color: var(--bg-1) !important;
+        background-color: var(--pre) !important;
         border: 1px solid var(--stroke);
       }
     }
@@ -234,7 +234,7 @@ return (
         {props.customButtons ? (
           props.customButtons
         ) : !pinned && !hideButtons && blockHeight !== "now" ? (
-          <div className="buttons d-flex justify-content-between">
+          <div className="buttons d-flex align-items-center gap-4 flex-wrap">
             <Widget
               loading=""
               src="mob.near/widget/N.CommentButton"

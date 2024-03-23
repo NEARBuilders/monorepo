@@ -50,7 +50,7 @@ const CardButton = styled.a`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  flex: 1 0 0;
+  flex-grow: 1;
 
   color: var(--color) !important;
   font-weight: 500;

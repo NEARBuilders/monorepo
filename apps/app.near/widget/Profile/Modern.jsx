@@ -3,7 +3,7 @@ const { Root } = VM.require("app.near/widget/Profile.Modern.Root") || {
 };
 
 const { Button, LinkTree, FollowStats, Hashtag } = VM.require(
-  "app.near/widget/Components",
+  "app.near/widget/Components"
 ) || {
   Button: () => <></>,
   LinkTree: () => <></>,
@@ -41,7 +41,7 @@ const BackgroundImage = styled.div`
     height: 280px;
     object-fit: cover;
 
-    @media screen and (max-width: 768px) {
+    @media (max-width: 768px) {
       height: 120px;
     }
   }
@@ -61,7 +61,7 @@ const ProfileImage = styled.div`
     border: 3px solid var(--profile-stroke);
   }
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 768px) {
     img {
       width: 80px;
       height: 80px;
@@ -139,7 +139,7 @@ return (
           <Button
             onClick={() =>
               clipboard.writeText(
-                `app.near/widget/Profile?accountId=${accountId}`,
+                `app.near/widget/Profile?accountId=${accountId}`
               )
             }
           >

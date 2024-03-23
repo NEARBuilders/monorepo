@@ -31,7 +31,7 @@ const composeData = () => {
 
   const notifications = state.extractMentionNotifications(
     state.content.text,
-    thisItem,
+    thisItem
   );
 
   if (props.notifyAccountId && props.notifyAccountId !== context.accountId) {
@@ -46,7 +46,7 @@ const composeData = () => {
 
   if (notifications.length) {
     data.index.notify = JSON.stringify(
-      notifications.length > 1 ? notifications : notifications[0],
+      notifications.length > 1 ? notifications : notifications[0]
     );
   }
 
@@ -57,7 +57,7 @@ const composeData = () => {
       hashtags.map((hashtag) => ({
         key: hashtag,
         value: thisItem,
-      })),
+      }))
     );
   }
 
@@ -86,6 +86,11 @@ return (
             disabled={!state.content}
             force
             className="btn btn-primary rounded-3"
+            style={{
+              background: "var(--active-color)",
+              fontFamily: "Pixelify Sans, InterVariable, sans-serif",
+              border: "1px solid var(--active-color)",
+            }}
             data={composeData}
             onCommit={() => {
               onCompose();

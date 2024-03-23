@@ -51,20 +51,16 @@ const Wrapper = styled.div`
   .nft-card {
     width: 100%;
     height: 100%;
-    background-color: var(--bg);
+    background-color: var(--bg1);
     border: 1px solid var(--stroke);
     border-radius: 1rem;
-    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 15px;
+    box-shadow: 0px 4px 8px -2px var(--shadow);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     overflow: hidden;
     transition: all 0.3s ease 0s;
-
-    &:hover {
-      box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 24px;
-    }
 
     .nft-image-wrapper {
       width: 100%;
@@ -87,6 +83,7 @@ const Wrapper = styled.div`
       width: 100%;
       height: 100%;
       padding: 8px;
+      color: var(--color);
       max-height: 7em;
       overflow: hidden;
       font-family: "InterVariable", sans-serif;
@@ -95,6 +92,8 @@ const Wrapper = styled.div`
     .nft-title {
       font-size: 16px;
       color: var(--color);
+      margin-bottom: 4px;
+      font-family: "Pixelify Sans", InterVariable, sans-serif;
       font-weight: bold;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -103,6 +102,7 @@ const Wrapper = styled.div`
 
     .nft-description {
       font-size: 16px;
+      font-family: "InterVariable", sans-serif;
       height: 4.5em;
       color: var(--color-muted);
       white-space: break-word;

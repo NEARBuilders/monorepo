@@ -81,7 +81,7 @@ return (
             <Overlay>
               <div
                 style={{ color: "var(--color)" }}
-                className="text-truncate fw-bold"
+                className="text-truncate fw-bold post-header-name"
               >
                 {name}
               </div>
