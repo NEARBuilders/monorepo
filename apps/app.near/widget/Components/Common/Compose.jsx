@@ -247,7 +247,7 @@ const gifSearchWidget = useMemo(
         }}
       />
     ) : undefined,
-  [gifSearch]
+  [gifSearch],
 );
 
 return (

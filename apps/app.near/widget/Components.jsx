@@ -3,13 +3,13 @@ const { Button } = VM.require("app.near/widget/Components.Button") || {
 };
 
 const { LinkTree } = VM.require(
-  "app.near/widget/Components.Profile.LinkTree"
+  "app.near/widget/Components.Profile.LinkTree",
 ) || {
   LinkTree: () => <></>,
 };
 
 const { FollowStats } = VM.require(
-  "app.near/widget/Components.Profile.FollowStats"
+  "app.near/widget/Components.Profile.FollowStats",
 ) || {
   FollowStats: () => <></>,
 };

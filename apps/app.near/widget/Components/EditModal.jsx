@@ -6,7 +6,7 @@ const accountId = props.accountId;
 const profile = Social.getr(`${accountId}/profile`);
 
 const [theme, setTheme] = useState(
-  profile.profileTheme === "dark" ?? props.theme
+  profile.profileTheme === "dark" ?? props.theme,
 );
 
 const ModalRoot = styled.div`
