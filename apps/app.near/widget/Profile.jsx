@@ -29,7 +29,7 @@ if (!accountId) {
 const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags) || [];
 
-const theme = profile.profile_theme ?? "light";
+const theme = profile.profileTheme ?? "light";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -171,7 +171,10 @@ return (
         <FollowStats accountId={accountId} />
         <div className="d-flex justify-content-center align-items-center gap-3">
           {context.accountId === accountId ? (
-            <Button>Edit Profile</Button>
+            <Widget
+              src="app.near/widget/Components.EditModal"
+              props={{ accountId: accountId, theme: theme }}
+            />
           ) : (
             <>
               <Widget

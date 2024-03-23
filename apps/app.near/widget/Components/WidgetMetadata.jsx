@@ -28,7 +28,7 @@ const Card = styled.div`
 const InlineUser = ({ accountId }) => {
   const profile = Social.getr(`${accountId}/profile`);
   return (
-    <div className="d-flex gap-1 align-items-center">
+    <div className="d-flex gap-1 align-items-center text-truncate">
       <Widget
         src="mob.near/widget/ProfileImage"
         props={{
@@ -72,7 +72,7 @@ return (
       target="_blank"
       href={`https://near.social/${widgetPath}`}
     >
-      <div className="d-flex gap-3 p-3 w-100">
+      <div className="d-flex gap-3 p-3 w-100 overflow-auto">
         <Widget
           src="mob.near/widget/Image"
           props={{
@@ -96,7 +96,9 @@ return (
           >
             {name}
           </p>
-          <InlineUser accountId={accountId} />
+          <span className="text-truncate">
+            <InlineUser accountId={accountId} />
+          </span>
           <p className="m-0">
             <i className="bi bi-time"></i>{" "}
             <Widget
