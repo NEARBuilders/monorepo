@@ -41,7 +41,7 @@ const ProfileTabs = styled.div`
 
 const TabsContainer = styled.div`
   display: flex;
-  margin-bottom: 1rem;
+  margin-bottom: 8px;
   background: var(--bg2);
   border-radius: 8px;
   width: max-content;
@@ -82,7 +82,7 @@ return (
         <TabButton item={item} key={item.label} />
       ))}
     </TabsContainer>
-    <div className="container-xl">
+    <div>
       <Widget
         src={selectedTab.widgetSrc}
         props={{ accountId: props.accountId }}
