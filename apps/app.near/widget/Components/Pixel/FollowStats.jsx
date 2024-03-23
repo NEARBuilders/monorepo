@@ -16,18 +16,45 @@ function FollowStats({ accountId }) {
 
   return (
     <div className="d-flex align-items-center gap-4">
-      <p className="m-0" style={{ color: "var(--color)", fontWeight: 600 }}>
-        {numFollowing}
-        <span style={{ color: "var(--color-muted)", fontWeight: 400 }}>
-          Following
-        </span>
-      </p>
-      <p className="m-0" style={{ color: "var(--color)", fontWeight: 600 }}>
-        {numFollowers}
-        <span style={{ color: "var(--color-muted)", fontWeight: 400 }}>
-          Followers
-        </span>
-      </p>
+      <Widget
+        loading=""
+        src="app.near/widget/Components.OverlayFaces"
+        props={{
+          accounts: Object.keys(following[accountId].graph.follow || {}),
+          limit: 10,
+          children: (
+            <p
+              className="m-0"
+              style={{ color: "var(--color)", fontWeight: 600 }}
+            >
+              {numFollowing}
+              <span style={{ color: "var(--color-muted)", fontWeight: 400 }}>
+                Following
+              </span>
+            </p>
+          ),
+        }}
+      />
+
+      <Widget
+        loading=""
+        src="app.near/widget/Components.OverlayFaces"
+        props={{
+          accounts: followers,
+          limit: 10,
+          children: (
+            <p
+              className="m-0"
+              style={{ color: "var(--color)", fontWeight: 600 }}
+            >
+              {numFollowers}{" "}
+              <span style={{ color: "var(--color-muted)", fontWeight: 400 }}>
+                Followers
+              </span>
+            </p>
+          ),
+        }}
+      />
     </div>
   );
 }

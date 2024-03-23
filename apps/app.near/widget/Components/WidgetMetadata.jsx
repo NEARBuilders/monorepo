@@ -53,6 +53,7 @@ const CardButton = styled.a`
   flex-grow: 1;
 
   color: var(--color) !important;
+  font-family: "Pixelify Sans", InterVariable, sans-serif;
   font-weight: 500;
   font-size: 16px;
   border: 1px solid var(--stroke);
@@ -92,7 +93,12 @@ return (
         <div className="d-flex flex-column gap-1">
           <p
             className="m-0"
-            style={{ color: "var(--color)", fontSize: 20, fontWeight: 500 }}
+            style={{
+              color: "var(--color)",
+              fontSize: 20,
+              fontWeight: 500,
+              fontFamily: "Pixelify Sans, InterVariable, sans-serif",
+            }}
           >
             {name}
           </p>
