@@ -3,7 +3,7 @@ const { Root } = VM.require("app.near/widget/Profile.Modern.Root") || {
 };
 
 const { Button, LinkTree, FollowStats, Hashtag } = VM.require(
-  "app.near/widget/Components"
+  "app.near/widget/Components",
 ) || {
   Button: () => <></>,
   LinkTree: () => <></>,
@@ -139,7 +139,7 @@ return (
           <Button
             onClick={() =>
               clipboard.writeText(
-                `app.near/widget/Profile?accountId=${accountId}`
+                `app.near/widget/Profile?accountId=${accountId}`,
               )
             }
           >

@@ -113,7 +113,7 @@ const Wrapper = styled.div`
 `;
 
 return (
-  <Wrapper>
+  <Wrapper className="container-xl">
     {allNfts.map((contractId, i) => (
       <Widget
         loading=""

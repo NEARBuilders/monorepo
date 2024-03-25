@@ -33,7 +33,7 @@ const apps = useMemo(() => {
   apps.sort((a, b) => (order?.[a] || 0) - (order?.[b] || 0));
   Storage.privateSet(
     StorageKey,
-    Object.fromEntries(apps.map((a, i) => [a, i + 1]))
+    Object.fromEntries(apps.map((a, i) => [a, i + 1])),
   );
   return apps;
 }, [stars, order]);
