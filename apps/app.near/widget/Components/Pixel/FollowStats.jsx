@@ -25,7 +25,11 @@ function FollowStats({ accountId }) {
           children: (
             <p
               className="m-0"
-              style={{ color: "var(--color)", fontWeight: 600 }}
+              style={{
+                color: "var(--color)",
+                fontWeight: 600,
+                fontFamily: "var(--font-family)",
+              }}
             >
               {numFollowing}
               <span style={{ color: "var(--color-muted)", fontWeight: 400 }}>

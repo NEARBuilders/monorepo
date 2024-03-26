@@ -33,7 +33,7 @@ const apps = useMemo(() => {
   apps.sort((a, b) => (order?.[a] || 0) - (order?.[b] || 0));
   Storage.privateSet(
     StorageKey,
-    Object.fromEntries(apps.map((a, i) => [a, i + 1])),
+    Object.fromEntries(apps.map((a, i) => [a, i + 1]))
   );
   return apps;
 }, [stars, order]);
@@ -71,7 +71,9 @@ const renderItem = (widgetSrc) => {
 
 const Container = styled.div`
   img {
-    box-shadow: none !important;
+    box-shadow:
+      0 4px 6px -1px var(--shadow),
+      0 2px 4px -2px var(--shadow) !important;
   }
 `;
 

@@ -5,7 +5,7 @@ const StyledHashtag = styled.span`
   border: 1px solid var(--hashtag-stroke);
   background: var(--hashtag-bg);
   color: var(--hashtag-color);
-  font-family: "Pixelify Sans", InterVariable, sans-serif;
+  font-family: var(--accent-font-family), InterVariable, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

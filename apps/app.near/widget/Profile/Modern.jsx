@@ -3,7 +3,7 @@ const { Root } = VM.require("app.near/widget/Profile.Modern.Root") || {
 };
 
 const { Button, LinkTree, FollowStats, Hashtag } = VM.require(
-  "app.near/widget/Components",
+  "app.near/widget/Components"
 ) || {
   Button: () => <></>,
   LinkTree: () => <></>,
@@ -30,6 +30,8 @@ const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags || []);
 
 const theme = profile.profileTheme ?? "light";
+const font = profile.profileFont ?? "InterVariable";
+const activeColor = profile.profileActiveColor ?? "#E93D82";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -107,7 +109,7 @@ const AccountName = styled.div`
 `;
 
 return (
-  <Root theme={theme}>
+  <Root theme={theme} font={font} activeColor={activeColor}>
     <ProfileImagesContainer>
       <BackgroundImage>
         <Widget
@@ -139,7 +141,7 @@ return (
           <Button
             onClick={() =>
               clipboard.writeText(
-                `app.near/widget/Profile?accountId=${accountId}`,
+                `app.near/widget/Profile?accountId=${accountId}`
               )
             }
           >
@@ -180,6 +182,7 @@ return (
               props={{
                 accountId: accountId,
                 theme: theme,
+                font: font,
                 profileLayout: "modern",
               }}
             />

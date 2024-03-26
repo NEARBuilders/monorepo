@@ -6,7 +6,6 @@ const StyledButton = styled.div`
   gap: 8px;
   flex-shrink: 0;
   border-radius: 10px;
-  font-family: InterVariable, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -27,7 +26,7 @@ const StyledButton = styled.div`
       case "outline":
         return "1px solid var(--button-outline-stroke)";
       case "primary":
-        return "1px solid var(--button-primary-stroke)";
+        return "1px solid var(--button-primary-stroke, rgba(0, 26, 51, 0.16))";
       case "transparent":
         return;
     }
@@ -37,7 +36,7 @@ const StyledButton = styled.div`
       case "outline":
         return "var(--button-outline-bg)";
       case "primary":
-        return "var(--button-primary-bg)";
+        return "var(--button-primary-bg, #000)";
       case "transparent":
         return "transparent";
     }
@@ -47,7 +46,7 @@ const StyledButton = styled.div`
       case "outline":
         return "var(--button-outline-color)";
       case "primary":
-        return "var(--button-primary-color)";
+        return "var(--button-primary-color, #fff)";
       case "transparent":
         return "var(--button-outline-color)";
     }
@@ -60,7 +59,7 @@ const StyledButton = styled.div`
         case "outline":
           return "var(--button-outline-hover-bg)";
         case "primary":
-          return "var(--button-primary-hover-bg)";
+          return "var(--button-primary-hover-bg, rgba(0, 0, 0, 0.8))";
         case "transparent":
           return "var(--button-outline-hover-bg)";
       }

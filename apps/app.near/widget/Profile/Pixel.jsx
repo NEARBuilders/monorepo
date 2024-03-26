@@ -33,6 +33,8 @@ const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags || []);
 
 const theme = profile.profileTheme ?? "dark";
+const font = profile.profileFont ?? "InterVariable";
+const accentFont = profile.profileAccentFont ?? "Pixelify Sans";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -99,7 +101,7 @@ const ProfileInfoContainer = styled.div`
 
 const ProfileName = styled.h2`
   color: var(--color);
-  font-family: "Pixelify Sans", "InterVariant", sans-serif;
+  font-family: var(--accent-font-family), "InterVariant", sans-serif;
   font-size: 48px;
   font-weight: 400;
   margin: 0;
@@ -155,7 +157,7 @@ const AccountName = styled.div`
 `;
 
 return (
-  <Root theme={theme}>
+  <Root theme={theme} font={font} accentFont={accentFont}>
     <ProfileImagesContainer>
       <BackgroundImage>
         <Widget
@@ -214,6 +216,8 @@ return (
               props={{
                 theme: theme,
                 accountId: accountId,
+                font: font,
+                accentFont: accentFont,
                 profileLayout: "pixel",
                 trigger: (
                   <Button>
@@ -261,7 +265,10 @@ return (
         <div>
           <h4
             className="mb-3"
-            style={{ fontFamily: "Pixelify Sans", color: "var(--color-muted)" }}
+            style={{
+              fontFamily: "var(--accent-font-family)",
+              color: "var(--color-muted)",
+            }}
           >
             Applications
           </h4>

@@ -44,7 +44,7 @@ const StyledButton = styled.div`
         return "var(--color)";
     }
   }};
-  font-family: "Pixelify Sans", "InterVariable", sans-serif;
+  font-family: var(--accent-font-family), "InterVariable", sans-serif;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;

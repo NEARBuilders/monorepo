@@ -93,7 +93,7 @@ const Wrapper = styled.div`
       font-size: 16px;
       color: var(--color);
       margin-bottom: 4px;
-      font-family: "Pixelify Sans", InterVariable, sans-serif;
+      font-family: var(--accent-font-family), InterVariable, sans-serif;
       font-weight: bold;
       overflow: hidden;
       text-overflow: ellipsis;

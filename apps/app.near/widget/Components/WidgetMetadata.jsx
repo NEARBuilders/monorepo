@@ -53,7 +53,7 @@ const CardButton = styled.a`
   flex-grow: 1;
 
   color: var(--color) !important;
-  font-family: "Pixelify Sans", InterVariable, sans-serif;
+  font-family: var(--accent-font-family), InterVariable, sans-serif;
   font-weight: 500;
   font-size: 16px;
   border: 1px solid var(--stroke);
@@ -97,7 +97,8 @@ return (
               color: "var(--color)",
               fontSize: 20,
               fontWeight: 500,
-              fontFamily: "Pixelify Sans, InterVariable, sans-serif",
+              fontFamily:
+                "var(--accent-font-family), InterVariable, sans-serif",
             }}
           >
             {name}
