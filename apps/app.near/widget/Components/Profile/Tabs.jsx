@@ -58,7 +58,7 @@ const TabsContainer = styled.div`
   @media (max-width: 768px) {
     gap: 16px;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     i {
       font-size: 24px !important;
     }

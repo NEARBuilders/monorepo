@@ -13,6 +13,9 @@ const [profileLayout, setProfileLayout] = useState(
 );
 const [font, setFont] = useState(profile.profileFont);
 const [accentFont, setAccentFont] = useState(profile.profileAccentFont);
+const [backgroundStyle, setBackgroundStyle] = useState(
+  profile.profileBackground ?? "plain"
+);
 
 const ModalRoot = styled.div`
   .DialogOverlay {
@@ -209,6 +212,66 @@ const [color, setColor] = useState(
 );
 const [showColorDropdown, setShowColorDropdown] = useState(false);
 
+const [name, setName] = useState(profile.name ?? "");
+const [description, setDescription] = useState(profile.description ?? "");
+const [twitter, setTwitter] = useState(profile.linktree.twitter ?? "");
+const [github, setGithub] = useState(profile.linktree.github ?? "");
+const [telegram, setTelegram] = useState(profile.linktree.telegram ?? "");
+const [website, setWebsite] = useState(profile.linktree.website ?? "");
+const [image, setImage] = useState(profile.image ?? {});
+const [backgroundImage, setBackgroundImage] = useState(
+  profile.backgroundImage ?? {}
+);
+
+const onNameChange = useCallback((e) => {
+  setName(e.target.value);
+}, []);
+
+const onDescriptionChange = useCallback((e) => {
+  setDescription(e.target.value);
+}, []);
+
+const onTwitterChange = useCallback((e) => {
+  setTwitter(e.target.value);
+}, []);
+
+const onGithubChange = useCallback((e) => {
+  setGithub(e.target.value);
+}, []);
+
+const onTelegramChange = useCallback((e) => {
+  setTelegram(e.target.value);
+}, []);
+
+const onWebsiteChange = useCallback((e) => {
+  setWebsite(e.target.value);
+}, []);
+
+const ProfileImageContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+
+  img {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 1rem;
+  }
+
+  .text-white {
+    color: var(--color) !important;
+    border: 1px solid var(--stroke);
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 300ms;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+`;
+
 return (
   <ModalRoot>
     <Dialog.Root>
@@ -227,161 +290,313 @@ return (
         </Dialog.Title>
         <Dialog.Description className="DialogDescription">
           <p>Make changes to your profile here. Click save when you're done.</p>
-
-          <div
-            className="form-check form-switch mb-3"
-            data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+          <ul
+            class="nav nav-tabs"
+            id="myTab"
+            role="tablist"
+            data-bs-theme={props.theme}
           >
-            <input
-              class="form-check-input"
-              checked={theme}
-              onChange={(e) => setTheme(e.target.checked)}
-              type="checkbox"
-              id="darktheme"
-            />
-            <label class="form-check-label" for="darktheme">
-              Dark Theme
-            </label>
-          </div>
-          <div
-            className="form-check form-switch mb-3"
-            data-bs-theme={props.theme === "dark" ? "dark" : "light"}
-          >
-            <input
-              class="form-check-input"
-              checked={profileLayout}
-              onChange={(e) => setProfileLayout(e.target.checked)}
-              type="checkbox"
-              id="darktheme"
-            />
-            <label class="form-check-label" for="darktheme">
-              Pixel Layout
-            </label>
-          </div>
-          <div className="d-flex flex-column gap-3 mb-3">
-            <Heading>Fonts</Heading>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#profile-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="profile-tab-pane"
+                aria-selected="true"
+              >
+                Profile Info
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="theme-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#theme-tab-pane"
+                type="button"
+                role="tab"
+                aria-controls="theme-tab-pane"
+                aria-selected="false"
+              >
+                Theme
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content" id="myTabContent">
             <div
-              className="form-group"
-              data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+              class="tab-pane fade show active"
+              id="profile-tab-pane"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+              tabindex="0"
             >
-              <label htmlFor="primary-font">Primary</label>
-              <select
-                id="primary-font"
-                name="primary-font"
-                class="form-select"
-                style={{ fontFamily: `"${font}"` }}
-                value={font}
-                onChange={(e) => setFont(e.target.value)}
-              >
-                <option
-                  value="InterVariable"
-                  style={{ fontFamily: "InterVariable, sans-serif" }}
-                >
-                  Inter
-                </option>
-                <option
-                  value="Poppins"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  Poppins
-                </option>
-                <option value="Lato" style={{ fontFamily: "Lato, sans-serif" }}>
-                  Lato
-                </option>
-                <option
-                  value="Raleway"
-                  style={{ fontFamily: "Raleway, sans-serif" }}
-                >
-                  Raleway
-                </option>
-              </select>
-            </div>
-            {profileLayout && (
               <div
-                className="form-group"
-                data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+                className="d-flex flex-column gap-3 mt-3"
+                data-bs-theme={props.theme}
               >
-                <label htmlFor="accent-font">Accent</label>
-                <select
-                  style={{ fontFamily: `"${accentFont}"` }}
-                  id="accent-font"
-                  name="accent-font"
-                  class="form-select"
-                  value={accentFont}
-                  onChange={(e) => setAccentFont(e.target.value)}
-                >
-                  <option
-                    value="Pixelify Sans"
-                    style={{
-                      fontFamily: "var(--accent-font-family), sans-serif",
-                    }}
-                  >
-                    Pixelify Sans
-                  </option>
-                  <option
-                    value="Press Start 2P"
-                    style={{ fontFamily: '"Press Start 2P", sans-serif' }}
-                  >
-                    Press Start
-                  </option>
-                  <option
-                    value="Silkscreen"
-                    style={{ fontFamily: "Silkscreen, sans-serif" }}
-                  >
-                    Silkscreen
-                  </option>
-                </select>
+                <ProfileImageContainer className="d-flex flex-column gap-1">
+                  <label>Profile Image</label>
+                  <div className="d-flex align-items-center gap-1">
+                    <Widget
+                      src="buildhub.near/widget/components.profile.ImageUploader"
+                      loading=""
+                      props={{
+                        image: profile.image,
+                        setImage: setImage,
+                      }}
+                    />
+                  </div>
+                </ProfileImageContainer>
+                <ProfileImageContainer className="d-flex flex-column gap-1">
+                  <label>Background Image</label>
+                  <div className="d-flex align-items-center gap-1">
+                    <Widget
+                      src="buildhub.near/widget/components.profile.ImageUploader"
+                      loading=""
+                      props={{
+                        image: profile.backgroundImage,
+                        setImage: setBackgroundImage,
+                      }}
+                    />
+                  </div>
+                </ProfileImageContainer>
+                <div className="form-group">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={onNameChange}
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Description</label>
+                  <textarea
+                    type="text"
+                    className="form-control"
+                    value={description}
+                    onChange={onDescriptionChange}
+                    placeholder="Markdown Supported"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Twitter</label>
+                  <input
+                    type="text"
+                    value={twitter}
+                    onChange={onTwitterChange}
+                    placeholder="Enter your X/Twitter handle"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>GitHub</label>
+                  <input
+                    type="text"
+                    value={github}
+                    onChange={onGithubChange}
+                    placeholder="Enter your GitHub handle"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Telegram</label>
+                  <input
+                    type="text"
+                    value={telegram}
+                    onChange={onTelegramChange}
+                    placeholder="Enter your Telegram handle"
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Website</label>
+                  <input
+                    type="text"
+                    value={website}
+                    onChange={onWebsiteChange}
+                    placeholder="Enter your website URL"
+                  />
+                </div>
               </div>
-            )}
-          </div>
-          <div className="d-flex flex-column gap-3 mb-3">
-            <Heading>Theme Color</Heading>
-            <div>
-              <label>Primary Color</label>
-              <div>
-                <DropdownSelect
-                  theme={props.theme === "dark" ? "dark" : "light"}
-                  onClick={() => setShowColorDropdown(!showColorDropdown)}
-                >
-                  <div
-                    style={{
-                      width: 24,
-                      height: 24,
-                      borderRadius: 8,
-                      background: color.value,
-                    }}
-                  ></div>
-                  {color.label}
-                </DropdownSelect>
-                {showColorDropdown && (
-                  <div
-                    className="d-flex flex-wrap gap-2 rounded-2 p-2 shadow-sm mt-2"
-                    style={{
-                      border: `1px solid ${props.theme === "dark" ? "#495057" : "#dee2e6"}`,
-                      background: props.theme === "dark" ? "#212529" : "#fff",
-                    }}
+            </div>
+            <div
+              class="tab-pane fade"
+              id="theme-tab-pane"
+              role="tabpanel"
+              aria-labelledby="theme-tab"
+              tabindex="0"
+            >
+              <div
+                className="form-check form-switch my-3"
+                data-bs-theme={props.theme}
+              >
+                <input
+                  class="form-check-input"
+                  checked={theme}
+                  onChange={(e) => setTheme(e.target.checked)}
+                  type="checkbox"
+                  id="darktheme"
+                />
+                <label class="form-check-label" for="darktheme">
+                  Dark Theme
+                </label>
+              </div>
+              <div
+                className="form-check form-switch mb-3"
+                data-bs-theme={props.theme}
+              >
+                <input
+                  class="form-check-input"
+                  checked={profileLayout}
+                  onChange={(e) => setProfileLayout(e.target.checked)}
+                  type="checkbox"
+                  id="darktheme"
+                />
+                <label class="form-check-label" for="darktheme">
+                  Pixel Layout
+                </label>
+              </div>
+              {!profileLayout && (
+                <div className="form-group mb-3" data-bs-theme={props.theme}>
+                  <label htmlFor="background-style">Background Style</label>
+                  <select
+                    id="background-style"
+                    name="background-style"
+                    class="form-select"
+                    value={backgroundStyle}
+                    onChange={(e) => setBackgroundStyle(e.target.value)}
                   >
-                    {colors.map((color) => (
-                      <div
-                        key={color.label}
-                        onClick={() => {
-                          setColor(color);
-                          setShowColorDropdown(!showColorDropdown);
+                    <option value="plain">Plain</option>
+                    <option value="half">Half gradient</option>
+                    <option value="full">Full gradient</option>
+                  </select>
+                </div>
+              )}
+              <div className="d-flex flex-column gap-3 mb-3">
+                <Heading>Fonts</Heading>
+                <div className="form-group" data-bs-theme={props.theme}>
+                  <label htmlFor="primary-font">Primary</label>
+                  <select
+                    id="primary-font"
+                    name="primary-font"
+                    class="form-select"
+                    style={{ fontFamily: `"${font}", sans-serif` }}
+                    value={font}
+                    onChange={(e) => setFont(e.target.value)}
+                  >
+                    <option
+                      value="InterVariable"
+                      style={{ fontFamily: "InterVariable, sans-serif" }}
+                    >
+                      Inter
+                    </option>
+                    <option
+                      value="Poppins"
+                      style={{ fontFamily: "Poppins, sans-serif" }}
+                    >
+                      Poppins
+                    </option>
+                    <option
+                      value="Lato"
+                      style={{ fontFamily: "Lato, sans-serif" }}
+                    >
+                      Lato
+                    </option>
+                    <option
+                      value="Raleway"
+                      style={{ fontFamily: "Raleway, sans-serif" }}
+                    >
+                      Raleway
+                    </option>
+                  </select>
+                </div>
+                {profileLayout && (
+                  <div className="form-group" data-bs-theme={props.theme}>
+                    <label htmlFor="accent-font">Accent</label>
+                    <select
+                      style={{ fontFamily: `"${accentFont}", sans-serif` }}
+                      id="accent-font"
+                      name="accent-font"
+                      class="form-select"
+                      value={accentFont}
+                      onChange={(e) => setAccentFont(e.target.value)}
+                    >
+                      <option
+                        value="Pixelify Sans"
+                        style={{
+                          fontFamily: "Pixelify Sans, sans-serif",
                         }}
+                      >
+                        Pixelify Sans
+                      </option>
+                      <option
+                        value="Press Start 2P"
+                        style={{ fontFamily: '"Press Start 2P", sans-serif' }}
+                      >
+                        Press Start
+                      </option>
+                      <option
+                        value="Silkscreen"
+                        style={{ fontFamily: "Silkscreen, sans-serif" }}
+                      >
+                        Silkscreen
+                      </option>
+                    </select>
+                  </div>
+                )}
+              </div>
+              <div className="d-flex flex-column gap-3 mb-3">
+                <Heading>Theme Color</Heading>
+                <div>
+                  <label>Primary Color</label>
+                  <div>
+                    <DropdownSelect
+                      theme={props.theme}
+                      onClick={() => setShowColorDropdown(!showColorDropdown)}
+                    >
+                      <div
                         style={{
                           width: 24,
                           height: 24,
                           borderRadius: 8,
                           background: color.value,
-                          cursor: "pointer",
-                          border:
-                            props.activeColor === color.value &&
-                            `2px solid ${props.theme === "dark" ? "white" : "black"}`,
                         }}
                       ></div>
-                    ))}
+                      {color.label}
+                    </DropdownSelect>
+                    {showColorDropdown && (
+                      <div
+                        className="d-flex flex-wrap gap-2 rounded-2 p-2 shadow-sm mt-2"
+                        style={{
+                          border: `1px solid ${props.theme === "dark" ? "#495057" : "#dee2e6"}`,
+                          background:
+                            props.theme === "dark" ? "#212529" : "#fff",
+                        }}
+                      >
+                        {colors.map((color) => (
+                          <div
+                            key={color.label}
+                            onClick={() => {
+                              setColor(color);
+                              setShowColorDropdown(!showColorDropdown);
+                            }}
+                            style={{
+                              width: 24,
+                              height: 24,
+                              borderRadius: 8,
+                              background: color.value,
+                              cursor: "pointer",
+                              border:
+                                props.activeColor === color.value &&
+                                `2px solid ${props.theme === "dark" ? "white" : "black"}`,
+                            }}
+                          ></div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
               </div>
             </div>
           </div>
@@ -402,6 +617,17 @@ return (
                 profileFont: font,
                 profileAccentFont: accentFont,
                 profileActiveColor: color.value,
+                profileBackground: backgroundStyle,
+                name,
+                image: image,
+                backgroundImage: backgroundImage,
+                description,
+                linktree: {
+                  twitter,
+                  github,
+                  telegram,
+                  website,
+                },
               },
             });
           }}

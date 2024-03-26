@@ -129,6 +129,13 @@ const LeftFullBlur = styled.div`
   opacity: 0.4;
   pointer-events: none;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 400px;
+    border-radius: 400px;
+    filter: blur(100px);
+  }
 `;
 
 const RightFullBlur = styled.div`
@@ -140,11 +147,54 @@ const RightFullBlur = styled.div`
   background: var(--active-color);
   filter: blur(200px);
 
+  opacity: 0.4;
   position: absolute;
   right: 0;
   top: 0;
   transform: translateX(50%);
-  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+
+  @media (max-width: 768px) {
+    width: 180px;
+    height: 400px;
+    border-radius: 400px;
+    filter: blur(100px);
+  }
+`;
+
+const LeftTabBlur = styled.div`
+  width: 407px;
+  height: 407px;
+
+  border-radius: 407px;
+  background: var(--active-color);
+  filter: blur(200px);
+
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 1;
+`;
+
+const RightTabBlur = styled.div`
+  width: 407px;
+  height: 407px;
+
+  border-radius: 407px;
+  background: var(--active-color);
+  filter: blur(200px);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  transform: translate(50%, -50%);
+  opacity: 0.3;
   pointer-events: none;
   z-index: 1;
 `;
@@ -186,7 +236,15 @@ return (
               )
             }
           >
-            Share <LinkIcon theme={theme} />
+            <span className="d-none d-md-inline-flex align-items-center gap-2">
+              Share <LinkIcon theme={theme} />
+            </span>
+            <span
+              className="d-md-none"
+              style={{ fontSize: 24, margin: "0 -8px" }}
+            >
+              <i class="bi bi-link-45deg"></i>
+            </span>
           </Button>
         </OverlayTrigger>
       </div>
@@ -255,12 +313,24 @@ return (
         </div>
       </div>
     </div>
-    <Widget
-      src="app.near/widget/Components.Profile.Tabs"
-      loading=""
-      props={{ accountId: accountId }}
-    />
-    <LeftFullBlur />
-    <RightFullBlur />
+    <div className="position-relative overflow-hidden">
+      <Widget
+        src="app.near/widget/Components.Profile.Tabs"
+        loading=""
+        props={{ accountId: accountId }}
+      />
+      {profile.profileBackground === "half" && (
+        <>
+          <LeftTabBlur />
+          <RightTabBlur />
+        </>
+      )}
+    </div>
+    {profile.profileBackground === "full" && (
+      <>
+        <LeftFullBlur />
+        <RightFullBlur />
+      </>
+    )}
   </Root>
 );
