@@ -18,9 +18,17 @@ const LightTheme = `
   --button-primary-color: #fff;
   --button-primary-hover-bg: rgba(0, 0, 0, 0.8);
 
-  --hashtag-stroke: #F9E68C;
-  --hashtag-bg: #FFFCE8;
-  --hashtag-color: #946800;
+  --hashtag-yellow-stroke: #F9E68C;
+  --hashtag-yellow-bg: #FFFCE8;
+  --hashtag-yellow-color: #946800;
+
+  --hashtag-green-stroke: #B4DFC4;
+  --hashtag-green-bg: #F2FCF5;
+  --hashtag-green-color: #18794E;
+
+  --hashtag-red-stroke: #F4C6DB;
+  --hashtag-red-bg: #FFF7FB;
+  --hashtag-red-color: #D31E66;
   
   --bg: #fff;
   --bg-hover: rgba(0, 0, 0, 0.2);
@@ -95,9 +103,17 @@ const DarkTheme = `
   --button-primary-color: #000;
   --button-primary-hover-bg: rgba(255, 255, 255, 0.8);
 
-  --hashtag-stroke: #F0C000;
-  --hashtag-bg: #221A00;
-  --hashtag-color: #F0C000;
+  --hashtag-yellow-stroke: #493C00;
+  --hashtag-yellow-bg: #221A00;
+  --hashtag-yellow-color: #F0C000;
+
+  --hashtag-green-stroke: #164430;
+  --hashtag-green-bg: #0C1F17;
+  --hashtag-green-color: #4CC38A;
+
+  --hashtag-red-stroke: #641D3B;
+  --hashtag-red-bg: #27141C;
+  --hashtag-red-color: #F76190;
 
   --bg: #000;
   --bg-hover: rgba(255, 255, 255, 0.2);

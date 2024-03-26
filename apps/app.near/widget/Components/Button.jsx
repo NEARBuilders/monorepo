@@ -3,6 +3,7 @@ const StyledButton = styled.div`
   display: inline-flex;
   justify-content: center;
   align-items: center;
+  font-family: var(--font-family);
   gap: 8px;
   flex-shrink: 0;
   border-radius: 10px;

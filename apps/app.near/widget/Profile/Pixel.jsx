@@ -266,7 +266,14 @@ return (
         </div>
         <div className="d-flex align-items-center flex-wrap gap-2">
           {profileTags.length > 0 &&
-            profileTags.map((tag) => <Hashtag key={tag}>{tag}</Hashtag>)}
+            profileTags.map((tag, i) => (
+              <Hashtag
+                color={i % 3 === 0 ? "green" : i % 3 === 1 ? "yellow" : "red"}
+                key={tag}
+              >
+                {tag}
+              </Hashtag>
+            ))}
         </div>
         <LinkTree linkTree={profile.linktree} theme={theme} />
         <div>

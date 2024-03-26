@@ -265,6 +265,7 @@ const ProfileImageContainer = styled.div`
     padding: 8px 12px;
     border-radius: 8px;
     transition: all 300ms;
+    cursor: pointer;
 
     &:hover {
       opacity: 0.8;

@@ -2,13 +2,16 @@ const { Root } = VM.require("app.near/widget/Profile.Modern.Root") || {
   Root: () => <></>,
 };
 
-const { Button, LinkTree, FollowStats, Hashtag } = VM.require(
+const { Button, LinkTree, Hashtag } = VM.require(
   "app.near/widget/Components"
 ) || {
   Button: () => <></>,
   LinkTree: () => <></>,
-  FollowStats: () => <></>,
   Hashtag: () => <></>,
+};
+
+const { FollowStats } = VM.require("app.near/widget/Components.Pixel") || {
+  FollowStats: () => <></>,
 };
 
 const { LinkIcon, CopyIcon } = VM.require("app.near/widget/Icons") || {
@@ -308,7 +311,14 @@ return (
         <div className="d-flex justify-content-center mt-2">
           <div className="d-flex align-items-center flex-wrap gap-2">
             {profileTags.length > 0 &&
-              profileTags.map((tag) => <Hashtag key={tag}>{tag}</Hashtag>)}
+              profileTags.map((tag, i) => (
+                <Hashtag
+                  key={tag}
+                  color={i % 3 === 0 ? "green" : i % 3 === 1 ? "yellow" : "red"}
+                >
+                  {tag}
+                </Hashtag>
+              ))}
           </div>
         </div>
       </div>
