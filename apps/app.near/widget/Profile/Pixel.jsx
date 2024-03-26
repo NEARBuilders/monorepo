@@ -35,6 +35,7 @@ const profileTags = Object.keys(profile.tags || []);
 const theme = profile.profileTheme ?? "dark";
 const font = profile.profileFont ?? "InterVariable";
 const accentFont = profile.profileAccentFont ?? "Pixelify Sans";
+const activeColor = profile.profileActiveColor ?? "#E93D82";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
@@ -157,7 +158,12 @@ const AccountName = styled.div`
 `;
 
 return (
-  <Root theme={theme} font={font} accentFont={accentFont}>
+  <Root
+    theme={theme}
+    font={font}
+    accentFont={accentFont}
+    activeColor={activeColor}
+  >
     <ProfileImagesContainer>
       <BackgroundImage>
         <Widget
@@ -218,6 +224,7 @@ return (
                 accountId: accountId,
                 font: font,
                 accentFont: accentFont,
+                activeColor: activeColor,
                 profileLayout: "pixel",
                 trigger: (
                   <Button>

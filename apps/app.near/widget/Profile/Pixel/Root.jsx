@@ -130,6 +130,7 @@ const DarkTheme = `
 const Theme = styled.div`
   box-sizing: border-box;
   ${(props) => (props.theme === "dark" ? DarkTheme : LightTheme)}
+  --active-color: ${(props) => props.activeColor};
   color: var(--color);
   background: var(--bg);
 
@@ -1276,9 +1277,14 @@ const Theme = styled.div`
   font-family: var(--font-family), sans-serif;
 `;
 
-function Root({ children, theme, font, accentFont }) {
+function Root({ children, theme, font, accentFont, activeColor }) {
   return (
-    <Theme theme={theme} font={font} accentFont={accentFont}>
+    <Theme
+      theme={theme}
+      font={font}
+      accentFont={accentFont}
+      activeColor={activeColor}
+    >
       {children}
     </Theme>
   );

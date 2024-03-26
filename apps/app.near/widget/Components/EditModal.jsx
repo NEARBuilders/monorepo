@@ -96,14 +96,18 @@ const Heading = styled.h3`
   line-height: 140%; /* 28px */
 `;
 
-const DropdownSelect = ({ children, onClick }) => {
+const DropdownSelect = ({ children, onClick, theme }) => {
   return (
     <div
       onClick={onClick}
-      className="d-flex gap-2 align-items-center rounded-2 p-2 bg-white"
+      className="d-flex gap-2 align-items-center rounded-2 p-2"
       style={{
-        border: "1px solid #dee2e6",
-        backgroundImage: `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e"`,
+        backgroundColor: theme === "dark" ? "#212529" : "white",
+        border: `1px solid ${theme === "dark" ? "#495057" : "#dee2e6"}`,
+        backgroundImage:
+          theme === "dark"
+            ? `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23dee2e6%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")`
+            : `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 16 16%27%3e%3cpath fill=%27none%27 stroke=%27%23343a40%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%272%27 d=%27m2 5 6 6 6-6%27/%3e%3c/svg%3e")`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "right .75rem center",
         backgroundSize: "16px 12px",
@@ -200,7 +204,9 @@ const colors = [
   },
 ];
 
-const [color, setColor] = useState(props.color ?? colors[0]);
+const [color, setColor] = useState(
+  colors.filter((color) => color.value === props.activeColor)[0] ?? colors[0]
+);
 const [showColorDropdown, setShowColorDropdown] = useState(false);
 
 return (
@@ -254,7 +260,10 @@ return (
           </div>
           <div className="d-flex flex-column gap-3 mb-3">
             <Heading>Fonts</Heading>
-            <div className="form-group">
+            <div
+              className="form-group"
+              data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+            >
               <label htmlFor="primary-font">Primary</label>
               <select
                 id="primary-font"
@@ -288,7 +297,10 @@ return (
               </select>
             </div>
             {profileLayout && (
-              <div className="form-group">
+              <div
+                className="form-group"
+                data-bs-theme={props.theme === "dark" ? "dark" : "light"}
+              >
                 <label htmlFor="accent-font">Accent</label>
                 <select
                   style={{ fontFamily: `"${accentFont}"` }}
@@ -328,6 +340,7 @@ return (
               <label>Primary Color</label>
               <div>
                 <DropdownSelect
+                  theme={props.theme === "dark" ? "dark" : "light"}
                   onClick={() => setShowColorDropdown(!showColorDropdown)}
                 >
                   <div
@@ -342,8 +355,11 @@ return (
                 </DropdownSelect>
                 {showColorDropdown && (
                   <div
-                    className="d-flex flex-wrap gap-2 rounded-2 p-2 bg-white shadow-sm mt-2"
-                    style={{ border: "1px solid #dee2e6" }}
+                    className="d-flex flex-wrap gap-2 rounded-2 p-2 shadow-sm mt-2"
+                    style={{
+                      border: `1px solid ${props.theme === "dark" ? "#495057" : "#dee2e6"}`,
+                      background: props.theme === "dark" ? "#212529" : "#fff",
+                    }}
                   >
                     {colors.map((color) => (
                       <div
@@ -358,6 +374,9 @@ return (
                           borderRadius: 8,
                           background: color.value,
                           cursor: "pointer",
+                          border:
+                            props.activeColor === color.value &&
+                            `2px solid ${props.theme === "dark" ? "white" : "black"}`,
                         }}
                       ></div>
                     ))}

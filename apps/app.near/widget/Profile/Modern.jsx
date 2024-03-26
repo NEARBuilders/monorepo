@@ -35,10 +35,14 @@ const activeColor = profile.profileActiveColor ?? "#E93D82";
 
 const ProfileImagesContainer = styled.div`
   position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
+  z-index: 5;
 `;
 
 const BackgroundImage = styled.div`
   img {
+    z-index: 5;
     width: 100%;
     height: 280px;
     object-fit: cover;
@@ -56,6 +60,7 @@ const ProfileImage = styled.div`
   transform: translate(-50%, 50%);
 
   img {
+    z-index: 5;
     width: 140px;
     height: 140px;
     object-fit: cover;
@@ -106,6 +111,42 @@ const AccountName = styled.div`
     cursor: pointer;
     margin-top: 3px;
   }
+`;
+
+const LeftFullBlur = styled.div`
+  width: 407px;
+  height: 697px;
+  flex-shrink: 0;
+
+  border-radius: 697px;
+  background: var(--active-color);
+  filter: blur(200px);
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform: translateX(-50%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+`;
+
+const RightFullBlur = styled.div`
+  width: 407px;
+  height: 697px;
+  flex-shrink: 0;
+
+  border-radius: 697px;
+  background: var(--active-color);
+  filter: blur(200px);
+
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translateX(50%);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
 `;
 
 return (
@@ -182,6 +223,7 @@ return (
               props={{
                 accountId: accountId,
                 theme: theme,
+                activeColor: activeColor,
                 font: font,
                 profileLayout: "modern",
               }}
@@ -218,5 +260,7 @@ return (
       loading=""
       props={{ accountId: accountId }}
     />
+    <LeftFullBlur />
+    <RightFullBlur />
   </Root>
 );

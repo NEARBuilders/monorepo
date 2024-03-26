@@ -1149,6 +1149,9 @@ const Theme = styled.div`
   }};
 
   font-family: var(--font-family), sans-serif;
+  position: relative;
+  overflow-x: clip;
+  overflow-y: visible;
 `;
 
 function Root({ children, theme, font, activeColor }) {
