@@ -10,7 +10,13 @@ const { Button, LinkTree, Hashtag } = VM.require(
   Hashtag: () => <></>,
 };
 
-const { FollowStats } = VM.require("app.near/widget/Components.Pixel") || {
+const { SocialSDK } = VM.require("app.near/widget/sdk.social") || {
+  SocialSDK: () => {},
+};
+
+const { FollowStats } = VM.require(
+  "app.near/widget/Components.Profile.FollowStats"
+) || {
   FollowStats: () => <></>,
 };
 
@@ -298,13 +304,7 @@ return (
                   accountId: accountId,
                 }}
               />
-              <Widget
-                src={"app.near/widget/Components.Profile.PokeButton"}
-                loading=""
-                props={{
-                  accountId: accountId,
-                }}
-              />
+              <Button onClick={() => SocialSDK.poke(accountId)}>👉 Poke</Button>
             </>
           )}
         </div>

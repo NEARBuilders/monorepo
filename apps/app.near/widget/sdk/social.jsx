@@ -1,0 +1,27 @@
+const SocialSDK = {
+  poke: (accountId) => {
+    console.log(accountId);
+    const data = {
+      index: {
+        graph: JSON.stringify({
+          key: "poke",
+          value: {
+            accountId: accountId,
+          },
+        }),
+        notify: JSON.stringify({
+          key: accountId,
+          value: {
+            type: "poke",
+          },
+        }),
+      },
+    };
+
+    Social.set(data, {
+      force: true,
+    });
+  },
+};
+
+return { SocialSDK };

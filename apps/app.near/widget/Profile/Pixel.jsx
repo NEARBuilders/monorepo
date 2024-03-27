@@ -2,13 +2,16 @@ const { Root } = VM.require("app.near/widget/Profile.Pixel.Root") || {
   Root: () => <></>,
 };
 
-const { FollowStats, Button, Hashtag, LinkTree } = VM.require(
+const { Button, Hashtag, LinkTree } = VM.require(
   "app.near/widget/Components.Pixel"
 ) || {
-  FollowStats: () => <></>,
   Button: () => <></>,
   Hashtag: () => <></>,
   LinkTree: () => <></>,
+};
+
+const { FollowStats } = VM.require("app.near/widget/Components") || {
+  FollowStats: () => <></>,
 };
 
 const { CopyIcon2, EditIcon2, LinkIcon2 } = VM.require(
