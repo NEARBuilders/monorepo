@@ -11,7 +11,7 @@ const { Button, LinkTree, Hashtag } = VM.require(
 };
 
 const { SocialSDK } = VM.require("app.near/widget/sdk.social") || {
-  SocialSDK: () => {},
+  SocialSDK: {},
 };
 
 const { FollowStats } = VM.require(

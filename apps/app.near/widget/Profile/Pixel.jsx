@@ -14,6 +14,10 @@ const { FollowStats } = VM.require("app.near/widget/Components") || {
   FollowStats: () => <></>,
 };
 
+const { SocialSDK } = VM.require("app.near/widget/sdk.social") || {
+  SocialSDK: {},
+};
+
 const { CopyIcon2, EditIcon2, LinkIcon2 } = VM.require(
   "app.near/widget/Icons"
 ) || {
@@ -35,7 +39,7 @@ if (!accountId) {
 const profile = Social.getr(`${accountId}/profile`);
 const profileTags = Object.keys(profile.tags || []);
 
-const theme = profile.profileTheme ?? "dark";
+const theme = profile.profileTheme ?? "light";
 const font = profile.profileFont ?? "InterVariable";
 const accentFont = profile.profileAccentFont ?? "Pixelify Sans";
 const activeColor = profile.profileActiveColor ?? "#E93D82";
@@ -244,11 +248,7 @@ return (
                 loading=""
                 props={{ accountId }}
               />
-              <Widget
-                src="app.near/widget/Components.Pixel.PokeButton"
-                loading=""
-                props={{ accountId }}
-              />
+              <Button onClick={() => SocialSDK.poke(accountId)}>👉 Poke</Button>
             </>
           )}
           <OverlayTrigger
