@@ -1,5 +1,5 @@
 const { Button, Avatar, InputField, TextEditor } = VM.require(
-  "buildhub.near/widget/components",
+  "buildhub.near/widget/components"
 ) || {
   Button: () => <></>,
   Avatar: () => <></>,
@@ -14,10 +14,6 @@ if (!accountId) {
 }
 
 const profile = Social.getr(`${accountId}/profile`);
-
-if (!profile) {
-  return "";
-}
 
 const [name, setName] = useState(profile.name ?? "");
 const [description, setDescription] = useState(profile.description ?? "");
@@ -108,7 +104,7 @@ return (
               onCommit: () => {
                 setEditMode(false);
               },
-            },
+            }
           );
         }}
         id={"save-profile"}
