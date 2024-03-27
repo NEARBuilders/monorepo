@@ -1,6 +1,6 @@
 [submodule "packages/bos-workspace"]
 	path = packages/bos-workspace
-	url = https://github.com/NEARBuilders/bos-workspace
+	url = https://github.com/klngrs/bos-workspace
 [submodule "twitter-bot"]
 	path = twitter-bot
 	url = https://github.com/nearbuilders/twitter-bot
