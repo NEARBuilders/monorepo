@@ -6,15 +6,15 @@ const accountId = props.accountId;
 const profile = Social.getr(`${accountId}/profile`);
 
 const [theme, setTheme] = useState(
-  profile.profileTheme === "dark" ?? props.theme
+  profile.profileTheme === "dark" ?? props.theme,
 );
 const [profileLayout, setProfileLayout] = useState(
-  props.profileLayout === "pixel"
+  props.profileLayout === "pixel",
 );
 const [font, setFont] = useState(profile.profileFont);
 const [accentFont, setAccentFont] = useState(profile.profileAccentFont);
 const [backgroundStyle, setBackgroundStyle] = useState(
-  profile.profileBackground ?? "plain"
+  profile.profileBackground ?? "plain",
 );
 
 const ModalRoot = styled.div`
@@ -208,7 +208,7 @@ const colors = [
 ];
 
 const [color, setColor] = useState(
-  colors.filter((color) => color.value === props.activeColor)[0] ?? colors[0]
+  colors.filter((color) => color.value === props.activeColor)[0] ?? colors[0],
 );
 const [showColorDropdown, setShowColorDropdown] = useState(false);
 
@@ -220,7 +220,7 @@ const [telegram, setTelegram] = useState(profile.linktree.telegram ?? "");
 const [website, setWebsite] = useState(profile.linktree.website ?? "");
 const [image, setImage] = useState(profile.image ?? {});
 const [backgroundImage, setBackgroundImage] = useState(
-  profile.backgroundImage ?? {}
+  profile.backgroundImage ?? {},
 );
 
 const onNameChange = useCallback((e) => {

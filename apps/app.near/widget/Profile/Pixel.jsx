@@ -3,7 +3,7 @@ const { Root } = VM.require("app.near/widget/Profile.Pixel.Root") || {
 };
 
 const { Button, Hashtag, LinkTree } = VM.require(
-  "app.near/widget/Components.Pixel"
+  "app.near/widget/Components.Pixel",
 ) || {
   Button: () => <></>,
   Hashtag: () => <></>,
@@ -19,7 +19,7 @@ const { SocialSDK } = VM.require("app.near/widget/sdk.social") || {
 };
 
 const { CopyIcon2, EditIcon2, LinkIcon2 } = VM.require(
-  "app.near/widget/Icons"
+  "app.near/widget/Icons",
 ) || {
   CopyIcon2: () => <></>,
   EditIcon2: () => <></>,
@@ -259,7 +259,7 @@ return (
               style={{ padding: "12px 14px" }}
               onClick={() =>
                 clipboard.writeText(
-                  `app.near/widget/Profile?accountId=${accountId}`
+                  `app.near/widget/Profile?accountId=${accountId}`,
                 )
               }
             >

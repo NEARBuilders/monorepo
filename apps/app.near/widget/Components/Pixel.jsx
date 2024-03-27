@@ -7,7 +7,7 @@ const { Hashtag } = VM.require("app.near/widget/Components.Pixel.Hashtag") || {
 };
 
 const { LinkTree } = VM.require(
-  "app.near/widget/Components.Pixel.LinkTree"
+  "app.near/widget/Components.Pixel.LinkTree",
 ) || {
   LinkTree: () => <></>,
 };
