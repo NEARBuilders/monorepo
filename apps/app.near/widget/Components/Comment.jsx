@@ -59,7 +59,7 @@ return (
           props={{ content, raw }}
         />
         {blockHeight !== "now" ? (
-          <div className="buttons d-flex justify-content-between">
+          <div className="buttons d-flex align-items-center gap-4 flex-wrap">
             {parentItem && (
               <div key="comment">
                 <Widget

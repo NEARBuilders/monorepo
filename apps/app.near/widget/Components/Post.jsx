@@ -116,6 +116,11 @@ const Wrapper = styled.div`
     .post-header {
       margin: 4px 0;
     }
+
+    div[disabled] {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 
   .post:not(:last-child):before {
