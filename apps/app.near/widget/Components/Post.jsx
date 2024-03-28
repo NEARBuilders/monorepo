@@ -135,7 +135,7 @@ const Wrapper = styled.div`
     left: 42px;
     top: 0;
     width: 2px;
-    height: 12px;
+    height: 24px;
     background-color: var(--stroke);
     z-index: 1;
   }
