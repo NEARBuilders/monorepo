@@ -1,6 +1,5 @@
 const SocialSDK = {
   poke: (accountId) => {
-    console.log(accountId);
     const data = {
       index: {
         graph: JSON.stringify({
